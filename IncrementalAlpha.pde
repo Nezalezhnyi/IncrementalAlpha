@@ -24,7 +24,7 @@ PFont font;
 
 void setup() 
 {
-  size(1000, 700);
+  size(1920, 700);
   
   font = createFont("Arial",32,true);
   
