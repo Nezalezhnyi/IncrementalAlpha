@@ -1,9 +1,9 @@
 float alphas = 1;
 float maxalphas = 2;
-float alphaFactories = 0;
+float alphaClots = 0;
 
-int button_bg_alphaFactories = 255;
-boolean buttonPressed_alphaFactories = false;
+int button_bg_alphaClots = 255;
+boolean buttonPressed_alphaClots = false;
 
 double thresholdUpgrades;
 double pthresholdUpgrades = thresholdUpgrades;
@@ -78,7 +78,7 @@ void draw()
 
 
   /////CURRENT ALPHA/////////////////////////////////////////////////////////////////
-  alphas += alphaFactories/100;
+  alphas += alphaClots/100;
 
   if (alphas > maxalphas) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
     maxalphas = alphas;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
@@ -94,7 +94,7 @@ void draw()
   /////CURRENT ALPHA/////////////////////////////////////////////////////////////////
 
 
-  currencyType(button_bg_alphaFactories, 8, 250, alphaFactories, "Unite α-particles");
+  currencyType(button_bg_alphaClots, 8, 250, alphaClots, "Unite α-particles");
 
 
   /////DIALOGS///////////////////////////////////////////////////////////////////////
@@ -105,18 +105,16 @@ void draw()
     rect(rectXD, rectYD, rectWidthD, rectHeightD);
     textSize(50);
 
-    float rectbuttonX = rectXD+(rectWidthD-(textWidth(answer_button)+50))/2;
-    float rectbuttonY = rectYD+rectHeightD-80;
-    float rectbuttonWidth = textWidth(answer_button)+50;
-    float textbuttonHeight = textAscent() + textDescent();
-    float rectbuttonHeight = textbuttonHeight + 20;
-    float txtY = rectbuttonY+(rectbuttonHeight+textbuttonHeight)/2;
-    float diff = (txtY-textAscent()+textbuttonHeight/2)-(rectbuttonY+rectbuttonHeight/2);
+    float rectdialogbuttonX = rectXD+(rectWidthD-(textWidth(answerbutton)+50))/2;
+    float rectdialogbuttonY = rectYD+rectHeightD-80;
+    float rectdialogbuttonWidth = textWidth(answerbutton)+50;
+    float textdialogbuttonHeight = textAscent() + textDescent();
+    float rectdialogbuttonHeight = textdialogbuttonHeight + 20;
 
     fill(255);
-    rect(rectbuttonX, rectbuttonY, rectbuttonWidth, rectbuttonHeight, 10);
+    rect(rectdialogbuttonX, rectdialogbuttonY, rectdialogbuttonWidth, rectdialogbuttonHeight, 10);
     fill(0);
-    text(answer_button, rectbuttonX + (rectbuttonWidth - textWidth(answer_button) )/2, rectbuttonY+(rectbuttonHeight+textbuttonHeight)/2 -diff/2); //diff/2 - середина між baseline та середини прямокутника
+    text(answerbutton, rectdialogbuttonX + (rectdialogbuttonWidth - textWidth(answerbutton) )/2, rectdialogbuttonY+(rectdialogbuttonHeight+textdialogbuttonHeight)/2 - textDescent()/2); //textAscent()/2 - середина між baseline та серединою прямокутника
     //line(0,rectbuttonY+rectbuttonHeight/2,width,rectbuttonY+rectbuttonHeight/2);
     //line(0, rectbuttonY+(rectbuttonWidth-textWidth(answer_button) )/2 + buttontextHeight/2,width, rectbuttonY+(rectbuttonWidth-textWidth(answer_button) )/2 + buttontextHeight/2 );
     

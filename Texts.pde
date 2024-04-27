@@ -4,8 +4,7 @@ String voidUniverse = "";
 String voidUniverseN = "Void";
 
 String dialogbeginning = "Oh, dear, there must be something here, just one—just one! I can't keep searching like this. When will I finally escape this cursed place... When will I, when will I...";
-String answer_button = "Uhm, hi?";
-
+String answerbutton = "Uhm, hi?";
 
 String dialbeginningP1_2 = "Wha!?.. God damn, who are you?! How";
 String dialbeginningP2_2 = "did you get... Urgh, never mind. Now";
