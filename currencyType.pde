@@ -1,4 +1,4 @@
-void currencyType (int bg, int textbuttonX, int rectY, float currency, String name, String buyName)
+void currencyType (int bg, int textbuttonX, int rectY, float currency, String buyName)
 {
   ///////THE RED-GREEN TEXT
   textSize(20);
