@@ -17,11 +17,8 @@ void mousePressed()
   {
     button_dialog_colour = 175;
     button_dialog_pressed = true;
-    dialbeginningP1 = dialbeginningP1_2;
-    dialbeginningP2 = dialbeginningP2_2;
-    dialbeginningP3 = dialbeginningP3_2;
-    answer_button1 = answer_button1_2;
-    corrX = 10;
+    
+   
     page = 2;  
   }
   
@@ -29,14 +26,11 @@ void mousePressed()
   {
     button_dialog_colour = 175;
     button_dialog_pressed = true;
-    dialbeginningP1 = dialbeginningP1_3;
-    dialbeginningP2 = dialbeginningP2_3;
-    dialbeginningP3 = dialbeginningP3_3;
-    answer_button1 = answer_button1_3;
+    
+    
     yourlocation = yourlocationN;
     voidUniverse = voidUniverseN;
     textAdd1_3 = "VOID";
-    corrX = -5; // 
     page = 3;
   }
   
@@ -44,11 +38,8 @@ void mousePressed()
   {
     button_dialog_colour = 175;
     button_dialog_pressed = true;
-    dialbeginningP1 = dialbeginningP1_4;
-    dialbeginningP2 = dialbeginningP2_4;
-    dialbeginningP3 = dialbeginningP3_4;
-    answer_button1 = answer_button1_4;
-    corrX = 25; // 
+    
+    
     page = 4;
     textAdd1_3 = "";
   }
@@ -57,11 +48,8 @@ void mousePressed()
   {
     button_dialog_colour = 175;
     button_dialog_pressed = true;
-    dialbeginningP1 = dialbeginningP1_5;
-    dialbeginningP2 = dialbeginningP2_5;
-    dialbeginningP3 = dialbeginningP3_5;
-    answer_button1 = answer_button1_5;
-    corrX = -15; // 
+    
+  
     page = 5;
   }
   
@@ -69,12 +57,9 @@ void mousePressed()
   {
     button_dialog_colour = 175;
     button_dialog_pressed = true;
-    dialbeginningP1 = dialbeginningP1_6;
-    dialbeginningP2 = dialbeginningP2_6;
-    dialbeginningP3 = dialbeginningP3_6;
-    answer_button1 = answer_button1_6;
+    
+   
     textAdd1_6 = "(You got 1 α-particle)";
-    corrX = 0; // 
     page = 6;
     alphas = 2;
   }
