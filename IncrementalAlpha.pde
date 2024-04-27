@@ -101,13 +101,19 @@ void draw()
   {
     fill(170);
     rect(rectXD, rectYD, rectWidthD, rectHeightD);
-
     textSize(50);
-    fill(255);
-    rect(rectXD+(rectWidthD-(textWidth(answer_button)+50))/2, rectYD+rectHeightD-80, textWidth(answer_button)+50, textAscent() + textDescent() + 20  , 10);
-    fill(0);
-    text(answer_button, (rectXD+(rectWidthD-(textWidth(answer_button)+50))/2) + ( (textWidth(answer_button)+50)-textWidth(answer_button))/2 , (rectYD+rectHeightD-80) + ( (textAscent() + textDescent()) +20) - ( (textAscent() + textDescent()) +20)/2  );
+    
+    float rectbuttonX = rectXD+(rectWidthD-(textWidth(answer_button)+50))/2;
+    float rectbuttonY = rectYD+rectHeightD-80;
+    float rectbuttonWidth = textWidth(answer_button)+50;
+    float rectbuttonHeight = textAscent() + textDescent() + 20;
 
+    fill(255);
+    rect(rectbuttonX, rectbuttonY, rectbuttonWidth, rectbuttonHeight, 10);
+    fill(0);
+    text(answer_button, rectbuttonX + (rectbuttonWidth-textWidth(answer_button) )/2 , (rectbuttonY+rectbuttonHeight)/2  );
+    //Значення rectbuttonX + (rectbuttonWidth-textWidth(answer_button) )/2 
+    //було підраховано шляхом складних розрахунків
   }
 
   fill(0);
