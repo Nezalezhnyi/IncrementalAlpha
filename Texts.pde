@@ -1,11 +1,10 @@
-
 String yourlocation = "";
 String yourlocationN = "You are currently in the ";
 String voidUniverse = "";
 String voidUniverseN = "Void";
 
-String dialogbeginning = "Oh, dear, there must be something here, just one—just one! I can't keep searching like this. When will I finally escape this cursed place?";
-String answer_button1 = "Uhm, hi?";
+String dialogbeginning = "Oh, dear, there must be something here, just one—just one! I can't keep searching like this. When will I finally escape this cursed place... When will I, when will I...";
+String answer_button = "Uhm, hi?";
 
 
 String dialbeginningP1_2 = "Wha!?.. God damn, who are you?! How";

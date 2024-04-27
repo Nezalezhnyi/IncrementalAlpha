@@ -34,6 +34,7 @@ void draw()
   /////DIALOG RECT/////
 
 
+
   background(100);
 
 
@@ -55,11 +56,11 @@ void draw()
 
     fill(0);
     textSize(70);
-    text("You have ", 140, 90);
+    text("You have ", 140+490, 90);
     fill(#EFFF66);
-    text(nf(alphas, 0, 1), 140 + textWidth("You have "), 90);
+    text(nf(alphas, 0, 1), 140+490 + textWidth("You have "), 90);
     fill(0);
-    text(" α-particles", 140 + textWidth("You have ") + textWidth(nf(alphas, 0, 1)), 90);
+    text(" α-particles", 140+490 + textWidth("You have ") + textWidth(nf(alphas, 0, 1)), 90);
   } else
   {
     float mantissa = alphas / pow(10, exponent);
@@ -95,11 +96,20 @@ void draw()
 
 
   /////DIALOGS/////
+  
   if (dialog == true)
   {
     fill(170);
     rect(rectXD, rectYD, rectWidthD, rectHeightD);
+
+    textSize(50);
+    fill(255);
+    rect(rectXD+(rectWidthD-(textWidth(answer_button)+50))/2, rectYD+rectHeightD-80, textWidth(answer_button)+50, textAscent() + textDescent() + 20  , 10);
+    fill(0);
+    text(answer_button, (rectXD+(rectWidthD-(textWidth(answer_button)+50))/2) + ( (textWidth(answer_button)+50)-textWidth(answer_button))/2 , (rectYD+rectHeightD-80) + ( (textAscent() + textDescent()) +20) - ( (textAscent() + textDescent()) +20)/2  );
+
   }
+
   fill(0);
   textSize(40);
   float textXD = rectXD + 20;
@@ -122,6 +132,8 @@ void draw()
   /////DIALOGS//////
 
 
+  /////THE CEMETRY OF printlnS/////
+
   //println("Available: " + availablePurchases);
   //println("Dep: " + (alphas - pow(a,(float)thresholdUpgrades-1)));
   //println("thresholdUpgrades: " + (int)thresholdUpgrades);
@@ -134,4 +146,6 @@ void draw()
   //textSize(40);
   //text("Next α-factory at " + nf(pow(a,(float)(thresholdUpgrades)),0,1) + " α-particles", 70, 70+50);
   //text("You can buy " + (int)(availablePurchases) + " α-factory", 70, 70+100);
+
+  /////THE CEMETRY OF printlnS/////
 }

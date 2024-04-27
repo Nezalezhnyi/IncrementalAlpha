@@ -18,7 +18,7 @@ void mousePressed()
     button_dialog_colour = 175;
     button_dialog_pressed = true;
     
-    answer_button1 = answer_button1_2;
+   
     page = 2;  
   }
   
@@ -27,7 +27,7 @@ void mousePressed()
     button_dialog_colour = 175;
     button_dialog_pressed = true;
     
-    answer_button1 = answer_button1_3;
+    
     yourlocation = yourlocationN;
     voidUniverse = voidUniverseN;
     textAdd1_3 = "VOID";
@@ -39,7 +39,7 @@ void mousePressed()
     button_dialog_colour = 175;
     button_dialog_pressed = true;
     
-    answer_button1 = answer_button1_4;
+    
     page = 4;
     textAdd1_3 = "";
   }
@@ -49,7 +49,7 @@ void mousePressed()
     button_dialog_colour = 175;
     button_dialog_pressed = true;
     
-    answer_button1 = answer_button1_5;
+  
     page = 5;
   }
   
@@ -58,7 +58,7 @@ void mousePressed()
     button_dialog_colour = 175;
     button_dialog_pressed = true;
     
-    answer_button1 = answer_button1_6;
+   
     textAdd1_6 = "(You got 1 α-particle)";
     page = 6;
     alphas = 2;
