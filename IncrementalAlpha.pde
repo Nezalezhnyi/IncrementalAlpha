@@ -1,37 +1,18 @@
-float alphas = 1;
-float maxalphas = 2;
-float alphaClots = 0;
-
-int button_bg_alphaClots = 255;
-boolean buttonPressed_alphaClots = false;
-
-double thresholdUpgrades;
-double pthresholdUpgrades = thresholdUpgrades;
-double availablePurchases = 0;
-
-float a = 2;
-float newPrice = 0;
-
-int page = 1;
-int button_dialog_colour = 255;
-boolean button_dialog_pressed = false;
-boolean button_dialog_last_pressed = false;
-boolean dialog = true;
-
-
 void setup()
 {
-
   size(1920, 1080);
+  rectXD = 120;
+  rectYD = height/2 + 80;
+  rectWidthD = width-2*rectXD;
+  rectHeightD = 250;
 }
+
+
 
 void draw()
 {
   /////DIALOG RECT/////////////////////////////////////////////////////////////////
-  int rectXD = 120;
-  int rectYD = height/2 + 80;
-  int rectWidthD = width-2*rectXD;
-  int rectHeightD = 250;
+
   /////DIALOG RECT/////////////////////////////////////////////////////////////////
 
 
@@ -105,11 +86,11 @@ void draw()
     rect(rectXD, rectYD, rectWidthD, rectHeightD);
     textSize(50);
 
-    float rectdialogbuttonX = rectXD+(rectWidthD-(textWidth(answerbutton)+50))/2;
-    float rectdialogbuttonY = rectYD+rectHeightD-80;
-    float rectdialogbuttonWidth = textWidth(answerbutton)+50;
-    float textdialogbuttonHeight = textAscent() + textDescent();
-    float rectdialogbuttonHeight = textdialogbuttonHeight + 20;
+    rectdialogbuttonX = rectXD+(rectWidthD-(textWidth(answerbutton)+50))/2;
+    rectdialogbuttonY = rectYD+rectHeightD-80;
+    rectdialogbuttonWidth = textWidth(answerbutton)+50;
+    textdialogbuttonHeight = textAscent() + textDescent();
+    rectdialogbuttonHeight = textdialogbuttonHeight + 20;
 
     fill(255);
     rect(rectdialogbuttonX, rectdialogbuttonY, rectdialogbuttonWidth, rectdialogbuttonHeight, 10);
@@ -157,6 +138,14 @@ void draw()
   //println(corrX);
   //println(button_dialog_last_pressed);
   //println(dialog);
+  println();
+  println(rectXD);
+  println(rectYD);
+  println(rectWidthD);
+  println(rectHeightD);
+  println("-----------------");
+  
+  
 
   //textSize(40);
   //text("Next α-factory at " + nf(pow(a,(float)(thresholdUpgrades)),0,1) + " α-particles", 70, 70+50);
