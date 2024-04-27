@@ -21,19 +21,18 @@ boolean dialog = true;
 
 void setup()
 {
-  
-size(1920, 1080);
 
+  size(1920, 1080);
 }
 
 void draw()
 {
-  /////DIALOG RECT/////
+  /////DIALOG RECT/////////////////////////////////////////////////////////////////
   int rectXD = 120;
   int rectYD = height/2 + 80;
   int rectWidthD = width-2*rectXD;
   int rectHeightD = 250;
-  /////DIALOG RECT/////
+  /////DIALOG RECT/////////////////////////////////////////////////////////////////
 
 
 
@@ -42,6 +41,7 @@ void draw()
 
   //int time = millis()/1000;
   //float speedAlphas = alphaFactories/1000;
+
 
 
   int exponent;
@@ -77,7 +77,7 @@ void draw()
   text(voidUniverse, 140+150+textWidth(yourlocationN)+3, 90+60);
 
 
-  /////CURRENT ALPHA/////
+  /////CURRENT ALPHA/////////////////////////////////////////////////////////////////
   alphas += alphaFactories/100;
 
   if (alphas > maxalphas) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
@@ -91,31 +91,40 @@ void draw()
 
     pthresholdUpgrades = thresholdUpgrades; //now we don`t have previous thresholdUpgrades, they`re equal. Now we just wait for the next changing to repeat the loop
   }
-  /////CURRENT ALPHA/////
+  /////CURRENT ALPHA/////////////////////////////////////////////////////////////////
 
 
   currencyType(button_bg_alphaFactories, 8, 250, alphaFactories, "Unite α-particles");
 
 
-  /////DIALOGS/////
-  
+  /////DIALOGS///////////////////////////////////////////////////////////////////////
+
   if (dialog == true)
   {
     fill(170);
     rect(rectXD, rectYD, rectWidthD, rectHeightD);
     textSize(50);
-    
+
     float rectbuttonX = rectXD+(rectWidthD-(textWidth(answer_button)+50))/2;
     float rectbuttonY = rectYD+rectHeightD-80;
     float rectbuttonWidth = textWidth(answer_button)+50;
-    float rectbuttonHeight = textAscent() + textDescent() + 20;
+    float textbuttonHeight = textAscent() + textDescent();
+    float rectbuttonHeight = textbuttonHeight + 20;
+    float txtY = rectbuttonY+(rectbuttonHeight+textbuttonHeight)/2;
+    float diff = (txtY-textAscent()+textbuttonHeight/2)-(rectbuttonY+rectbuttonHeight/2);
 
     fill(255);
     rect(rectbuttonX, rectbuttonY, rectbuttonWidth, rectbuttonHeight, 10);
     fill(0);
-    text(answer_button, rectbuttonX + (rectbuttonWidth-textWidth(answer_button) )/2 , (rectbuttonY+rectbuttonHeight)/2  );
-    //Значення rectbuttonX + (rectbuttonWidth-textWidth(answer_button) )/2 
-    //було підраховано шляхом складних розрахунків
+    text(answer_button, rectbuttonX + (rectbuttonWidth - textWidth(answer_button) )/2, rectbuttonY+(rectbuttonHeight+textbuttonHeight)/2 -diff/2); //diff/2 - середина між baseline та середини прямокутника
+    //line(0,rectbuttonY+rectbuttonHeight/2,width,rectbuttonY+rectbuttonHeight/2);
+    //line(0, rectbuttonY+(rectbuttonWidth-textWidth(answer_button) )/2 + buttontextHeight/2,width, rectbuttonY+(rectbuttonWidth-textWidth(answer_button) )/2 + buttontextHeight/2 );
+    
+    //line(0,rectbuttonY+rectbuttonHeight/2,width,rectbuttonY+rectbuttonHeight/2); //baseline
+    //line(0, txtY-textAscent()+textbuttonHeight/2,width,txtY-textAscent()+textbuttonHeight/2); //buttonmiddle
+
+    //Значення rectbuttonX + (rectbuttonWidth-textWidth(answer_button) )/2
+    //було підраховано шляхом складних розрахунків у IMG buttondialogXlocation
   }
 
   fill(0);
@@ -137,7 +146,7 @@ void draw()
     dialogline.append(word).append(" ");
   }
   text(dialogline.toString(), textXD, textYD);
-  /////DIALOGS//////
+  /////DIALOGS//////////////////////////////////////////////////////////////////////
 
 
   /////THE CEMETRY OF printlnS/////
