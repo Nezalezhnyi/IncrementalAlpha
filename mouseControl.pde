@@ -1,5 +1,6 @@
 int page = 1;
 String redbuttontext = ""; 
+boolean gameIsStarted = false;
 
 void mousePressed()
 {
@@ -106,6 +107,7 @@ void mouseReleased() {
     button_dialog_pressed = false;
     dialog = false;
     alphas = 2;
+    gameIsStarted = true;
   }
   
 }

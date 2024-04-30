@@ -1,5 +1,6 @@
 void setup()
 {
+  frameRate(60);
   size(1920, 1080);
   rectXD = 120;
   rectYD = height/2 + 80;
@@ -8,18 +9,39 @@ void setup()
 }
 
 
-
 void draw()
 {
 
   background(120);
+  currencyType(button_bg_alphaClots, 8, 250, alphaClots, "Unite α-particles");
+  currentAlphaParticles();
+  formatAlphaParticlesText();
+  alphaParticlesProductionSpeed();
+  currentLocation();
+  dialogs();
+}
 
 
-  //int time = millis()/1000;
-  //float speedAlphas = alphaFactories/1000;
+void currentAlphaParticles()
+{
+  alphas += alphaClots/100;
+
+  if (alphas > maxalphas) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
+    maxalphas = alphas;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
+
+  thresholdUpgrades = (int)(log(maxalphas)/log(a))+1; //log₂(maxalphas)  // the power of a (initially 2) of the cost of the next factory
+
+  if (thresholdUpgrades != pthresholdUpgrades) //if the current thresholdUpgrades doesn`t equal himself previous (it happens when we buy a new factory)
+  {
+    availablePurchases += 1; //then give us one availablePurchases (the hidden value which means how many factories it is possible to buy currently, considering current alpha-particles and factories we already have bought. It was made in order to control alpha-particals so that they don`t get below zero)
+
+    pthresholdUpgrades = thresholdUpgrades; //now we don`t have previous thresholdUpgrades, they`re equal. Now we just wait for the next changing to repeat the loop
+  }
+}
 
 
-
+void formatAlphaParticlesText()
+{
   int exponent;
   if (alphas != 0)
   {
@@ -34,47 +56,41 @@ void draw()
 
     fill(0);
     textSize(70);
-    text("You have ", 140+490, 90);
+    text("You have ", 140+470, 90);
     fill(#EFFF66);
-    text(nf(alphas, 0, 1), 140+490 + textWidth("You have "), 90);
+    text(nf(alphas, 0, 1), 140+470 + textWidth("You have "), 90);
     fill(0);
-    text(" α-particles", 140+490 + textWidth("You have ") + textWidth(nf(alphas, 0, 1)), 90);
+    text(" α-particles", 140+470 + textWidth("You have ") + textWidth(nf(alphas, 0, 1)), 90);
   } else
   {
     float mantissa = alphas / pow(10, exponent);
     textSize(70);
     text("You have " + nf(mantissa, 0, 1) + "e" + exponent + " α-particles", 70, 70);
   }
+}
 
 
+void alphaParticlesProductionSpeed() {
+  float deltaAlphas = alphas - lastAlphaCount;
+  alphaParticlesPerSecond = deltaAlphas * 60;
   textSize(30);
-  text(yourlocationST, 140+630, 90+60);
+  fill(30);
+  text("You are gaining " + nf(alphaParticlesPerSecond, 0, 1) + " α-particles per second", 700, 145);
+  lastAlphaCount = alphas;
+}
+
+void currentLocation()
+{
+  fill(0);
+  textSize(30);
+  text(yourlocationST, 140+630, 90+100);
   fill(#1D1264);
-  text(yourlocation, 140+630+textWidth(yourlocationST)+3, 90+60);
+  text(yourlocation, 140+630+textWidth(yourlocationST)+3, 90+100);
+}
 
 
-  /////CURRENT ALPHA/////////////////////////////////////////////////////////////////
-  alphas += alphaClots/100;
-
-  if (alphas > maxalphas) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
-    maxalphas = alphas;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
-
-  thresholdUpgrades = (int)(log(maxalphas)/log(a))+1; //log₂(maxalphas)  // the power of a (initially 2) of the cost of the next factory
-
-  if (thresholdUpgrades != pthresholdUpgrades) //if the current thresholdUpgrades doesn`t equal himself previous (it happens when we buy a new factory)
-  {
-    availablePurchases += 1; //then give us one availablePurchases (the hidden value which means how many factories it is possible to buy currently, considering current alpha-particles and factories we already have bought. It was made in order to control alpha-particals so that they don`t get below zero)
-
-    pthresholdUpgrades = thresholdUpgrades; //now we don`t have previous thresholdUpgrades, they`re equal. Now we just wait for the next changing to repeat the loop
-  }
-  /////CURRENT ALPHA/////////////////////////////////////////////////////////////////
-
-
-  currencyType(button_bg_alphaClots, 8, 250, alphaClots, "Unite α-particles");
-
-
-  /////DIALOGS///////////////////////////////////////////////////////////////////////
-
+void dialogs()
+{
   if (dialog == true)
   {
     fill(170);
@@ -123,32 +139,60 @@ void draw()
     }
     text(dialogline.toString(), textXD, textYD);
   }
-  /////DIALOGS//////////////////////////////////////////////////////////////////////
+}
+
+void currencyType (int bg, int textbuttonX, int rectY, float currency, String buyName)
+{
+  ///////THE RED-GREEN TEXT
+  textSize(20);
+  if (alphas < (int)pow(a, (int)alphaClots+1))
+  {
+    strokeWeight(3);
+    stroke(#FF5B5B);
+    fill(#FF5B5B);
+    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240, 250+33 + (rectY-250) );
+  } else
+  {
+    strokeWeight(3);
+    stroke(#3CFF63);
+    fill(#3CFF63);
+    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240, 250+33 + (rectY-250) );
+  }
 
 
-  /////THE CEMETRY OF printlnS/////
+  ///////THE BUTTON
+  fill(bg);
+  rect(40, rectY, 152, 50, 10); //rectY is initially += 100
+  fill(0);
+  textSize(20);
+  text(buyName, 40+textbuttonX, 250+33 + (rectY-250) );
 
-  //println("Available: " + availablePurchases);
-  //println("Dep: " + (alphas - pow(a,(float)thresholdUpgrades-1)));
-  //println("thresholdUpgrades: " + (int)thresholdUpgrades);
-  //println("Speed: " + speedAlphas + " alpha/s");
-  //println(page);
-  //println(corrX);
-  //println(button_dialog_last_pressed);
-  //println(dialog);
-  //println();
-  //println(rectXD);
-  //println(rectYD);
-  //println(rectWidthD);
-  //println(rectHeightD);
-  //println("-----------------");
-  //strokeWeight(5);
-  //line(861,790,861+197,790);
-  //line(861,790+65.7,861+197,790+65.7);
+  fill(0);
+  textSize(20);
+  //if (alphas < pow(2,(float)alphaFactories)
+  text("You have ", 52+153+10, 250+33 + (rectY-250));
+  fill(#66FFFF);
+  text(nf(currency, 0, 0), 52+153+10+textWidth("You have "), 250+33 + (rectY-250));
+  fill(0);
+  text(" clots of α-energy", (52+153+3+10)+textWidth("You have ")+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250));
 
-  //textSize(40);
-  //text("Next α-factory at " + nf(pow(a,(float)(thresholdUpgrades)),0,1) + " α-particles", 70, 70+50);
-  //text("You can buy " + (int)(availablePurchases) + " α-factory", 70, 70+100);
+  strokeWeight(1);
+  stroke(0);
 
-  /////THE CEMETRY OF printlnS/////
+  float timeToNextAlphaClot = ((int)pow(a, (int)alphaClots+1) - alphas) / alphaParticlesPerSecond;
+  fill(255);
+  if (alphaParticlesPerSecond == 0)
+    text("Accumulation paused or not started", 100+153+240+390, 250+33 + (rectY-250));
+  else
+  {
+    if (timeToNextAlphaClot > 0)
+    {
+      int minutes = (int)(timeToNextAlphaClot / 60); // Calculate full minutes
+      float seconds = (timeToNextAlphaClot % 60); // Calculate remaining seconds
+      text("You're gonna be able to buy next clot in " + minutes + " minutes " + nf(seconds, 0, 1) + " seconds", 100+153+240+390, 250+33 + (rectY-250));
+    } else {
+      text("You're gonna be able to buy next clot RIGHT NOW!", 100+153+240+390, 250+33 + (rectY-250));
+    }
+  }
+  //println(timeToNextAlphaClot);
 }
