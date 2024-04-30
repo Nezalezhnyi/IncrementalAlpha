@@ -33,7 +33,7 @@ void currentAlphaParticles()
 
   if (thresholdUpgrades != pthresholdUpgrades) //if the current thresholdUpgrades doesn`t equal himself previous (it happens when we buy a new factory)
   {
-    availablePurchases += 1; //then give us one availablePurchases (the hidden value which means how many factories it is possible to buy currently, considering current alpha-particles and factories we already have bought. It was made in order to control alpha-particals so that they don`t get below zero)
+
 
     pthresholdUpgrades = thresholdUpgrades; //now we don`t have previous thresholdUpgrades, they`re equal. Now we just wait for the next changing to repeat the loop
   }
@@ -63,11 +63,16 @@ void formatAlphaParticlesText()
     text(" α-particles", 140+470 + textWidth("You have ") + textWidth(nf(alphas, 0, 1)), 90);
   } else
   {
+    fill(0);
     float mantissa = alphas / pow(10, exponent);
-    textSize(70);
-    text("You have " + nf(mantissa, 0, 1) + "e" + exponent + " α-particles", 70, 70);
+    text("You have ", 140+470, 90);
+    fill(#EFFF66);
+    text(nf(mantissa, 0, 1) + "e" + exponent, 140+470 + textWidth("You have "), 90);
+    fill(0);
+    text(" α-particles", 140+470 + textWidth("You have ") + textWidth(nf(mantissa, 0, 1) + "e" + exponent), 90);
   }
 }
+
 
 
 void alphaParticlesProductionSpeed() {
@@ -91,6 +96,18 @@ void currentLocation()
 
 void dialogs()
 {
+  if (alphaClots == 5 && page != 21)
+  {
+    dialog = true;
+    if (page == 8)
+    {
+      dialogbeginning = "I'm glad to see that you have figured out how alpha particles and alpha energy clots work. It's impressive, isn't it?";
+      answerbutton = "Well... I guess yes?..";
+    }
+  }
+  else if (page == 21)
+    dialog = false;
+
   if (dialog == true)
   {
     fill(170);
@@ -195,4 +212,6 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
     }
   }
   //println(timeToNextAlphaClot);
+  println(page);
+  println(dialog);
 }

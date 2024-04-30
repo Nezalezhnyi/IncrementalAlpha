@@ -14,7 +14,6 @@ boolean buttonPressed_alphaClots = false;
 
 double thresholdUpgrades;
 double pthresholdUpgrades = thresholdUpgrades;
-double availablePurchases = 0;
 
 float a = 2;
 float newPrice = 0;
