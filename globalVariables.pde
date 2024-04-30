@@ -1,3 +1,5 @@
+PFont font;
+
 String yourlocationST = "";
 String yourlocation = "";
 
@@ -37,3 +39,19 @@ float rectdialogbuttonHeight;
 float alphaParticlesPerSecond = 0;
 
 float lastAlphaCount = 0;
+
+int lowerButtonX;
+int lowerButtonY;
+int lowerButtonWidth;
+int lowerButtonHeight;
+
+int lowerButtonParticlesBg = 255;
+int lowerButtonFountainsBg = 255;
+
+boolean lowerButtonParticlesBg_Pressed = false;
+boolean lowerButtonFountainsBg_Pressed = false;
+
+int fountainX;
+int fountainY;
+int fountainWidth;
+int founatinHeight;

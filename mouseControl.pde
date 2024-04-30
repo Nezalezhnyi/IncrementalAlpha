@@ -1,6 +1,8 @@
 int page = 1;
 String redbuttontext = "";
 boolean gameIsStarted = false;
+boolean InterfaceParticlesShowed = false;
+boolean InterfaceFountainsShowed = true;
 
 void mousePressed()
 {
@@ -27,10 +29,20 @@ void mousePressed()
     button_dialog_colour = 175;
     button_dialog_pressed = true;
   }
+
+
+  if (mouseX >= lowerButtonX && mouseX <= (lowerButtonX+lowerButtonWidth) && mouseY >= lowerButtonY && mouseY <= lowerButtonY + lowerButtonHeight)
+  {
+    lowerButtonParticlesBg = 175;
+    lowerButtonParticlesBg_Pressed = true;
+  }
+
+  if (mouseX >= (lowerButtonX+(lowerButtonWidth+30)) && mouseX <= ((lowerButtonX+(lowerButtonWidth+30))+lowerButtonWidth) && mouseY >= lowerButtonY && mouseY <= lowerButtonY + lowerButtonHeight)
+  {
+    lowerButtonFountainsBg = 175;
+    lowerButtonFountainsBg_Pressed = true;
+  }
 }
-
-
-
 
 void mouseReleased() {
   if (buttonPressed_alphaClots)
@@ -40,6 +52,23 @@ void mouseReleased() {
 
     alphaClots += 1;
     alphas -= pow(a, (float)alphaClots);
+  }
+
+
+  if (lowerButtonParticlesBg_Pressed)
+  {
+    lowerButtonParticlesBg = 255;
+    lowerButtonParticlesBg_Pressed = false;
+    InterfaceParticlesShowed = true;
+    InterfaceFountainsShowed = false;
+  }
+
+  if (lowerButtonFountainsBg_Pressed)
+  {
+    lowerButtonFountainsBg = 255;
+    lowerButtonFountainsBg_Pressed = false;
+    InterfaceParticlesShowed = false;
+    InterfaceFountainsShowed = true;
   }
 
 
@@ -181,7 +210,7 @@ void mouseReleased() {
     answerbutton = "Other beigns?";
     page = 16;
   }
-  
+
   if (button_dialog_pressed && page == 16)
   {
     button_dialog_colour = 255;
@@ -190,7 +219,7 @@ void mouseReleased() {
     answerbutton = "That's... Really impressive. But how do you understand them?";
     page = 17;
   }
-  
+
   if (button_dialog_pressed && page == 17)
   {
     button_dialog_colour = 255;
@@ -199,7 +228,7 @@ void mouseReleased() {
     answerbutton = "Alright. What about our particles?";
     page = 18;
   }
-  
+
   if (button_dialog_pressed && page == 18)
   {
     button_dialog_colour = 255;
@@ -208,7 +237,7 @@ void mouseReleased() {
     answerbutton = "How can we get them?";
     page = 19;
   }
-  
+
   if (button_dialog_pressed && page == 19)
   {
     button_dialog_colour = 255;
@@ -217,7 +246,7 @@ void mouseReleased() {
     answerbutton = "So what are we waiting for? Lead me!";
     page = 20;
   }
-  
+
   if (button_dialog_pressed && page == 20)
   {
     button_dialog_colour = 255;

@@ -2,10 +2,18 @@ void setup()
 {
   frameRate(60);
   size(1920, 1080);
+  font = createFont("Arial Unicode MS", 16);
+  textFont(font);
+
   rectXD = 120;
   rectYD = height/2 + 80;
   rectWidthD = width-2*rectXD;
   rectHeightD = 250;
+
+  lowerButtonX = 20;
+  lowerButtonY = height - 160;
+  lowerButtonWidth = 100;
+  lowerButtonHeight = lowerButtonWidth;
 }
 
 
@@ -13,12 +21,25 @@ void draw()
 {
 
   background(120);
-  currencyType(button_bg_alphaClots, 8, 250, alphaClots, "Unite α-particles");
+  if (InterfaceParticlesShowed)
+  {
+    currencyType(button_bg_alphaClots, 8, 250, alphaClots, "Unite α-particles");
+  }
+  
+  if (InterfaceFountainsShowed)
+  {
+    fountains();
+  }
   currentAlphaParticles();
   formatAlphaParticlesText();
   alphaParticlesProductionSpeed();
   currentLocation();
-  dialogs();
+  lowerButtons();
+
+  
+    //////////
+    //dialogs();
+    textAlign(LEFT, BASELINE);
 }
 
 
@@ -104,8 +125,7 @@ void dialogs()
       dialogbeginning = "I'm glad to see that you have figured out how alpha particles and alpha energy clots work. It's impressive, isn't it?";
       answerbutton = "Well... I guess yes?..";
     }
-  }
-  else if (page == 21)
+  } else if (page == 21)
     dialog = false;
 
   if (dialog == true)
@@ -179,7 +199,7 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
 
   ///////THE BUTTON
   fill(bg);
-  rect(40, rectY, 152, 50, 10); //rectY is initially += 100
+  rect(40, rectY, 160, 50, 10); //rectY is initially += 100
   fill(0);
   textSize(20);
   text(buyName, 40+textbuttonX, 250+33 + (rectY-250) );
@@ -211,7 +231,26 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
       text("You're gonna be able to buy next clot RIGHT NOW!", 100+153+240+390, 250+33 + (rectY-250));
     }
   }
-  //println(timeToNextAlphaClot);
-  println(page);
-  println(dialog);
+}
+
+void lowerButtons()
+{
+  fill(lowerButtonParticlesBg);
+  rect(lowerButtonX, lowerButtonY, lowerButtonWidth, lowerButtonHeight);
+  fill(0);
+  textSize(70);
+  textAlign(CENTER, CENTER);
+  text("≡", (lowerButtonX)+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
+
+  fill(lowerButtonFountainsBg);
+  rect(lowerButtonX+(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
+  fill(0);
+  textSize(70);
+  textAlign(CENTER, CENTER);
+  text("╬", (lowerButtonX+(lowerButtonWidth+30) )+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
+}
+
+void fountains()
+{
+  
 }
