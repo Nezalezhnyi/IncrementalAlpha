@@ -42,7 +42,7 @@ void draw()
   lowerButtons();
 
   sacrificedAlphasSpeed = alphas/100;
-  
+
 
   //////////
   textAlign(LEFT, BASELINE);
@@ -52,7 +52,7 @@ void draw()
 
 void currentAlphaParticles()
 {
-  alphas += alphaClots/1;
+  alphas += alphaClots*100;
 
   if (alphas > maxalphas) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
     maxalphas = alphas;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
@@ -70,7 +70,13 @@ void currentAlphaParticles()
 
 void formatAlphaParticlesText()
 {
+  float widthYouHave = textWidth("You have ");
+  float widthParticles, widthAlphas;
+  float totalWidth;
+  float startX;
+  String alphasStr;
   int exponent;
+
   if (alphas != 0)
   {
     exponent = (int)Math.log10(alphas);
@@ -79,37 +85,66 @@ void formatAlphaParticlesText()
     exponent = 0;
   }
 
-  if (alphas <= 100000)
+  if (alphas <= formatCape)
   {
+    textSize(70);
+    alphasStr = nf(alphas, 0, 1);
+    widthYouHave = textWidth("You have ");
+    widthAlphas = textWidth(alphasStr);
+    widthParticles = textWidth(" α-particles");
+    totalWidth = widthYouHave + widthAlphas + widthParticles;
+    startX = (width - totalWidth) / 2;
 
     fill(0);
-    textSize(70);
-    text("You have ", 140+470, 90);
+    text("You have ", startX, 90);
     fill(#EFFF66);
-    text(nf(alphas, 0, 1), 140+470 + textWidth("You have "), 90);
+    text(alphasStr, startX + widthYouHave, 90);
     fill(0);
-    text(" α-particles", 140+470 + textWidth("You have ") + textWidth(nf(alphas, 0, 1)), 90);
+    text(" α-particles", startX + widthYouHave + widthAlphas, 90);
   } else
   {
+    textSize(70);
     fill(0);
     float mantissa = alphas / pow(10, exponent);
-    text("You have ", 140+470, 90);
-    fill(#EFFF66);
-    text(nf(mantissa, 0, 1) + "e" + exponent, 140+470 + textWidth("You have "), 90);
+    alphasStr = nf(mantissa, 0, 1) + "e" + exponent;
+    widthYouHave = textWidth("You have ");
+    widthAlphas = textWidth(alphasStr);
+    widthParticles = textWidth(" α-particles");
+    totalWidth = widthYouHave + widthAlphas + widthParticles;
+    startX = (width - totalWidth) / 2;
+
     fill(0);
-    text(" α-particles", 140+470 + textWidth("You have ") + textWidth(nf(mantissa, 0, 1) + "e" + exponent), 90);
+    text("You have ", startX, 90);
+    fill(#EFFF66);
+    text(alphasStr, startX + widthYouHave, 90);
+    fill(0);
+    text(" α-particles", startX + widthYouHave + widthAlphas, 90);
   }
 }
 
 
 
-void alphaParticlesProductionSpeed() {
-  float deltaAlphas = alphas - lastAlphaCount;
-  alphaParticlesPerSecond = deltaAlphas * 60;
-  textSize(30);
-  fill(30);
-  text("You are gaining " + nf(alphaParticlesPerSecond, 0, 1) + " α-particles per second", 700, 145);
-  lastAlphaCount = alphas;
+void alphaParticlesProductionSpeed()
+{
+  if (alphaParticlesPerSecond < 100000)
+  {
+    float deltaAlphas = alphas - lastAlphaCount;
+    alphaParticlesPerSecond = deltaAlphas * 60;
+    textSize(30);
+    fill(30);
+    text("You are gaining " + nf(alphaParticlesPerSecond, 0, 1) + " α-particles per second", 700, 145);
+    lastAlphaCount = alphas;
+  } else {
+    int exponent = (int)Math.log10(alphas);
+    float mantissa = alphaParticlesPerSecond/pow(10,exponent);
+    
+    float deltaAlphas = alphas - lastAlphaCount;
+    alphaParticlesPerSecond = deltaAlphas * 60;
+    textSize(30);
+    fill(30);
+    text("You are gaining " + nf(mantissa, 0, 1) + "e" + exponent + " α-particles per second", 700, 145);
+    lastAlphaCount = alphas;
+  }
 }
 
 void currentLocation()
@@ -189,18 +224,37 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
 {
   ///////THE RED-GREEN TEXT
   textSize(20);
-  if (alphas < (int)pow(a, (int)alphaClots+1))
+  if ((int)pow(a, (int)alphaClots+1) < 100000)
   {
-    strokeWeight(3);
-    stroke(#FF5B5B);
-    fill(#FF5B5B);
-    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250) );
-  } else
-  {
-    strokeWeight(3);
-    stroke(#3CFF63);
-    fill(#3CFF63);
-    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250) );
+    if (alphas < (int)pow(a, (int)alphaClots+1))
+    {
+      strokeWeight(3);
+      stroke(#FF5B5B);
+      fill(#FF5B5B);
+      text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250) );
+    } else
+    {
+      strokeWeight(3);
+      stroke(#3CFF63);
+      fill(#3CFF63);
+      text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250) );
+    }
+  } else {
+    int exponent = (int)Math.log10((int)pow(a, (int)alphaClots+1));
+    float mantissa = (int)pow(a, (int)alphaClots+1) / pow(10, exponent);
+    if (alphas < (int)pow(a, (int)alphaClots+1))
+    {
+      strokeWeight(3);
+      stroke(#FF5B5B);
+      fill(#FF5B5B);
+      text("Make a clot of α-energy with " + nf(mantissa, 0, 1) + "e" + exponent + " α-particles", 100+153+240+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250) );
+    } else
+    {
+      strokeWeight(3);
+      stroke(#3CFF63);
+      fill(#3CFF63);
+      text("Make a clot of α-energy with " + nf(mantissa, 0, 1) + "e" + exponent + " α-particles", 100+153+240+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250) );
+    }
   }
 
 
@@ -224,7 +278,7 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
   stroke(0);
 
   float timeToNextAlphaClot = ((int)pow(a, (int)alphaClots+1) - alphas) / alphaParticlesPerSecond;
-  
+
   fill(255);
   if (alphaParticlesPerSecond == 0)
     text("Accumulation paused or not started", 100+153+240+390+textWidth(str((int)pow(a, (int)alphaClots+1))), 250+33 + (rectY-250));

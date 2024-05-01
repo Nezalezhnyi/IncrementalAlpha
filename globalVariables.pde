@@ -60,3 +60,5 @@ float sacrificedAlphas;
 int sacrificedAlphasButtonBg = 255;
 boolean sacrificedAlphasButtonBg_Pressed = false;
 float sacrificedAlphasSpeed;
+
+int formatCape = 100000;
