@@ -124,36 +124,35 @@ void formatAlphaParticlesText()
 
 
 
-void alphaParticlesProductionSpeed()
-{
-  if (alphaParticlesPerSecond < 100000)
-  {
+void alphaParticlesProductionSpeed() {
     float deltaAlphas = alphas - lastAlphaCount;
     alphaParticlesPerSecond = deltaAlphas * 60;
+    String alphasGainingStr;
     textSize(30);
     fill(30);
-    text("You are gaining " + nf(alphaParticlesPerSecond, 0, 1) + " α-particles per second", 700, 145);
+
+    if (alphaParticlesPerSecond < 100000) {
+        alphasGainingStr = "You are gaining " + nf(alphaParticlesPerSecond, 0, 1) + " α-particles per second";
+    } else {
+        int exponent = (alphaParticlesPerSecond != 0) ? (int) Math.log10(alphaParticlesPerSecond) : 0;
+        float mantissa = alphaParticlesPerSecond / pow(10, exponent);
+        alphasGainingStr = "You are gaining " + nf(mantissa, 0, 1) + "e" + exponent + " α-particles per second";
+    }
+
+    text(alphasGainingStr, (width - textWidth(alphasGainingStr)) / 2, 145);
     lastAlphaCount = alphas;
-  } else {
-    int exponent = (int)Math.log10(alphas);
-    float mantissa = alphaParticlesPerSecond/pow(10,exponent);
-    
-    float deltaAlphas = alphas - lastAlphaCount;
-    alphaParticlesPerSecond = deltaAlphas * 60;
-    textSize(30);
-    fill(30);
-    text("You are gaining " + nf(mantissa, 0, 1) + "e" + exponent + " α-particles per second", 700, 145);
-    lastAlphaCount = alphas;
-  }
 }
+
 
 void currentLocation()
 {
+  float fullLocationWidth = textWidth(yourlocationST) + textWidth(yourlocation);
+  float startX = (width-fullLocationWidth)/2;
   fill(0);
   textSize(30);
-  text(yourlocationST, 140+630, 90+100);
+  text(yourlocationST, startX, 90+100);
   fill(#1D1264);
-  text(yourlocation, 140+630+textWidth(yourlocationST)+3, 90+100);
+  text(yourlocation, startX + textWidth(yourlocationST), 90+100);
 }
 
 
