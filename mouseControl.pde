@@ -1,8 +1,8 @@
 int page = 1;
 String redbuttontext = "";
 boolean gameIsStarted = false;
-boolean InterfaceParticlesShowed = false;
-boolean InterfaceFountainsShowed = true;
+boolean InterfaceParticlesShowed = true;
+boolean InterfaceFountainsShowed = false;
 
 void mousePressed()
 {
@@ -42,6 +42,15 @@ void mousePressed()
     lowerButtonFountainsBg = 175;
     lowerButtonFountainsBg_Pressed = true;
   }
+  
+  if (mouseX >= fountainX+fountainWidth+20 && mouseX <= fountainX+fountainWidth+20 + 200 && mouseY >= fountainY+fountainHeight - 50 && mouseY <= fountainY+fountainHeight - 50 + 50)
+  {
+    sacrificedAlphasButtonBg = 175;
+    sacrificedAlphasButtonBg_Pressed = true;
+  }
+  
+  
+  
 }
 
 void mouseReleased() {
@@ -70,6 +79,14 @@ void mouseReleased() {
     InterfaceParticlesShowed = false;
     InterfaceFountainsShowed = true;
   }
+  
+  if (sacrificedAlphasButtonBg_Pressed)
+  {
+    sacrificedAlphasButtonBg = 255;
+    sacrificedAlphasButtonBg_Pressed = false;
+  }
+  
+  
 
 
   if (button_dialog_pressed && page == 1)
@@ -135,11 +152,12 @@ void mouseReleased() {
     button_dialog_pressed = false;
     dialog = false;
     alphas = 2;
+    //alphaClots = 45;
     gameIsStarted = true;
     page = 8;
   }
 
-  if (button_dialog_pressed && page == 8)
+  if (button_dialog_pressed && page == 8 && dialog == true)
   {
     button_dialog_colour = 255;
     button_dialog_pressed = false;

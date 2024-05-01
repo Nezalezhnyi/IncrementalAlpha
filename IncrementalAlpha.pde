@@ -2,7 +2,7 @@ void setup()
 {
   frameRate(60);
   size(1920, 1080);
-  font = createFont("Arial Unicode MS", 16);
+  font = createFont("Arial", 16);
   textFont(font);
 
   rectXD = 120;
@@ -14,6 +14,11 @@ void setup()
   lowerButtonY = height - 160;
   lowerButtonWidth = 100;
   lowerButtonHeight = lowerButtonWidth;
+
+  fountainWidth = 100;
+  fountainY = 200;
+  fountainX = fountainWidth+100;
+  fountainHeight = height - fountainY - lowerButtonHeight-100;
 }
 
 
@@ -25,7 +30,7 @@ void draw()
   {
     currencyType(button_bg_alphaClots, 8, 250, alphaClots, "Unite α-particles");
   }
-  
+
   if (InterfaceFountainsShowed)
   {
     fountains();
@@ -36,16 +41,18 @@ void draw()
   currentLocation();
   lowerButtons();
 
+  sacrificedAlphasSpeed = alphas/100;
   
-    //////////
-    //dialogs();
-    textAlign(LEFT, BASELINE);
+
+  //////////
+  textAlign(LEFT, BASELINE);
+  dialogs();
 }
 
 
 void currentAlphaParticles()
 {
-  alphas += alphaClots/100;
+  alphas += alphaClots/1;
 
   if (alphas > maxalphas) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
     maxalphas = alphas;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
@@ -187,13 +194,13 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
     strokeWeight(3);
     stroke(#FF5B5B);
     fill(#FF5B5B);
-    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240, 250+33 + (rectY-250) );
+    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250) );
   } else
   {
     strokeWeight(3);
     stroke(#3CFF63);
     fill(#3CFF63);
-    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240, 250+33 + (rectY-250) );
+    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250) );
   }
 
 
@@ -217,18 +224,19 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
   stroke(0);
 
   float timeToNextAlphaClot = ((int)pow(a, (int)alphaClots+1) - alphas) / alphaParticlesPerSecond;
+  
   fill(255);
   if (alphaParticlesPerSecond == 0)
-    text("Accumulation paused or not started", 100+153+240+390, 250+33 + (rectY-250));
+    text("Accumulation paused or not started", 100+153+240+390+textWidth(str((int)pow(a, (int)alphaClots+1))), 250+33 + (rectY-250));
   else
   {
     if (timeToNextAlphaClot > 0)
     {
       int minutes = (int)(timeToNextAlphaClot / 60); // Calculate full minutes
       float seconds = (timeToNextAlphaClot % 60); // Calculate remaining seconds
-      text("You're gonna be able to buy next clot in " + minutes + " minutes " + nf(seconds, 0, 1) + " seconds", 100+153+240+390, 250+33 + (rectY-250));
+      text("You're gonna be able to buy next clot in " + minutes + " minutes " + nf(seconds, 0, 1) + " seconds", 100+153+240+390+textWidth(str((int)pow(a, (int)alphaClots+1)))+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250));
     } else {
-      text("You're gonna be able to buy next clot RIGHT NOW!", 100+153+240+390, 250+33 + (rectY-250));
+      text("You're gonna be able to buy next clot RIGHT NOW!", 100+153+240+390+textWidth(str((int)pow(a, (int)alphaClots+1)))+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250));
     }
   }
 }
@@ -252,5 +260,36 @@ void lowerButtons()
 
 void fountains()
 {
-  
+
+  if (sacrificedAlphasButtonBg_Pressed && alphas >= sacrificedAlphasSpeed && sacrificedAlphas <= (fountainHeight-4)*10)
+  {
+    alphas -= sacrificedAlphasSpeed;
+    sacrificedAlphas += sacrificedAlphasSpeed;
+  }
+
+
+  stroke(0, 0, 255);
+  strokeWeight(5);
+  fill(0);
+  rect(fountainX, fountainY, fountainWidth, fountainHeight, 10);
+
+  float fillY = fountainY + fountainHeight - sacrificedAlphas/10;
+
+  strokeWeight(0);
+  fill(#a6edff);
+  rect(fountainX+3, fillY-2, fountainWidth-5, sacrificedAlphas/10, 10); //680.00
+
+  fill(sacrificedAlphasButtonBg);
+  strokeWeight(1);
+  stroke(0);
+  rect(fountainX+fountainWidth+20, fountainY+fountainHeight - 50, 200, 50);
+
+  strokeWeight(2);
+  line (10, fillY-4, fountainX, fillY-4);
+  textSize(30);
+  text((int)(sacrificedAlphas), 70, fillY-45);
+  text("α-particles", 30, fillY-15);
+
+  println("sacrificedAlphas: " + sacrificedAlphas);
+  println("fillY: " + fillY);
 }

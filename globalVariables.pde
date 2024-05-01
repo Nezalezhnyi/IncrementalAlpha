@@ -54,4 +54,9 @@ boolean lowerButtonFountainsBg_Pressed = false;
 int fountainX;
 int fountainY;
 int fountainWidth;
-int founatinHeight;
+int fountainHeight;
+
+float sacrificedAlphas;
+int sacrificedAlphasButtonBg = 255;
+boolean sacrificedAlphasButtonBg_Pressed = false;
+float sacrificedAlphasSpeed;
