@@ -42,7 +42,21 @@ void mousePressed()
     lowerButtonFountainsBg = 175;
     lowerButtonFountainsBg_Pressed = true;
   }
+
+  if (mouseX >= buttonfountainX && mouseX <= buttonfountainX + buttonfountainWidth && mouseY >= buttonfountainY && mouseY <= buttonfountainY + buttonfountainHeight)
+  {
+    buttonfountainBg_Pressed = true;
+    buttonfountainBg = 175;
+
+  }
+
+
+  //
 }
+
+
+
+
 
 void mouseReleased() {
   if (buttonPressed_alphaClots)
@@ -71,6 +85,18 @@ void mouseReleased() {
     InterfaceFountainsShowed = true;
   }
 
+  if (buttonfountainBg_Pressed)
+  {
+    buttonfountainBg = 255;
+    buttonfountainBg_Pressed = false;
+  }
+
+
+
+
+
+
+  //DIALOGS
 
   if (button_dialog_pressed && page == 1)
   {

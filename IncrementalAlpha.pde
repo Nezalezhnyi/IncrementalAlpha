@@ -14,6 +14,19 @@ void setup()
   lowerButtonY = height - 160;
   lowerButtonWidth = 100;
   lowerButtonHeight = lowerButtonWidth;
+
+  fountainX = 80;
+  fountainY = 90+100 + 50; //currentlocation Y coordinate + 50
+  fountainWidth = 80;
+  fountainHeight = 600;
+  fountainFilled = 0;
+
+  buttonfountainBg_Pressed = false;
+  buttonfountainBg = 255;
+  buttonfountainX = fountainX + fountainWidth + 30;
+  buttonfountainHeight = 40;
+  buttonfountainY = fountainY + fountainHeight - buttonfountainHeight;
+  buttonfountainWidth = 160;
 }
 
 
@@ -25,7 +38,7 @@ void draw()
   {
     currencyType(button_bg_alphaClots, 8, 250, alphaClots, "Unite α-particles");
   }
-  
+
   if (InterfaceFountainsShowed)
   {
     fountains();
@@ -35,11 +48,13 @@ void draw()
   alphaParticlesProductionSpeed();
   currentLocation();
   lowerButtons();
-
   
-    //////////
-    //dialogs();
-    textAlign(LEFT, BASELINE);
+
+
+  /////////
+  textAlign(LEFT, BASELINE);
+  //dialogs();
+  textAlign(LEFT, BASELINE);
 }
 
 
@@ -250,7 +265,29 @@ void lowerButtons()
   text("╬", (lowerButtonX+(lowerButtonWidth+30) )+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
 }
 
-void fountains()
-{
-  
+void fountains() {
+  fill(180);
+  strokeWeight(3);
+  rect(fountainX, fountainY, fountainWidth, fountainHeight, 10);
+
+  strokeWeight(0);
+
+
+
+
+  fill(#A6E8FF);
+  rect(fountainX + 2, (fountainY-1) + fountainHeight - fountainFilled, fountainWidth - 4, fountainFilled, 10);
+
+  if (buttonfountainBg_Pressed && fountainFilled <= (float)fountainHeight-8 && alphas - 5 > 0)
+  {
+    fountainFilled += 5;
+    alphas -= 5;
+  }
+  if (fountainFilled > fountainHeight-8)
+    fountainFilled = fountainHeight-3;
+
+
+  strokeWeight(1);
+  fill(buttonfountainBg);
+  rect(buttonfountainX, buttonfountainY, buttonfountainWidth, buttonfountainHeight);
 }

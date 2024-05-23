@@ -7,7 +7,7 @@ String dialogbeginning = "Oh, dear, there must be something here, just one—jus
 String answerbutton = "Uhm, hi?";
 
 
-float alphas = 1;
+float alphas = 1000;
 float maxalphas = 2;
 float alphaClots = 0;
 
@@ -54,4 +54,12 @@ boolean lowerButtonFountainsBg_Pressed = false;
 int fountainX;
 int fountainY;
 int fountainWidth;
-int founatinHeight;
+int fountainHeight;
+int fountainFilled;
+
+boolean buttonfountainBg_Pressed;
+int buttonfountainBg;
+int buttonfountainX;
+int buttonfountainHeight;
+int buttonfountainY;
+int buttonfountainWidth;
