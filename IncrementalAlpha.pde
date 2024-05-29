@@ -1,3 +1,6 @@
+Fountain f1 = new Fountain (80, 90+100 + 50, 80, 600);
+//Fountain f2 = new Fountain(480, 90+100 + 50, 80, 600);
+
 void setup()
 {
   frameRate(60);
@@ -41,7 +44,10 @@ void draw()
 
   if (InterfaceFountainsShowed)
   {
-    fountains();
+    f1.drawIt();
+    //f2.drawIt();
+    f1.act();
+    //f2.act();
   }
   currentAlphaParticles();
   formatAlphaParticlesText();
@@ -263,31 +269,4 @@ void lowerButtons()
   textSize(70);
   textAlign(CENTER, CENTER);
   text("╬", (lowerButtonX+(lowerButtonWidth+30) )+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
-}
-
-void fountains() {
-  fill(180);
-  strokeWeight(3);
-  rect(fountainX, fountainY, fountainWidth, fountainHeight, 10);
-
-  strokeWeight(0);
-
-
-
-
-  fill(#A6E8FF);
-  rect(fountainX + 2, (fountainY-1) + fountainHeight - fountainFilled, fountainWidth - 4, fountainFilled, 10);
-
-  if (buttonfountainBg_Pressed && fountainFilled <= (float)fountainHeight-8 && alphas - 5 > 0)
-  {
-    fountainFilled += 5;
-    alphas -= 5;
-  }
-  if (fountainFilled > fountainHeight-8)
-    fountainFilled = fountainHeight-3;
-
-
-  strokeWeight(1);
-  fill(buttonfountainBg);
-  rect(buttonfountainX, buttonfountainY, buttonfountainWidth, buttonfountainHeight);
 }
