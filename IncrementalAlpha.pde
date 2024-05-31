@@ -1,4 +1,4 @@
-Fountain f1 = new Fountain (80, 90+100 + 50, 80, 600);
+Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600);
 //Fountain f2 = new Fountain(480, 90+100 + 50, 80, 600);
 
 void setup()
@@ -100,9 +100,9 @@ void formatAlphaParticlesText()
     textSize(70);
     text("You have ", 140+470, 90);
     fill(#EFFF66);
-    text(nf(alphas, 0, 1), 140+470 + textWidth("You have "), 90);
+    text(round(alphas), 140+470 + textWidth("You have "), 90);
     fill(0);
-    text(" α-particles", 140+470 + textWidth("You have ") + textWidth(nf(alphas, 0, 1)), 90);
+    text(" α-particles", 140+470 + textWidth("You have ") + textWidth(str((int)alphas)), 90);
   } else
   {
     fill(0);
@@ -256,6 +256,8 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
 
 void lowerButtons()
 {
+  strokeWeight(1);
+  
   fill(lowerButtonParticlesBg);
   rect(lowerButtonX, lowerButtonY, lowerButtonWidth, lowerButtonHeight);
   fill(0);
