@@ -7,9 +7,9 @@ String dialogbeginning = "Oh, dear, there must be something here, just one—jus
 String answerbutton = "Uhm, hi?";
 
 
-float alphas = 1000;
+float alphas = 2000;
 float maxalphas = 2;
-float alphaClots = 0;
+float alphaClots = 5;
 
 int button_bg_alphaClots = 255;
 boolean buttonPressed_alphaClots = false;
@@ -19,6 +19,7 @@ double pthresholdUpgrades = thresholdUpgrades;
 
 float a = 2;
 float newPrice = 0;
+int alphaIncreaser1 = 1;
 
 int button_dialog_colour = 255;
 boolean button_dialog_pressed = false;
@@ -47,9 +48,11 @@ int lowerButtonHeight;
 
 int lowerButtonParticlesBg = 255;
 int lowerButtonFountainsBg = 255;
+int lowerButtonCaveBg = 255;
 
 boolean lowerButtonParticlesBg_Pressed = false;
 boolean lowerButtonFountainsBg_Pressed = false;
+boolean lowerButtonCaveBg_Pressed = false;
 
 int fountainX;
 int fountainY;
@@ -63,3 +66,8 @@ int buttonfountainX;
 int buttonfountainHeight;
 int buttonfountainY;
 int buttonfountainWidth;
+
+boolean achieved2;
+
+
+float caveBarX, caveBarY, caveBarW, caveBarH, caveCircleRadius, caveCircleFill;

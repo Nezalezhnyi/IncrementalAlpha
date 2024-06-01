@@ -48,6 +48,12 @@ void draw()
     //f2.drawIt();
     f1.act();
     //f2.act();
+    f1.tasks();
+  }
+  
+  if (InterfaceCaveShowed)
+  {
+    cave();
   }
   currentAlphaParticles();
   formatAlphaParticlesText();
@@ -55,6 +61,7 @@ void draw()
   currentLocation();
   lowerButtons();
   
+
 
 
   /////////
@@ -66,7 +73,7 @@ void draw()
 
 void currentAlphaParticles()
 {
-  alphas += alphaClots/100;
+  alphas += alphaIncreaser1*(alphaClots/100);
 
   if (alphas > maxalphas) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
     maxalphas = alphas;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
@@ -257,7 +264,7 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
 void lowerButtons()
 {
   strokeWeight(1);
-  
+
   fill(lowerButtonParticlesBg);
   rect(lowerButtonX, lowerButtonY, lowerButtonWidth, lowerButtonHeight);
   fill(0);
@@ -265,10 +272,23 @@ void lowerButtons()
   textAlign(CENTER, CENTER);
   text("≡", (lowerButtonX)+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
 
-  fill(lowerButtonFountainsBg);
-  rect(lowerButtonX+(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
-  fill(0);
-  textSize(70);
-  textAlign(CENTER, CENTER);
-  text("╬", (lowerButtonX+(lowerButtonWidth+30) )+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
+  if (true)//page >= 21)
+  {
+    fill(lowerButtonFountainsBg);
+    rect(lowerButtonX+(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
+    fill(0);
+    textSize(70);
+    textAlign(CENTER, CENTER);
+    text("╬", (lowerButtonX+(lowerButtonWidth+30) )+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
+  }
+
+  if (true)//achieved2)
+  {
+    fill(lowerButtonCaveBg);
+    rect(lowerButtonX+2*(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
+    fill(0);
+    textSize(70);
+    textAlign(CENTER, CENTER);
+    text("¤", (lowerButtonX+2*((lowerButtonWidth+30) )+(lowerButtonWidth/2)), lowerButtonY+(lowerButtonHeight/2));
+  }
 }
