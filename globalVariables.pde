@@ -69,5 +69,5 @@ int buttonfountainWidth;
 
 boolean achieved2;
 
-
-float caveBarX, caveBarY, caveBarW, caveBarH, caveCircleRadius, caveCircleFill;
+boolean wasCaveMousePressed = false;
+boolean caveStartFilling = false;

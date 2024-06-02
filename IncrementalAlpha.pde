@@ -1,5 +1,7 @@
 Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600);
-//Fountain f2 = new Fountain(480, 90+100 + 50, 80, 600);
+
+Cave c1 = new Cave();
+Cave c2 = new Cave();
 
 void setup()
 {
@@ -53,8 +55,10 @@ void draw()
   
   if (InterfaceCaveShowed)
   {
-    cave();
-  }
+    c1.barCircle();
+    c1.mainButton();
+    c1.resourseButtons(); //((90+100+50)+400 - the circle's center, 200 - the circle's radius, 40 - 1/2 of the rect's height
+}
   currentAlphaParticles();
   formatAlphaParticlesText();
   alphaParticlesProductionSpeed();
