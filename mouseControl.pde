@@ -1,8 +1,9 @@
 int page = 1;
 String redbuttontext = "";
 boolean gameIsStarted = false;
-boolean InterfaceParticlesShowed = true;
+boolean InterfaceParticlesShowed = false;
 boolean InterfaceFountainsShowed = false;
+boolean InterfaceCaveShowed = true;
 
 void mousePressed()
 {
@@ -42,6 +43,12 @@ void mousePressed()
     lowerButtonFountainsBg = 175;
     lowerButtonFountainsBg_Pressed = true;
   }
+  
+  if (mouseX >= (lowerButtonX+2*(lowerButtonWidth+30)) && mouseX <= ((lowerButtonX+2*(lowerButtonWidth+30))+lowerButtonWidth) && mouseY >= lowerButtonY && mouseY <= lowerButtonY + lowerButtonHeight)
+  {
+    lowerButtonCaveBg = 175;
+    lowerButtonCaveBg_Pressed = true;
+  }
 
   if (mouseX >= buttonfountainX && mouseX <= buttonfountainX + buttonfountainWidth && mouseY >= buttonfountainY && mouseY <= buttonfountainY + buttonfountainHeight)
   {
@@ -75,6 +82,7 @@ void mouseReleased() {
     lowerButtonParticlesBg_Pressed = false;
     InterfaceParticlesShowed = true;
     InterfaceFountainsShowed = false;
+    InterfaceCaveShowed = false;
   }
 
   if (lowerButtonFountainsBg_Pressed)
@@ -83,6 +91,16 @@ void mouseReleased() {
     lowerButtonFountainsBg_Pressed = false;
     InterfaceParticlesShowed = false;
     InterfaceFountainsShowed = true;
+    InterfaceCaveShowed = false;
+  }
+  
+  if (lowerButtonCaveBg_Pressed)
+  {
+    lowerButtonCaveBg = 255;
+    lowerButtonCaveBg_Pressed = false;
+    InterfaceParticlesShowed = false;
+    InterfaceFountainsShowed = false;
+    InterfaceCaveShowed = true;
   }
 
   if (buttonfountainBg_Pressed)

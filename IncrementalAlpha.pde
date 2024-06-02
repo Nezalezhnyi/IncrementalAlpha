@@ -1,5 +1,7 @@
 Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600);
-//Fountain f2 = new Fountain(480, 90+100 + 50, 80, 600);
+
+Cave c1 = new Cave();
+Cave c2 = new Cave();
 
 void setup()
 {
@@ -48,13 +50,22 @@ void draw()
     //f2.drawIt();
     f1.act();
     //f2.act();
+    f1.tasks();
   }
+  
+  if (InterfaceCaveShowed)
+  {
+    c1.barCircle();
+    c1.mainButton();
+    c1.resourseButtons(); //((90+100+50)+400 - the circle's center, 200 - the circle's radius, 40 - 1/2 of the rect's height
+}
   currentAlphaParticles();
   formatAlphaParticlesText();
   alphaParticlesProductionSpeed();
   currentLocation();
   lowerButtons();
   
+
 
 
   /////////
@@ -66,7 +77,7 @@ void draw()
 
 void currentAlphaParticles()
 {
-  alphas += alphaClots/100;
+  alphas += alphaIncreaser1*(alphaClots/100);
 
   if (alphas > maxalphas) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
     maxalphas = alphas;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
@@ -257,7 +268,7 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
 void lowerButtons()
 {
   strokeWeight(1);
-  
+
   fill(lowerButtonParticlesBg);
   rect(lowerButtonX, lowerButtonY, lowerButtonWidth, lowerButtonHeight);
   fill(0);
@@ -265,10 +276,23 @@ void lowerButtons()
   textAlign(CENTER, CENTER);
   text("≡", (lowerButtonX)+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
 
-  fill(lowerButtonFountainsBg);
-  rect(lowerButtonX+(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
-  fill(0);
-  textSize(70);
-  textAlign(CENTER, CENTER);
-  text("╬", (lowerButtonX+(lowerButtonWidth+30) )+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
+  if (true)//page >= 21)
+  {
+    fill(lowerButtonFountainsBg);
+    rect(lowerButtonX+(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
+    fill(0);
+    textSize(70);
+    textAlign(CENTER, CENTER);
+    text("╬", (lowerButtonX+(lowerButtonWidth+30) )+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
+  }
+
+  if (true)//achieved2)
+  {
+    fill(lowerButtonCaveBg);
+    rect(lowerButtonX+2*(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
+    fill(0);
+    textSize(70);
+    textAlign(CENTER, CENTER);
+    text("¤", (lowerButtonX+2*((lowerButtonWidth+30) )+(lowerButtonWidth/2)), lowerButtonY+(lowerButtonHeight/2));
+  }
 }

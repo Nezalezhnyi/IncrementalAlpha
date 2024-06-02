@@ -8,13 +8,13 @@ class Cave
   int seconds = 20;
   int totalFrames = seconds * 60;
 
-  float originalX, originalY;  // Original center position of the rectangle
-  float moveLX, moveLY, moveRX, moveRY;          // Current movement offsets
-  float velLX, velLY, velRX, velRY;            // Velocities in x and y directions             // Constant speed for movement
+  float originalX, originalY;
+  float moveLX, moveLY, moveRX, moveRY, moveDX, moveDY;
+  float velLX, velLY, velRX, velRY, velDX, velDY;
   int lastDirectionChange = 0; // Frame count when the last direction change occurred
-  int directionChangeInterval = 120; // Change direction every 120 frames
-  float boundary = 50;         // Movement boundary
-  boolean isMoving = false;    // Movement flag
+  int directionChangeInterval = 120;
+  float boundary = 50;
+  boolean isMoving = false;
 
 
   public Cave()
@@ -22,6 +22,7 @@ class Cave
     caveFilled = 0;
     originalX = originalY = 0;
     moveLX = moveLY = moveRX = moveRY = 0;
+    moveLX = moveLY = moveRX = moveRY = moveDX = moveDY = 0;
   }
 
 
@@ -91,29 +92,35 @@ class Cave
     int LX = (width/2 - 200) - 600;
     int RX = (width/2 + 200) + 600 - w;
     int y = ((int)caveBarY+400)-40;
+    int DX = width/2 - w/2;
+    int DY = (((int)caveBarY+400) + 200) + 50;
     int h = 80;
 
     // Set original position once
     if (!isMoving) {
       isMoving = true;
-      moveLX = moveLY = moveRX = moveRY = 0;
+      moveLX = moveLY = moveRX = moveRY = moveDX = moveDY = 0;
       float angleL = random(TWO_PI);
       float angleR = random(TWO_PI);
+      float angleD = random(TWO_PI);
       velLX = cos(angleL);
       velLY = sin(angleL);
       velRX = cos(angleR);
       velRY = sin(angleR);
+      velDX = cos(angleD);
+      velDY = sin(angleD);
     }
 
-    // Check if it's time to change direction
     if (frameCount - lastDirectionChange > directionChangeInterval) {
-      // Random angle
       float angleL = random(TWO_PI);
       float angleR = random(TWO_PI);
+      float angleD = random(TWO_PI);
       velLX = cos(angleL);
       velLY = sin(angleL);
       velRX = cos(angleR);
       velRY = sin(angleR);
+      velDX = cos(angleD);
+      velDY = sin(angleD);
       lastDirectionChange = frameCount;
     }
     float retarder = 0.2;
@@ -121,8 +128,9 @@ class Cave
     moveLY += retarder *velLY;
     moveRX += retarder *velRX;
     moveRY += retarder *velRY;
+    moveDX += retarder *velDX;
+    moveDY += retarder *velDY;
 
-    // Boundary checks to reverse direction if necessary
     if (abs(moveLX) > boundary || abs(moveLY) > boundary) {
       velLX *= -1;
       velLY *= -1;
@@ -136,11 +144,25 @@ class Cave
       moveRY = constrain(moveRY, -boundary, boundary);
     }
 
-    // Draw the rectangle at the new position
+    if (abs(moveDX) > boundary+30 || abs(moveDY) > 40) {
+      velDX *= -1;
+      velDY *= -1;
+      moveDX = constrain(moveDX, -(boundary+30), boundary+30);
+      moveDY = constrain(moveDY, -40, 40);
+    }
+    println("moveDX: " + moveDX);
+    println("moveDY: " + moveDY);
+    println("---------");
+    println("velDX: " + velDX);
+    println("velDY: " + velDY);
+    
     strokeWeight(2);
     rect(LX + moveLX, y + moveLY, w, h);
     line(LX + moveLX + w, y + moveLY + h/2, width/2 - caveCircleDiameter/2, y + h/2);
     rect(RX + moveRX, y + moveRY, w, h);
     line(RX + moveRX, y + moveRY + h/2, width/2 + caveCircleDiameter/2, y + h/2);
+    rect(DX + moveDX, DY + moveDY, w, h);
+    line(DX + moveDX+w/2, DY + moveDY, width/2, caveBarY+400+caveCircleDiameter/2);
+
   }
 }
