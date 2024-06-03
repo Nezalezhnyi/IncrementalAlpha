@@ -5,6 +5,12 @@ class Cave
   boolean caveButtonPressed, buttonCaveBg_Pressed, buttonHasBeenPressed;
   int buttonCaveColour = #CCE9FF;
   int buttonCaveColour_Pressed = #94D1FF;
+  int buttonCavePurchaseLColour = #CCE9FF;
+  int buttonCavePurchaseLColour_Pressed = #94D1FF;
+  int buttonCavePurchaseRColour = #CCE9FF;
+  int buttonCavePurchaseRColour_Pressed = #94D1FF;
+  int buttonCavePurchaseDColour = #CCE9FF;
+  int buttonCavePurchaseDColour_Pressed = #94D1FF;
   int seconds = 20;
   int totalFrames = seconds * 60;
 
@@ -15,6 +21,8 @@ class Cave
   int directionChangeInterval = 120;
   float boundary = 50;
   boolean isMoving = false;
+  int lineColour = 0;
+  int strLinesW = 1;
 
 
   public Cave()
@@ -59,12 +67,14 @@ class Cave
     strokeWeight(1);
   }
 
+
   void mainButton()
   {
     fill(buttonCaveColour);
     rect(caveButtonX, caveButtonY, caveButtonW, caveBarH, 15); //the main button
+
     if (mousePressed && !wasCaveMousePressed && mouseX >= caveButtonX && mouseX <= caveButtonX + caveButtonW && mouseY >= caveButtonY
-      && mouseY <= caveButtonY + caveBarH && caveFilled/caveBarW <= 1 && caveFilled <= caveBarW)
+      && mouseY <= caveButtonY + caveBarH && caveFilled/caveBarW <= 1)
     {
       buttonCaveColour = #94D1FF;
       buttonHasBeenPressed = true;
@@ -76,10 +86,15 @@ class Cave
     if (caveStartFilling && caveFilled < caveBarW)
     {
       caveFilled += increment;
+      lineColour = #6699FF;
+      strLinesW = 4;
       if (caveFilled >= caveBarW-1)
       {
         caveFilled = 0;
         caveStartFilling = false;
+        buttonHasBeenPressed = false;
+        lineColour = 0;
+        strLinesW = 1;
       }
     }
 
@@ -150,19 +165,51 @@ class Cave
       moveDX = constrain(moveDX, -(boundary+30), boundary+30);
       moveDY = constrain(moveDY, -40, 40);
     }
-    println("moveDX: " + moveDX);
-    println("moveDY: " + moveDY);
-    println("---------");
-    println("velDX: " + velDX);
-    println("velDY: " + velDY);
-    
+    /*println("moveDX: " + moveDX);
+     println("moveDY: " + moveDY);
+     println("---------");
+     println("velDX: " + velDX);
+     println("velDY: " + velDY);*/
+
+
+
     strokeWeight(2);
+    stroke(lineColour);
+    strokeWeight(strLinesW);
+
+    if (mousePressed && mouseX >= LX+moveLX && mouseX <= LX+moveLX+w && mouseY >= y+moveLY && mouseY <= y+moveLY+h)
+    {
+      buttonCavePurchaseLColour = #94D1FF;
+    } else
+    {
+      buttonCavePurchaseLColour = #CCE9FF;
+    }
+    if (mousePressed && mouseX >= RX+moveRX && mouseX <= RX+moveRX+w && mouseY >= y+moveRY && mouseY <= y+moveRY+h)
+    {
+      buttonCavePurchaseRColour = #94D1FF;
+    } else
+    {
+      buttonCavePurchaseRColour = #CCE9FF;
+    }
+    if (mousePressed && mouseX >= DX+moveDX && mouseX <= DX+moveDX+w && mouseY >= DY+moveDY && mouseY <= DY+moveDY+h)
+    {
+      buttonCavePurchaseDColour = #94D1FF;
+    } else
+    {
+      buttonCavePurchaseDColour = #CCE9FF;
+    }
+    fill(buttonCavePurchaseLColour);
     rect(LX + moveLX, y + moveLY, w, h);
-    line(LX + moveLX + w, y + moveLY + h/2, width/2 - caveCircleDiameter/2, y + h/2);
+    fill(buttonCavePurchaseRColour);
     rect(RX + moveRX, y + moveRY, w, h);
-    line(RX + moveRX, y + moveRY + h/2, width/2 + caveCircleDiameter/2, y + h/2);
+    fill(buttonCavePurchaseDColour);
     rect(DX + moveDX, DY + moveDY, w, h);
+
+    line(LX + moveLX + w, y + moveLY + h/2, width/2 - caveCircleDiameter/2, y + h/2);
+    line(RX + moveRX, y + moveRY + h/2, width/2 + caveCircleDiameter/2, y + h/2);
     line(DX + moveDX+w/2, DY + moveDY, width/2, caveBarY+400+caveCircleDiameter/2);
+    stroke(0);
+    strokeWeight(1);
 
   }
 }
