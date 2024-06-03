@@ -214,18 +214,22 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
 {
   ///////THE RED-GREEN TEXT
   textSize(20);
+  float distClots = textWidth("You have ") + textWidth(nf(currency, 0, 0)) + textWidth(" clots of α-energy");
+  float distTime = textWidth("Make a clot of α-energy with ") + textWidth(str((int)pow(a, (int)alphaClots+1))) + textWidth(" α-particles");
+  int stabiliserClots = 240;
+  int stabiliserTime = 20;
   if (alphas < (int)pow(a, (int)alphaClots+1))
   {
     strokeWeight(3);
     stroke(#FF5B5B);
     fill(#FF5B5B);
-    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240, 250+33 + (rectY-250) );
+    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
   } else
   {
     strokeWeight(3);
     stroke(#3CFF63);
     fill(#3CFF63);
-    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", 100+153+240, 250+33 + (rectY-250) );
+    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
   }
 
 
@@ -258,9 +262,9 @@ void currencyType (int bg, int textbuttonX, int rectY, float currency, String bu
     {
       int minutes = (int)(timeToNextAlphaClot / 60); // Calculate full minutes
       float seconds = (timeToNextAlphaClot % 60); // Calculate remaining seconds
-      text("You're gonna be able to buy next clot in " + minutes + " minutes " + nf(seconds, 0, 1) + " seconds", 100+153+240+390, 250+33 + (rectY-250));
+      text("You're gonna be able to buy next clot in " + minutes + " minutes " + nf(seconds, 0, 1) + " seconds", (distClots+stabiliserClots) + distTime+stabiliserTime, 250+33 + (rectY-250));
     } else {
-      text("You're gonna be able to buy next clot RIGHT NOW!", 100+153+240+390, 250+33 + (rectY-250));
+      text("You're gonna be able to buy next clot RIGHT NOW!", (distClots+stabiliserClots) + distTime+stabiliserTime, 250+33 + (rectY-250));
     }
   }
 }

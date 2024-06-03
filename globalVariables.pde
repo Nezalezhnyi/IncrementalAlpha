@@ -7,7 +7,7 @@ String dialogbeginning = "Oh, dear, there must be something here, just one—jus
 String answerbutton = "Uhm, hi?";
 
 
-float alphas = 2000;
+float alphas = 20000;
 float maxalphas = 2;
 float alphaClots = 5;
 
