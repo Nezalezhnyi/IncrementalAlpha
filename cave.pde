@@ -70,11 +70,19 @@ class Cave
 
   void mainButton()
   {
-    fill(buttonCaveColour);
-    rect(caveButtonX, caveButtonY, caveButtonW, caveBarH, 15); //the main button
 
+    if (InterfaceCaveShowed)
+    {
+      textSize(25);
+      fill(buttonCaveColour);
+      rect(caveButtonX, caveButtonY, caveButtonW, caveBarH, 15); //the main button
+      fill(0);
+
+      text("Start charging the sphere", caveButtonX + 10, caveButtonY+45);
+      fill(buttonCaveColour);
+    }
     if (mousePressed && !wasCaveMousePressed && mouseX >= caveButtonX && mouseX <= caveButtonX + caveButtonW && mouseY >= caveButtonY
-      && mouseY <= caveButtonY + caveBarH && caveFilled/caveBarW <= 1)
+      && mouseY <= caveButtonY + caveBarH && caveFilled/caveBarW <= 1 && InterfaceCaveShowed)
     {
       buttonCaveColour = #94D1FF;
       buttonHasBeenPressed = true;
@@ -103,7 +111,7 @@ class Cave
   }
 
   void resourseButtons() {
-    int w = 200;
+    int w = 220;
     int LX = (width/2 - 200) - 600;
     int RX = (width/2 + 200) + 600 - w;
     int y = ((int)caveBarY+400)-40;
@@ -154,7 +162,7 @@ class Cave
     }
     if (abs(moveRX) > boundary || abs(moveRY) > boundary) {
       velRX *= -1;
-      velLY *= -1;
+      velRY *= -1;
       moveRX = constrain(moveRX, -boundary, boundary);
       moveRY = constrain(moveRY, -boundary, boundary);
     }
@@ -198,8 +206,12 @@ class Cave
     {
       buttonCavePurchaseDColour = #CCE9FF;
     }
+
     fill(buttonCavePurchaseLColour);
     rect(LX + moveLX, y + moveLY, w, h);
+
+    
+
     fill(buttonCavePurchaseRColour);
     rect(RX + moveRX, y + moveRY, w, h);
     fill(buttonCavePurchaseDColour);
@@ -211,5 +223,21 @@ class Cave
     stroke(0);
     strokeWeight(1);
 
+
+    //text, variables, hopes, dreams and other stuff <3
+    fill(0);
+    int xStabiliser = 10;
+    int ystabiliser = 25;
+    int yNextStabiliser = 20;
+    textSize(17);
+    text("Decrease durability: -2s", (int)(LX + moveLX) + xStabiliser, (int)(y + moveLY) + ystabiliser);
+    text("Currently: " + seconds + " seconds", (LX + moveLX) + xStabiliser, (y + moveLY) + ystabiliser + yNextStabiliser);
+    text("Cost: " + "??" + " Dream Charges", (LX + moveLX) + xStabiliser, (y + moveLY) + ystabiliser + 2*yNextStabiliser);
+    text("Open the posibility menu", (RX + moveRX) + xStabiliser, (y + moveRY) + ystabiliser);
+    text("???", (RX + moveRX) + xStabiliser, (y + moveRY) + ystabiliser + yNextStabiliser);
+    text("Cost: " + "??" + " Hope Charges", (RX + moveRX) + xStabiliser, (y + moveRY) + ystabiliser + 2*yNextStabiliser);
+    text("This button is gonna", (DX + moveDX) + xStabiliser, (DY + moveDY) + ystabiliser);
+    text("do something significantly", (DX + moveDX) + xStabiliser, (DY + moveDY) + ystabiliser + yNextStabiliser);
+    text("cool (idk what yet)", (DX + moveDX) + xStabiliser, (DY + moveDY) + ystabiliser + 2*yNextStabiliser);
   }
 }
