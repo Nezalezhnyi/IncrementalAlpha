@@ -23,9 +23,10 @@ class Cave
   boolean isMoving = false;
   int lineColour = 0;
   int strLinesW = 1;
-  boolean textCostL, textCostR;
+  boolean textCostL, textCostR, textCostD;
   boolean firstHopePurchase;
   boolean pressedL, pressedR, pressedD;
+  boolean zealHasBeenBought;
 
 
   int dreamChargesCost, hopeChargesCost, zealChargesCost;
@@ -60,17 +61,17 @@ class Cave
     moveLX = moveLY = moveRX = moveRY = moveDX = moveDY = 0;
     pressedL = pressedR = pressedD = false;
 
-    dreamChargesCurrent = 1;  //45
-    hopeChargesCurrent = 3; //66
-    zealChargesCurrent = 0;
+    dreamChargesCurrent = 45;  //45
+    hopeChargesCurrent = 66; //66
+    zealChargesCurrent = 30; //30
 
     dreamDecreaseSeconds = 0;
     seconds = 20;
-    textCostL = true;
-    textCostR = true;
+    textCostL = textCostR = textCostD = true;
     firstHopePurchase = false;
     dreamChargesCost = 1;
     hopeChargesCost = 1;
+    zealChargesCost = 30;
     currentNothing = 50;
     availablePercents = 0;
     dreamProbability = 20;
@@ -80,6 +81,8 @@ class Cave
     changerDream = changerHope = changerZeal = 0;
 
     buttonDreamMinusPressed = buttonDreamPlusPressed = buttonHopeMinusPressed = buttonHopePlusPressed = buttonZealMinusPressed = buttonZealPlusPressed = false;
+
+    zealHasBeenBought = false;
   }
 
 
@@ -271,7 +274,7 @@ class Cave
       pressedR = true;
     } else if (!mousePressed && pressedR)
     {
-      if (hopeChargesCurrent >= hopeChargesCost)
+      if (hopeChargesCurrent >= hopeChargesCost && currentNothing >= 5)
       {
         firstHopePurchase = true;
         hopeChargesCurrent -= hopeChargesCost;
@@ -285,18 +288,26 @@ class Cave
         hopeNewTextDecrease = "Current Nothing: " + currentNothing + "%";
       }
       buttonCavePurchaseRColour = #CCE9FF;
-
       pressedR = false;
     }
-
+    
+    
 
     if (mousePressed && mouseX >= DX+moveDX && mouseX <= DX+moveDX+w && mouseY >= DY+moveDY && mouseY <= DY+moveDY+h)
     {
       buttonCavePurchaseDColour = #94D1FF;
-    } else
+      pressedD = true;
+    } else if (!mousePressed && pressedD)
     {
+      if (zealChargesCurrent >= 30 && !zealHasBeenBought);
+      {
+        zealChargesCurrent -= 30;
+        zealHasBeenBought = true;
+      }
       buttonCavePurchaseDColour = #CCE9FF;
+      pressedD = false;
     }
+
 
     if (seconds <= 2)
     {
@@ -307,7 +318,16 @@ class Cave
     if (currentNothing <= 0)
     {
       buttonCavePurchaseRColour = #FFEEA4;
+      textCostR = false;
     }
+
+    if (zealHasBeenBought)
+    {
+      buttonCavePurchaseDColour = #D5FFE1;
+      textCostD = false;
+    }
+
+    println(zealChargesCurrent >= 30 && !zealHasBeenBought);
     //////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -339,9 +359,8 @@ class Cave
     text(openTheHopeMenu, (int)(RX + moveRX) + xStabiliser, (int)(y + moveRY) + ystabiliser);
     text(hopeNewTextDecrease, (int)(RX + moveRX) + xStabiliser, (int)(y + moveRY) + ystabiliser + yNextStabiliser);
 
-    text("This button is gonna", (int)(DX + moveDX) + xStabiliser, (int)(DY + moveDY) + ystabiliser);
-    text("do something significantly", (int)(DX + moveDX) + xStabiliser, (int)(DY + moveDY) + ystabiliser + yNextStabiliser);
-    text("cool (idk what yet)", (int)(DX + moveDX) + xStabiliser, (int)(DY + moveDY) + ystabiliser + 2*yNextStabiliser);
+    text("Unlock Alchemy of Alpha", (int)(DX + moveDX) + xStabiliser, (int)(DY + moveDY) + yNextStabiliser);
+    text("(Be careful)", (int)(DX + moveDX) + xStabiliser, (int)(DY + moveDY) + ystabiliser + yNextStabiliser);
 
     if (dreamChargesCurrent >= dreamChargesCost)
       fill(#228E38);
@@ -353,9 +372,17 @@ class Cave
       fill(#228E38);
     else
       fill(#FF5B5B);
-    if (currentNothing > 0)
+    if (textCostR)
       text("Cost: " + hopeChargesCost + " Hope Charges", (int)(RX + moveRX) + xStabiliser, (int)(y + moveRY) + ystabiliser + 2*yNextStabiliser);
 
+    if (zealChargesCurrent >= zealChargesCost)
+      fill(#228E38);
+    else
+      fill(#FF5B5B);
+    if (textCostD)
+    {
+      text("Cost: " + zealChargesCost + " Zeal Charges", (int)(DX + moveDX) + xStabiliser, (int)(DY + moveDY) + ystabiliser + 2*yNextStabiliser);
+    }
 
     int stabiliserDreamX = -35;
     int stabiliserHopeX = -33;
@@ -371,6 +398,25 @@ class Cave
     fill(#D5FFE1);
     text("You have " + zealChargesCurrent + " Zeal Charges", (int)(DX + moveDX) + stabiliserZealX, (int)(DY + moveDY) + h + -stabiliserY+15);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
