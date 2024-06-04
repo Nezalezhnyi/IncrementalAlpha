@@ -233,11 +233,11 @@ class Cave
       moveRY = constrain(moveRY, -boundary, boundary);
     }
 
-    if (abs(moveDX) > boundary+30 || abs(moveDY) > 40) {
+    if (abs(moveDX) > boundary+30 || abs(moveDY) > 20) {
       velDX *= -1;
       velDY *= -1;
       moveDX = constrain(moveDX, -(boundary+30), boundary+30);
-      moveDY = constrain(moveDY, -40, 40);
+      moveDY = constrain(moveDY, -20, 20);
     }
     /*println("moveDX: " + moveDX);
      println("moveDY: " + moveDY);
@@ -290,24 +290,27 @@ class Cave
       buttonCavePurchaseRColour = #CCE9FF;
       pressedR = false;
     }
-    
-    
 
-    if (mousePressed && mouseX >= DX+moveDX && mouseX <= DX+moveDX+w && mouseY >= DY+moveDY && mouseY <= DY+moveDY+h)
+
+
+    if (mouseX >= DX+moveDX && mouseX <= DX+moveDX+w && mouseY >= DY+moveDY && mouseY <= DY+moveDY+h)
     {
-      buttonCavePurchaseDColour = #94D1FF;
-      pressedD = true;
-    } else if (!mousePressed && pressedD)
-    {
-      if (zealChargesCurrent >= 30 && !zealHasBeenBought);
+      if (mousePressed)
       {
-        zealChargesCurrent -= 30;
-        zealHasBeenBought = true;
+        buttonCavePurchaseDColour = #94D1FF;
+        pressedD = true;
+      } else if (!mousePressed && pressedD)
+      {
+        if (zealChargesCurrent >= 30 && !zealHasBeenBought)
+        {
+          zealChargesCurrent -= 30;
+          zealHasBeenBought = true;
+          //println("hello");
+        }
+        buttonCavePurchaseDColour = #CCE9FF;
+        pressedD = false;
       }
-      buttonCavePurchaseDColour = #CCE9FF;
-      pressedD = false;
     }
-
 
     if (seconds <= 2)
     {
@@ -328,6 +331,7 @@ class Cave
     }
 
     println(zealChargesCurrent >= 30 && !zealHasBeenBought);
+    println(zealChargesCurrent);
     //////////////////////////////////////////////////////////////////////////////////////
 
 
