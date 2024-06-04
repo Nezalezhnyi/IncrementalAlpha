@@ -36,6 +36,10 @@ class Cave
   int dreamDecreaseSeconds;
   int availablePercents;
 
+  int dreamProbability;
+  int hopeProbability;
+  int zealProbability;
+
   String hopeCurrentNothing;
   int currentNothing;
   String hopeNewTextDecrease = "???";
@@ -59,6 +63,9 @@ class Cave
     hopeChargesCost = 1;
     currentNothing = 50;
     availablePercents = 0;
+    dreamProbability = 20;
+    hopeProbability = 20;
+    zealProbability = 10;
   }
 
 
@@ -340,7 +347,7 @@ class Cave
 
   void probabilityMenu()
   {
-    if (firstHopePurchase)
+    if (!firstHopePurchase)
     {
       int probabilityMenuX = (int)caveBarX;
       int probabilityMenuY = (int)caveBarY + (int)caveBarH + 20;
@@ -348,25 +355,102 @@ class Cave
       int probabilityMenuH = 180;
       int stabiliseY = 40;
 
+      int butProbW = 30;
+      int butProbX = probabilityMenuX + probabilityMenuW - butProbW - 10 - 180;
+      int butProbY = probabilityMenuY + 40 - 25; //40
+      int butProbH = butProbW;
+
+      int dreamColourMinus = #FFDFFC;
+      int dreamColourPlus = #FFDFFC;
+      int hopeColourMinus = #FFFFA4;
+      int hopeColourPlus = #FFFFA4;
+      int zealColourMinus = #ACFFC5;
+      int zealColourPlus = #ACFFC5;
+
+
       fill(70);
       rect(probabilityMenuX, probabilityMenuY, probabilityMenuW, probabilityMenuH);
       fill(255);
       ///////
       fill(#FFA4F4);
-      text("Dream Charges: ", probabilityMenuX + 20, probabilityMenuY + 40);
-      text("??" + "%", probabilityMenuX + 20 + textWidth("Dream Charges: "), probabilityMenuY + 40);
+      text("Dream Charges: ", probabilityMenuX + 20, probabilityMenuY + 40); //40
+      text(dreamProbability + "%", probabilityMenuX + 20 + textWidth("Dream Charges: "), probabilityMenuY + 40);
+      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= butProbY && mouseY <= butProbY + butProbH)
+        dreamColourMinus = #FFC3F8;
+      else
+        dreamColourMinus = #FFDFFC;
+      fill(dreamColourMinus); //FFC3F8
+      rect(butProbX, butProbY, butProbW, butProbH, 10); //dream minus
+      if (mousePressed && mouseX >= (butProbX) + butProbW + 20 && mouseX <= (butProbX + butProbW)+butProbW + 20
+        && mouseY >= butProbY && mouseY <= butProbY + butProbH)
+        dreamColourPlus= #FFC3F8;
+      else
+        dreamColourPlus = #FFDFFC;
+      fill(dreamColourPlus);
+      rect(butProbX + butProbW + 20, butProbY, butProbW, butProbH, 10); //dream plus
 
+      fill(#FF5B5B);
+      textSize(40);
+      text("-", butProbX + 9, butProbY + butProbH-3);
+      fill(#228E38);
+      text("+", (butProbX + butProbW + 20) + 4, butProbY + butProbH-1);
+      textSize(25);
+
+      
       fill(#FFEEA4);
       text("Hope Charges: ", probabilityMenuX + 20, probabilityMenuY + 40 + stabiliseY);
-      text("??" + "%", probabilityMenuX + 20 + textWidth("Hope Charges: "), probabilityMenuY + 40 + stabiliseY);
+      text(hopeProbability + "%", probabilityMenuX + 20 + textWidth("Hope Charges: "), probabilityMenuY + 40 + stabiliseY);
+      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= (butProbY) + stabiliseY 
+      && mouseY <= (butProbY + butProbH) + stabiliseY)
+        hopeColourMinus = #FFF66B;
+      else
+        hopeColourMinus = #FFFFC0;
+      fill(hopeColourMinus); //FFFFA4
+      rect(butProbX, butProbY + stabiliseY, butProbW, butProbH, 10);
+      if (mousePressed && mouseX >= (butProbX) + butProbW + 20 && mouseX <= (butProbX + butProbW) + butProbW + 20 
+      && mouseY >= (butProbY) + stabiliseY && mouseY <= (butProbY + butProbH) + stabiliseY)
+        hopeColourPlus = #FFF66B;
+      else
+        hopeColourPlus = #FFFFC0;
+      fill(hopeColourPlus);
+      rect(butProbX + butProbW + 20, butProbY + stabiliseY, butProbW, butProbH, 10);
+      
+      fill(#FF5B5B);
+      textSize(40);
+      text("-", butProbX + 9, butProbY + stabiliseY + butProbH-3);
+      fill(#228E38);
+      text("+", (butProbX + butProbW + 20) + 4, butProbY + stabiliseY + butProbH-1);
+      textSize(25);
+
 
       fill(#D5FFE1);
       text("Zeal Charges: ", probabilityMenuX + 20, probabilityMenuY + 40 + 2*stabiliseY);
-      text("??" + "%", probabilityMenuX + 20 + textWidth("Zeal Charges: "), probabilityMenuY + 40 + 2*stabiliseY);
+      text(zealProbability + "%", probabilityMenuX + 20 + textWidth("Zeal Charges: "), probabilityMenuY + 40 + 2*stabiliseY);
+      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= (butProbY) + 2*stabiliseY 
+      && mouseY <= (butProbY + butProbH) + 2*stabiliseY)
+        zealColourMinus = #ACFFC5;
+      else
+        zealColourMinus = #E5FFED; 
+      fill(zealColourMinus); //FFFFA4
+      rect(butProbX, butProbY + 2*stabiliseY, butProbW, butProbH, 10);
+      if (mousePressed && mouseX >= (butProbX) + butProbW + 20  && mouseX <= (butProbX + butProbW) + butProbW + 20
+      && mouseY >= (butProbY) + 2*stabiliseY && mouseY <= (butProbY + butProbH) + 2*stabiliseY)
+        zealColourPlus = #ACFFC5;
+      else
+        zealColourPlus = #E5FFED; 
+      fill(zealColourPlus); //FFFFA4
+      rect(butProbX + butProbW + 20, butProbY + 2*stabiliseY, butProbW, butProbH, 10);
+      fill(#FF5B5B);
+      textSize(40);
+      text("-", butProbX + 9, butProbY + 2*stabiliseY + butProbH-3);
+      fill(#228E38);
+      text("+", (butProbX + butProbW + 20) + 4, butProbY + 2*stabiliseY + butProbH-1);
+      textSize(25);
 
       fill(200);
       text("Available Probabilities: ", probabilityMenuX + 20, probabilityMenuY + 40 + 3*stabiliseY);
       text(availablePercents + "%", probabilityMenuX + 20 + textWidth("Available Probabilities: "), probabilityMenuY + 40 + 3*stabiliseY);
+
 
       ///////
     }
