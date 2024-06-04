@@ -51,11 +51,13 @@ class Cave
     originalX = originalY = 0;
     moveLX = moveLY = moveRX = moveRY = 0;
     moveLX = moveLY = moveRX = moveRY = moveDX = moveDY = 0;
-    dreamChargesCurrent = 0;
-    hopeChargesCurrent = 0;
+
+    dreamChargesCurrent = 50;
+    hopeChargesCurrent = 50;
     zealChargesCurrent = 0;
+
     dreamDecreaseSeconds = 0;
-    seconds = 1;
+    seconds = 20;
     textCostL = true;
     textCostR = true;
     firstHopePurchase = false;
@@ -256,7 +258,7 @@ class Cave
       hopeChargesCurrent -= 1;
       hopeChargesCost += 1;
       openTheHopeMenu = "Decrease Nothing: -5%";
-      if (firstHopePurchase && currentNothing >= 10)
+      if (firstHopePurchase && currentNothing >= 5)
       {
         currentNothing -= 5;
         availablePercents += 5;
@@ -327,7 +329,8 @@ class Cave
       fill(#228E38);
     else
       fill(#FF5B5B);
-    text("Cost: " + hopeChargesCost + " Hope Charges", (int)(RX + moveRX) + xStabiliser, (int)(y + moveRY) + ystabiliser + 2*yNextStabiliser);
+    if (currentNothing > 0)
+      text("Cost: " + hopeChargesCost + " Hope Charges", (int)(RX + moveRX) + xStabiliser, (int)(y + moveRY) + ystabiliser + 2*yNextStabiliser);
 
 
     int stabiliserDreamX = -35;
@@ -345,9 +348,12 @@ class Cave
     text("You have " + zealChargesCurrent + " Zeal Charges", (int)(DX + moveDX) + stabiliserZealX, (int)(DY + moveDY) + h + -stabiliserY+15);
   }
 
+
+
+
   void probabilityMenu()
   {
-    if (!firstHopePurchase)
+    if (firstHopePurchase)
     {
       int probabilityMenuX = (int)caveBarX;
       int probabilityMenuY = (int)caveBarY + (int)caveBarH + 20;
@@ -396,25 +402,25 @@ class Cave
       text("+", (butProbX + butProbW + 20) + 4, butProbY + butProbH-1);
       textSize(25);
 
-      
+
       fill(#FFEEA4);
       text("Hope Charges: ", probabilityMenuX + 20, probabilityMenuY + 40 + stabiliseY);
       text(hopeProbability + "%", probabilityMenuX + 20 + textWidth("Hope Charges: "), probabilityMenuY + 40 + stabiliseY);
-      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= (butProbY) + stabiliseY 
-      && mouseY <= (butProbY + butProbH) + stabiliseY)
+      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= (butProbY) + stabiliseY
+        && mouseY <= (butProbY + butProbH) + stabiliseY)
         hopeColourMinus = #FFF66B;
       else
         hopeColourMinus = #FFFFC0;
       fill(hopeColourMinus); //FFFFA4
       rect(butProbX, butProbY + stabiliseY, butProbW, butProbH, 10);
-      if (mousePressed && mouseX >= (butProbX) + butProbW + 20 && mouseX <= (butProbX + butProbW) + butProbW + 20 
-      && mouseY >= (butProbY) + stabiliseY && mouseY <= (butProbY + butProbH) + stabiliseY)
+      if (mousePressed && mouseX >= (butProbX) + butProbW + 20 && mouseX <= (butProbX + butProbW) + butProbW + 20
+        && mouseY >= (butProbY) + stabiliseY && mouseY <= (butProbY + butProbH) + stabiliseY)
         hopeColourPlus = #FFF66B;
       else
         hopeColourPlus = #FFFFC0;
       fill(hopeColourPlus);
       rect(butProbX + butProbW + 20, butProbY + stabiliseY, butProbW, butProbH, 10);
-      
+
       fill(#FF5B5B);
       textSize(40);
       text("-", butProbX + 9, butProbY + stabiliseY + butProbH-3);
@@ -426,18 +432,18 @@ class Cave
       fill(#D5FFE1);
       text("Zeal Charges: ", probabilityMenuX + 20, probabilityMenuY + 40 + 2*stabiliseY);
       text(zealProbability + "%", probabilityMenuX + 20 + textWidth("Zeal Charges: "), probabilityMenuY + 40 + 2*stabiliseY);
-      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= (butProbY) + 2*stabiliseY 
-      && mouseY <= (butProbY + butProbH) + 2*stabiliseY)
+      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= (butProbY) + 2*stabiliseY
+        && mouseY <= (butProbY + butProbH) + 2*stabiliseY)
         zealColourMinus = #ACFFC5;
       else
-        zealColourMinus = #E5FFED; 
+        zealColourMinus = #E5FFED;
       fill(zealColourMinus); //FFFFA4
       rect(butProbX, butProbY + 2*stabiliseY, butProbW, butProbH, 10);
       if (mousePressed && mouseX >= (butProbX) + butProbW + 20  && mouseX <= (butProbX + butProbW) + butProbW + 20
-      && mouseY >= (butProbY) + 2*stabiliseY && mouseY <= (butProbY + butProbH) + 2*stabiliseY)
+        && mouseY >= (butProbY) + 2*stabiliseY && mouseY <= (butProbY + butProbH) + 2*stabiliseY)
         zealColourPlus = #ACFFC5;
       else
-        zealColourPlus = #E5FFED; 
+        zealColourPlus = #E5FFED;
       fill(zealColourPlus); //FFFFA4
       rect(butProbX + butProbW + 20, butProbY + 2*stabiliseY, butProbW, butProbH, 10);
       fill(#FF5B5B);
