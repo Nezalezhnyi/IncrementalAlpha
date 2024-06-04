@@ -57,7 +57,8 @@ void draw()
   if (InterfaceCaveShowed)
   {
     c1.barCircle();
-    c1.resourseButtons(); //((90+100+50)+400 - the circle's center, 200 - the circle's radius, 40 - 1/2 of the rect's height
+    c1.resourceButtons(); //((90+100+50)+400 - the circle's center, 200 - the circle's radius, 40 - 1/2 of the rect's height
+    c1.probabilityMenu();
   }
   c1.mainButton();
   //)))

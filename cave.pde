@@ -11,8 +11,8 @@ class Cave
   int buttonCavePurchaseRColour_Pressed = #94D1FF;
   int buttonCavePurchaseDColour = #CCE9FF;
   int buttonCavePurchaseDColour_Pressed = #94D1FF;
-  int seconds = 20;
-  int totalFrames = seconds * 60;
+  int seconds;
+  int totalFrames;
 
   float originalX, originalY;
   float moveLX, moveLY, moveRX, moveRY, moveDX, moveDY;
@@ -23,7 +23,23 @@ class Cave
   boolean isMoving = false;
   int lineColour = 0;
   int strLinesW = 1;
+  boolean textCostL, textCostR;
+  boolean firstHopePurchase;
 
+
+  int dreamChargesCost, hopeChargesCost, zealChargesCost;
+  float randomCharge;
+
+  int dreamChargesCurrent;
+  int hopeChargesCurrent;
+  int zealChargesCurrent;
+  int dreamDecreaseSeconds;
+  int availablePercents;
+
+  String hopeCurrentNothing;
+  int currentNothing;
+  String hopeNewTextDecrease = "???";
+  String openTheHopeMenu =  "Open the posibility menu";
 
   public Cave()
   {
@@ -31,6 +47,18 @@ class Cave
     originalX = originalY = 0;
     moveLX = moveLY = moveRX = moveRY = 0;
     moveLX = moveLY = moveRX = moveRY = moveDX = moveDY = 0;
+    dreamChargesCurrent = 0;
+    hopeChargesCurrent = 0;
+    zealChargesCurrent = 0;
+    dreamDecreaseSeconds = 0;
+    seconds = 1;
+    textCostL = true;
+    textCostR = true;
+    firstHopePurchase = false;
+    dreamChargesCost = 1;
+    hopeChargesCost = 1;
+    currentNothing = 50;
+    availablePercents = 0;
   }
 
 
@@ -47,7 +75,6 @@ class Cave
     caveButtonY = caveBarY+100;
     caveButtonW = 300;
 
-    increment = caveBarW/totalFrames;
 
     fill(180);
     rect(caveBarX, caveBarY, caveBarW, caveBarH); //the bar
@@ -71,6 +98,8 @@ class Cave
   void mainButton()
   {
 
+    totalFrames = seconds * 60;
+    increment = caveBarW/totalFrames;
     if (InterfaceCaveShowed)
     {
       textSize(25);
@@ -103,14 +132,30 @@ class Cave
         buttonHasBeenPressed = false;
         lineColour = 0;
         strLinesW = 1;
+        randomCharge = int(random(10));
+
+        if (randomCharge == 0 || randomCharge == 1)
+        {
+          dreamChargesCurrent += 1;
+        }
+        if (randomCharge == 2 || randomCharge == 3)
+        {
+          hopeChargesCurrent += 1;
+        }
+        if (randomCharge == 4)
+        {
+          zealChargesCurrent += 1;
+        }
       }
     }
 
     wasCaveMousePressed = mousePressed;
     //println(increment);
+    println(increment);
+    println(seconds);
   }
 
-  void resourseButtons() {
+  void resourceButtons() {
     int w = 220;
     int LX = (width/2 - 200) - 600;
     int RX = (width/2 + 200) + 600 - w;
@@ -184,17 +229,33 @@ class Cave
     strokeWeight(2);
     stroke(lineColour);
     strokeWeight(strLinesW);
-
+    //////////////////////////////////////////////////////////////////////////////////////
     if (mousePressed && mouseX >= LX+moveLX && mouseX <= LX+moveLX+w && mouseY >= y+moveLY && mouseY <= y+moveLY+h)
     {
       buttonCavePurchaseLColour = #94D1FF;
+      if (dreamChargesCurrent >= dreamChargesCost && seconds >= 4)
+      {
+        dreamChargesCurrent -= 1;
+        seconds -= 2;
+        dreamChargesCost += 1;
+      }
     } else
     {
       buttonCavePurchaseLColour = #CCE9FF;
     }
-    if (mousePressed && mouseX >= RX+moveRX && mouseX <= RX+moveRX+w && mouseY >= y+moveRY && mouseY <= y+moveRY+h)
+    if (mousePressed && mouseX >= RX+moveRX && mouseX <= RX+moveRX+w && mouseY >= y+moveRY && mouseY <= y+moveRY+h && hopeChargesCurrent >= hopeChargesCost)
     {
       buttonCavePurchaseRColour = #94D1FF;
+      hopeChargesCurrent -= 1;
+      hopeChargesCost += 1;
+      openTheHopeMenu = "Decrease Nothing: -5%";
+      if (firstHopePurchase && currentNothing >= 10)
+      {
+        currentNothing -= 5;
+        availablePercents += 5;
+      }
+      hopeNewTextDecrease = "Current Nothing: " + currentNothing + "%";
+      firstHopePurchase = true;
     } else
     {
       buttonCavePurchaseRColour = #CCE9FF;
@@ -207,12 +268,21 @@ class Cave
       buttonCavePurchaseDColour = #CCE9FF;
     }
 
-    fill(buttonCavePurchaseLColour);
+    if (seconds != 2)
+      fill(buttonCavePurchaseLColour);
+    else
+    {
+      fill(#FFA4F4);
+      textCostL = false;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////
+
     rect(LX + moveLX, y + moveLY, w, h);
 
-    
+
 
     fill(buttonCavePurchaseRColour);
+
     rect(RX + moveRX, y + moveRY, w, h);
     fill(buttonCavePurchaseDColour);
     rect(DX + moveDX, DY + moveDY, w, h);
@@ -228,16 +298,77 @@ class Cave
     fill(0);
     int xStabiliser = 10;
     int ystabiliser = 25;
-    int yNextStabiliser = 20;
+    int yNextStabiliser = 23;
     textSize(17);
     text("Decrease durability: -2s", (int)(LX + moveLX) + xStabiliser, (int)(y + moveLY) + ystabiliser);
-    text("Currently: " + seconds + " seconds", (LX + moveLX) + xStabiliser, (y + moveLY) + ystabiliser + yNextStabiliser);
-    text("Cost: " + "??" + " Dream Charges", (LX + moveLX) + xStabiliser, (y + moveLY) + ystabiliser + 2*yNextStabiliser);
-    text("Open the posibility menu", (RX + moveRX) + xStabiliser, (y + moveRY) + ystabiliser);
-    text("???", (RX + moveRX) + xStabiliser, (y + moveRY) + ystabiliser + yNextStabiliser);
-    text("Cost: " + "??" + " Hope Charges", (RX + moveRX) + xStabiliser, (y + moveRY) + ystabiliser + 2*yNextStabiliser);
-    text("This button is gonna", (DX + moveDX) + xStabiliser, (DY + moveDY) + ystabiliser);
-    text("do something significantly", (DX + moveDX) + xStabiliser, (DY + moveDY) + ystabiliser + yNextStabiliser);
-    text("cool (idk what yet)", (DX + moveDX) + xStabiliser, (DY + moveDY) + ystabiliser + 2*yNextStabiliser);
+    text("Currently: " + seconds + " seconds", (int)(LX + moveLX) + xStabiliser, (int)(y + moveLY) + ystabiliser + yNextStabiliser);
+
+    text(openTheHopeMenu, (int)(RX + moveRX) + xStabiliser, (int)(y + moveRY) + ystabiliser);
+    text(hopeNewTextDecrease, (int)(RX + moveRX) + xStabiliser, (int)(y + moveRY) + ystabiliser + yNextStabiliser);
+
+    text("This button is gonna", (int)(DX + moveDX) + xStabiliser, (int)(DY + moveDY) + ystabiliser);
+    text("do something significantly", (int)(DX + moveDX) + xStabiliser, (int)(DY + moveDY) + ystabiliser + yNextStabiliser);
+    text("cool (idk what yet)", (int)(DX + moveDX) + xStabiliser, (int)(DY + moveDY) + ystabiliser + 2*yNextStabiliser);
+
+    if (dreamChargesCurrent >= dreamChargesCost)
+      fill(#228E38);
+    else
+      fill(#FF5B5B);
+    if (textCostL)
+      text("Cost: " + dreamChargesCost + " Dream Charges", (int)(LX + moveLX) + xStabiliser, (int)(y + moveLY) + ystabiliser + 2*yNextStabiliser);
+    if (hopeChargesCurrent >= hopeChargesCost)
+      fill(#228E38);
+    else
+      fill(#FF5B5B);
+    text("Cost: " + hopeChargesCost + " Hope Charges", (int)(RX + moveRX) + xStabiliser, (int)(y + moveRY) + ystabiliser + 2*yNextStabiliser);
+
+
+    int stabiliserDreamX = -35;
+    int stabiliserHopeX = -33;
+    int stabiliserZealX = -33;
+
+
+    int stabiliserY = -20;
+    textSize(25);
+    fill(#FFA4F4);
+    text("You have " + dreamChargesCurrent + " Dream Charges", (int)(LX + moveLX) + stabiliserDreamX, (int)(y + moveLY) + stabiliserY);
+    fill(#FFEEA4);
+    text("You have " + hopeChargesCurrent + " Hope Charges", (int)(RX + moveRX) + stabiliserHopeX, (int)(y + moveRY) + stabiliserY);
+    fill(#D5FFE1);
+    text("You have " + zealChargesCurrent + " Zeal Charges", (int)(DX + moveDX) + stabiliserZealX, (int)(DY + moveDY) + h + -stabiliserY+15);
+  }
+
+  void probabilityMenu()
+  {
+    if (firstHopePurchase)
+    {
+      int probabilityMenuX = (int)caveBarX;
+      int probabilityMenuY = (int)caveBarY + (int)caveBarH + 20;
+      int probabilityMenuW = 500;
+      int probabilityMenuH = 180;
+      int stabiliseY = 40;
+
+      fill(70);
+      rect(probabilityMenuX, probabilityMenuY, probabilityMenuW, probabilityMenuH);
+      fill(255);
+      ///////
+      fill(#FFA4F4);
+      text("Dream Charges: ", probabilityMenuX + 20, probabilityMenuY + 40);
+      text("??" + "%", probabilityMenuX + 20 + textWidth("Dream Charges: "), probabilityMenuY + 40);
+
+      fill(#FFEEA4);
+      text("Hope Charges: ", probabilityMenuX + 20, probabilityMenuY + 40 + stabiliseY);
+      text("??" + "%", probabilityMenuX + 20 + textWidth("Hope Charges: "), probabilityMenuY + 40 + stabiliseY);
+
+      fill(#D5FFE1);
+      text("Zeal Charges: ", probabilityMenuX + 20, probabilityMenuY + 40 + 2*stabiliseY);
+      text("??" + "%", probabilityMenuX + 20 + textWidth("Zeal Charges: "), probabilityMenuY + 40 + 2*stabiliseY);
+
+      fill(200);
+      text("Available Probabilities: ", probabilityMenuX + 20, probabilityMenuY + 40 + 3*stabiliseY);
+      text(availablePercents + "%", probabilityMenuX + 20 + textWidth("Available Probabilities: "), probabilityMenuY + 40 + 3*stabiliseY);
+
+      ///////
+    }
   }
 }
