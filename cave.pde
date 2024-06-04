@@ -25,10 +25,15 @@ class Cave
   int strLinesW = 1;
   boolean textCostL, textCostR;
   boolean firstHopePurchase;
+  boolean pressedL, pressedR, pressedD;
 
 
   int dreamChargesCost, hopeChargesCost, zealChargesCost;
+
   float randomCharge;
+  int changerDream;
+  int changerHope;
+  int changerZeal;
 
   int dreamChargesCurrent;
   int hopeChargesCurrent;
@@ -45,15 +50,18 @@ class Cave
   String hopeNewTextDecrease = "???";
   String openTheHopeMenu =  "Open the posibility menu";
 
+  boolean buttonDreamMinusPressed, buttonDreamPlusPressed, buttonHopeMinusPressed, buttonHopePlusPressed, buttonZealMinusPressed, buttonZealPlusPressed;
+
   public Cave()
   {
     caveFilled = 0;
     originalX = originalY = 0;
     moveLX = moveLY = moveRX = moveRY = 0;
     moveLX = moveLY = moveRX = moveRY = moveDX = moveDY = 0;
+    pressedL = pressedR = pressedD = false;
 
-    dreamChargesCurrent = 50;
-    hopeChargesCurrent = 50;
+    dreamChargesCurrent = 1;  //45
+    hopeChargesCurrent = 3; //66
     zealChargesCurrent = 0;
 
     dreamDecreaseSeconds = 0;
@@ -68,6 +76,10 @@ class Cave
     dreamProbability = 20;
     hopeProbability = 20;
     zealProbability = 10;
+
+    changerDream = changerHope = changerZeal = 0;
+
+    buttonDreamMinusPressed = buttonDreamPlusPressed = buttonHopeMinusPressed = buttonHopePlusPressed = buttonZealMinusPressed = buttonZealPlusPressed = false;
   }
 
 
@@ -141,17 +153,17 @@ class Cave
         buttonHasBeenPressed = false;
         lineColour = 0;
         strLinesW = 1;
-        randomCharge = int(random(10));
+        randomCharge = int(random(20));
 
-        if (randomCharge == 0 || randomCharge == 1)
+        if (randomCharge <= 3 + changerDream)
         {
           dreamChargesCurrent += 1;
         }
-        if (randomCharge == 2 || randomCharge == 3)
+        if (randomCharge >= 4 + changerDream && randomCharge <= 7 + changerDream + changerHope)
         {
           hopeChargesCurrent += 1;
         }
-        if (randomCharge == 4)
+        if (randomCharge >= 8 + changerDream + changerHope && randomCharge <= 9 + changerDream + changerHope + changerZeal)
         {
           zealChargesCurrent += 1;
         }
@@ -159,9 +171,6 @@ class Cave
     }
 
     wasCaveMousePressed = mousePressed;
-    //println(increment);
-    println(increment);
-    println(seconds);
   }
 
   void resourceButtons() {
@@ -242,33 +251,45 @@ class Cave
     if (mousePressed && mouseX >= LX+moveLX && mouseX <= LX+moveLX+w && mouseY >= y+moveLY && mouseY <= y+moveLY+h)
     {
       buttonCavePurchaseLColour = #94D1FF;
+      pressedL = true;
+    } else if (!mousePressed && pressedL)
+    {
       if (dreamChargesCurrent >= dreamChargesCost && seconds >= 4)
       {
-        dreamChargesCurrent -= 1;
+        dreamChargesCurrent -= dreamChargesCost;
         seconds -= 2;
         dreamChargesCost += 1;
       }
-    } else
-    {
       buttonCavePurchaseLColour = #CCE9FF;
+      pressedL = false;
     }
-    if (mousePressed && mouseX >= RX+moveRX && mouseX <= RX+moveRX+w && mouseY >= y+moveRY && mouseY <= y+moveRY+h && hopeChargesCurrent >= hopeChargesCost)
+
+
+    if (mousePressed && mouseX >= RX+moveRX && mouseX <= RX+moveRX+w && mouseY >= y+moveRY && mouseY <= y+moveRY+h && currentNothing >= 5)
     {
       buttonCavePurchaseRColour = #94D1FF;
-      hopeChargesCurrent -= 1;
-      hopeChargesCost += 1;
-      openTheHopeMenu = "Decrease Nothing: -5%";
-      if (firstHopePurchase && currentNothing >= 5)
-      {
-        currentNothing -= 5;
-        availablePercents += 5;
-      }
-      hopeNewTextDecrease = "Current Nothing: " + currentNothing + "%";
-      firstHopePurchase = true;
-    } else
+      pressedR = true;
+    } else if (!mousePressed && pressedR)
     {
+      if (hopeChargesCurrent >= hopeChargesCost)
+      {
+        firstHopePurchase = true;
+        hopeChargesCurrent -= hopeChargesCost;
+        hopeChargesCost += 1;
+        openTheHopeMenu = "Decrease Nothing: -5%";
+        if (firstHopePurchase)
+        {
+          currentNothing -= 5;
+          availablePercents += 5;
+        }
+        hopeNewTextDecrease = "Current Nothing: " + currentNothing + "%";
+      }
       buttonCavePurchaseRColour = #CCE9FF;
+
+      pressedR = false;
     }
+
+
     if (mousePressed && mouseX >= DX+moveDX && mouseX <= DX+moveDX+w && mouseY >= DY+moveDY && mouseY <= DY+moveDY+h)
     {
       buttonCavePurchaseDColour = #94D1FF;
@@ -277,22 +298,25 @@ class Cave
       buttonCavePurchaseDColour = #CCE9FF;
     }
 
-    if (seconds != 2)
-      fill(buttonCavePurchaseLColour);
-    else
+    if (seconds <= 2)
     {
-      fill(#FFA4F4);
+      buttonCavePurchaseLColour = #FFA4F4;
       textCostL = false;
+    }
+
+    if (currentNothing <= 0)
+    {
+      buttonCavePurchaseRColour = #FFEEA4;
     }
     //////////////////////////////////////////////////////////////////////////////////////
 
+
+    fill(buttonCavePurchaseLColour);
     rect(LX + moveLX, y + moveLY, w, h);
 
-
-
     fill(buttonCavePurchaseRColour);
-
     rect(RX + moveRX, y + moveRY, w, h);
+
     fill(buttonCavePurchaseDColour);
     rect(DX + moveDX, DY + moveDY, w, h);
 
@@ -353,6 +377,7 @@ class Cave
 
   void probabilityMenu()
   {
+
     if (firstHopePurchase)
     {
       int probabilityMenuX = (int)caveBarX;
@@ -373,25 +398,55 @@ class Cave
       int zealColourMinus = #ACFFC5;
       int zealColourPlus = #ACFFC5;
 
-
       fill(70);
       rect(probabilityMenuX, probabilityMenuY, probabilityMenuW, probabilityMenuH);
       fill(255);
       ///////
-      fill(#FFA4F4);
-      text("Dream Charges: ", probabilityMenuX + 20, probabilityMenuY + 40); //40
-      text(dreamProbability + "%", probabilityMenuX + 20 + textWidth("Dream Charges: "), probabilityMenuY + 40);
       if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= butProbY && mouseY <= butProbY + butProbH)
+      {
         dreamColourMinus = #FFC3F8;
-      else
-        dreamColourMinus = #FFDFFC;
-      fill(dreamColourMinus); //FFC3F8
-      rect(butProbX, butProbY, butProbW, butProbH, 10); //dream minus
+        if (!buttonDreamMinusPressed)
+          buttonDreamMinusPressed = true;
+      } else if (!mousePressed && buttonDreamMinusPressed)
+      {
+        if (changerDream >= 1)
+        {
+          changerDream -= 1;
+          availablePercents += 5;
+        }
+        buttonDreamMinusPressed = false;
+      }
+
       if (mousePressed && mouseX >= (butProbX) + butProbW + 20 && mouseX <= (butProbX + butProbW)+butProbW + 20
         && mouseY >= butProbY && mouseY <= butProbY + butProbH)
+      {
         dreamColourPlus= #FFC3F8;
-      else
+        if (!buttonDreamPlusPressed)
+          buttonDreamPlusPressed = true;
+      } else if (!mousePressed && buttonDreamPlusPressed)
+      {
+        if (availablePercents >= 5)
+        {
+          changerDream += 1;
+          availablePercents -= 5;
+        }
+        buttonDreamPlusPressed = false;
+      } else
         dreamColourPlus = #FFDFFC;
+
+      println(changerHope);
+      //println(buttonDreamPlusPressed);
+      //println(availablePercents >= 5);
+
+
+
+      fill(#FFA4F4);
+      text("Dream Charges: ", probabilityMenuX + 20, probabilityMenuY + 40); //40
+      text(dreamProbability+changerDream*5 + "%", probabilityMenuX + 20 + textWidth("Dream Charges: "), probabilityMenuY + 40);
+
+      fill(dreamColourMinus); //FFC3F8
+      rect(butProbX, butProbY, butProbW, butProbH, 10); //dream minus
+
       fill(dreamColourPlus);
       rect(butProbX + butProbW + 20, butProbY, butProbW, butProbH, 10); //dream plus
 
@@ -403,21 +458,47 @@ class Cave
       textSize(25);
 
 
+      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= (butProbY) + stabiliseY && mouseY <= (butProbY + butProbH) + stabiliseY)
+      {
+        hopeColourMinus = #FFF66B;
+        if (!buttonHopeMinusPressed)
+          buttonHopeMinusPressed = true;
+      } else if (!mousePressed && buttonHopeMinusPressed)
+      {
+        if (changerHope >= 1)
+        {
+          changerHope -= 1;
+          availablePercents += 5;
+        }
+        buttonHopeMinusPressed = false;
+      } else
+        hopeColourMinus = #FFFFC0;
+
+      if (mousePressed && mouseX >= (butProbX) + butProbW + 20 && mouseX <= (butProbX + butProbW)+butProbW + 20
+        && mouseY >= (butProbY) + stabiliseY && mouseY <= (butProbY + butProbH) + stabiliseY)
+      {
+        hopeColourPlus = #FFF66B;
+        if (!buttonHopePlusPressed)
+          buttonHopePlusPressed = true;
+      } else if (!mousePressed && buttonHopePlusPressed)
+      {
+        if (availablePercents >= 5)
+        {
+          changerHope += 1;
+          availablePercents -= 5;
+        }
+        buttonHopePlusPressed = false;
+      } else
+        hopeColourPlus = #FFFFC0;
+
+
       fill(#FFEEA4);
       text("Hope Charges: ", probabilityMenuX + 20, probabilityMenuY + 40 + stabiliseY);
-      text(hopeProbability + "%", probabilityMenuX + 20 + textWidth("Hope Charges: "), probabilityMenuY + 40 + stabiliseY);
-      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= (butProbY) + stabiliseY
-        && mouseY <= (butProbY + butProbH) + stabiliseY)
-        hopeColourMinus = #FFF66B;
-      else
-        hopeColourMinus = #FFFFC0;
+      text(hopeProbability+changerHope*5 + "%", probabilityMenuX + 20 + textWidth("Hope Charges: "), probabilityMenuY + 40 + stabiliseY);
+
       fill(hopeColourMinus); //FFFFA4
       rect(butProbX, butProbY + stabiliseY, butProbW, butProbH, 10);
-      if (mousePressed && mouseX >= (butProbX) + butProbW + 20 && mouseX <= (butProbX + butProbW) + butProbW + 20
-        && mouseY >= (butProbY) + stabiliseY && mouseY <= (butProbY + butProbH) + stabiliseY)
-        hopeColourPlus = #FFF66B;
-      else
-        hopeColourPlus = #FFFFC0;
+
       fill(hopeColourPlus);
       rect(butProbX + butProbW + 20, butProbY + stabiliseY, butProbW, butProbH, 10);
 
@@ -429,21 +510,57 @@ class Cave
       textSize(25);
 
 
+
+
+
+
+
+
+
+
+
+      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= (butProbY) + 2*stabiliseY && mouseY <= (butProbY + butProbH) + 2*stabiliseY)
+      {
+        zealColourMinus = #ACFFC5;
+        if (!buttonZealMinusPressed)
+          buttonZealMinusPressed = true;
+      } else if (!mousePressed && buttonZealMinusPressed)
+      {
+        if (changerZeal >= 1)
+        {
+          changerZeal -= 1;
+          availablePercents += 5;
+        }
+        buttonZealMinusPressed = false;
+      } else
+        zealColourMinus = #E5FFED;
+
+      if (mousePressed && mouseX >= (butProbX) + butProbW + 20 && mouseX <= (butProbX + butProbW)+butProbW + 20
+        && mouseY >= (butProbY) + 2*stabiliseY && mouseY <= (butProbY + butProbH) + 2*stabiliseY)
+      {
+        zealColourPlus = #ACFFC5;
+        if (!buttonZealPlusPressed)
+          buttonZealPlusPressed = true;
+      } else if (!mousePressed && buttonZealPlusPressed)
+      {
+        if (availablePercents >= 5)
+        {
+          changerZeal += 1;
+          availablePercents -= 5;
+        }
+        buttonZealPlusPressed = false;
+      } else
+        zealColourPlus = #E5FFED;
+
+
+
       fill(#D5FFE1);
       text("Zeal Charges: ", probabilityMenuX + 20, probabilityMenuY + 40 + 2*stabiliseY);
-      text(zealProbability + "%", probabilityMenuX + 20 + textWidth("Zeal Charges: "), probabilityMenuY + 40 + 2*stabiliseY);
-      if (mousePressed && mouseX >= butProbX && mouseX <= butProbX + butProbW && mouseY >= (butProbY) + 2*stabiliseY
-        && mouseY <= (butProbY + butProbH) + 2*stabiliseY)
-        zealColourMinus = #ACFFC5;
-      else
-        zealColourMinus = #E5FFED;
+      text(zealProbability + changerZeal*5 + "%", probabilityMenuX + 20 + textWidth("Zeal Charges: "), probabilityMenuY + 40 + 2*stabiliseY);
+
       fill(zealColourMinus); //FFFFA4
       rect(butProbX, butProbY + 2*stabiliseY, butProbW, butProbH, 10);
-      if (mousePressed && mouseX >= (butProbX) + butProbW + 20  && mouseX <= (butProbX + butProbW) + butProbW + 20
-        && mouseY >= (butProbY) + 2*stabiliseY && mouseY <= (butProbY + butProbH) + 2*stabiliseY)
-        zealColourPlus = #ACFFC5;
-      else
-        zealColourPlus = #E5FFED;
+
       fill(zealColourPlus); //FFFFA4
       rect(butProbX + butProbW + 20, butProbY + 2*stabiliseY, butProbW, butProbH, 10);
       fill(#FF5B5B);
