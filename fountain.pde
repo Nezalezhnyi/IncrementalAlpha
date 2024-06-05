@@ -67,7 +67,7 @@ class Fountain
       && mouseY > (y - buttonH - 20) && mouseY < (y - buttonH - 20) + buttonH)
     {
       bg = 175;
-      if (alphas - alphas/10 > 0 && filled < filledMax)
+      if (resource - resource/10 > 0 && filled < filledMax)
       {
         filled += resource/100;
         resource -= resource/100; //alphas -> resource (alphas does not decrease)

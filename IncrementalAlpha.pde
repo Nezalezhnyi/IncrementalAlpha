@@ -1,11 +1,17 @@
 float alphas =  12000;
-float betas = 0;
+float a;
+
+float betas = 2;
+float b = 10;
 
 Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, alphas, "α");
 Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, 5, betas, "β");
 
 Cave c1 = new Cave();
 Cave c2 = new Cave();
+
+Resources r1 = new Resources(alphas, "α", 100, #EFFF66, false, 0, 255, 2);
+Resources r2 = new Resources(betas, "β", 1050, #A2CEFF, false, 0, 255, 10);
 
 void setup()
 {
@@ -38,6 +44,7 @@ void setup()
   buttonfountainWidth = 160;
   
   a = 2;
+  b = 10;
 }
 
 
@@ -47,7 +54,8 @@ void draw()
   background(120);
   if (InterfaceParticlesShowed)
   {
-    currencyType(button_bg_alphaClots, 8, 250, alphaClots, "Unite α-particles");
+    r1.currencyType(8, 250);
+    r2.currencyType(8, 350);
   }
 
   if (InterfaceFountainsShowed)
@@ -76,10 +84,16 @@ void draw()
   c1.mainButton();
   //)))
   
+  r1.currentAlphaParticles();
+  r1.formatAlphaParticlesText();
+  r1.alphaParticlesProductionSpeed();
+  r1.mouseControl(40, 250, 140, 50);
   
-  currentAlphaParticles();
-  formatAlphaParticlesText();
-  alphaParticlesProductionSpeed();
+  r2.currentBetaParticles();
+  r2.formatAlphaParticlesText();
+  r2.alphaParticlesProductionSpeed();
+  r2.mouseControl(40, 250+100, 140, 50);
+  
   currentLocation();
   lowerButtons();
   
@@ -93,67 +107,7 @@ void draw()
 }
 
 
-void currentAlphaParticles()
-{
-  alphas += alphaIncreaser1*(alphaClots/100);
 
-  if (alphas > maxalphas) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
-    maxalphas = alphas;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
-
-  thresholdUpgrades = (int)(log(maxalphas)/log(a))+1; //log₂(maxalphas)  // the power of a (initially 2) of the cost of the next factory
-
-  if (thresholdUpgrades != pthresholdUpgrades) //if the current thresholdUpgrades doesn`t equal himself previous (it happens when we buy a new factory)
-  {
-
-
-    pthresholdUpgrades = thresholdUpgrades; //now we don`t have previous thresholdUpgrades, they`re equal. Now we just wait for the next changing to repeat the loop
-  }
-}
-
-
-void formatAlphaParticlesText()
-{
-  int exponent;
-  if (alphas != 0)
-  {
-    exponent = (int)Math.log10(alphas);
-  } else
-  {
-    exponent = 0;
-  }
-
-  if (alphas <= 100000)
-  {
-
-    fill(0);
-    textSize(70);
-    text("You have ", 140+470, 90);
-    fill(#EFFF66);
-    text(round(alphas), 140+470 + textWidth("You have "), 90);
-    fill(0);
-    text(" α-particles", 140+470 + textWidth("You have ") + textWidth(str((int)alphas)), 90);
-  } else
-  {
-    fill(0);
-    float mantissa = alphas / pow(10, exponent);
-    text("You have ", 140+470, 90);
-    fill(#EFFF66);
-    text(nf(mantissa, 0, 1) + "e" + exponent, 140+470 + textWidth("You have "), 90);
-    fill(0);
-    text(" α-particles", 140+470 + textWidth("You have ") + textWidth(nf(mantissa, 0, 1) + "e" + exponent), 90);
-  }
-}
-
-
-
-void alphaParticlesProductionSpeed() {
-  float deltaAlphas = alphas - lastAlphaCount;
-  alphaParticlesPerSecond = deltaAlphas * 60;
-  textSize(30);
-  fill(30);
-  text("You are gaining " + nf(alphaParticlesPerSecond, 0, 1) + " α-particles per second", 700, 145);
-  lastAlphaCount = alphas;
-}
 
 void currentLocation()
 {
@@ -167,7 +121,7 @@ void currentLocation()
 
 void dialogs()
 {
-  if (alphaClots == 5 && page != 21)
+  if (/*alphaClots == 5 &&*/ page != 21)
   {
     dialog = true;
     if (page == 8)
@@ -228,64 +182,7 @@ void dialogs()
   }
 }
 
-void currencyType (int bg, int textbuttonX, int rectY, float currency, String buyName)
-{
-  ///////THE RED-GREEN TEXT
-  textSize(20);
-  float distClots = textWidth("You have ") + textWidth(nf(currency, 0, 0)) + textWidth(" clots of α-energy");
-  float distTime = textWidth("Make a clot of α-energy with ") + textWidth(str((int)pow(a, (int)alphaClots+1))) + textWidth(" α-particles");
-  int stabiliserClots = 240;
-  int stabiliserTime = 20;
-  if (alphas < (int)pow(a, (int)alphaClots+1))
-  {
-    strokeWeight(3);
-    stroke(#FF5B5B);
-    fill(#FF5B5B);
-    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
-  } else
-  {
-    strokeWeight(3);
-    stroke(#3CFF63);
-    fill(#3CFF63);
-    text("Make a clot of α-energy with " + (int)pow(a, (int)alphaClots+1) + " α-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
-  }
 
-
-  ///////THE BUTTON
-  fill(bg);
-  rect(40, rectY, 160, 50, 10); //rectY is initially += 100
-  fill(0);
-  textSize(20);
-  text(buyName, 40+textbuttonX, 250+33 + (rectY-250) );
-
-  fill(0);
-  textSize(20);
-  //if (alphas < pow(2,(float)alphaFactories)
-  text("You have ", 52+153+10, 250+33 + (rectY-250));
-  fill(#66FFFF);
-  text(nf(currency, 0, 0), 52+153+10+textWidth("You have "), 250+33 + (rectY-250));
-  fill(0);
-  text(" clots of α-energy", (52+153+3+10)+textWidth("You have ")+textWidth(nf(currency, 0, 0)), 250+33 + (rectY-250));
-
-  strokeWeight(1);
-  stroke(0);
-
-  float timeToNextAlphaClot = ((int)pow(a, (int)alphaClots+1) - alphas) / alphaParticlesPerSecond;
-  fill(255);
-  if (alphaParticlesPerSecond == 0)
-    text("Accumulation paused or not started", 100+153+240+390, 250+33 + (rectY-250));
-  else
-  {
-    if (timeToNextAlphaClot > 0)
-    {
-      int minutes = (int)(timeToNextAlphaClot / 60); // Calculate full minutes
-      float seconds = (timeToNextAlphaClot % 60); // Calculate remaining seconds
-      text("You're gonna be able to buy next clot in " + minutes + " minutes " + nf(seconds, 0, 1) + " seconds", (distClots+stabiliserClots) + distTime+stabiliserTime, 250+33 + (rectY-250));
-    } else {
-      text("You're gonna be able to buy next clot RIGHT NOW!", (distClots+stabiliserClots) + distTime+stabiliserTime, 250+33 + (rectY-250));
-    }
-  }
-}
 
 void lowerButtons()
 {

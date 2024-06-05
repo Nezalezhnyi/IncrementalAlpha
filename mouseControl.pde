@@ -14,15 +14,7 @@ void mousePressed()
   rectdialogbuttonHeight = textdialogbuttonHeight + 20;
 
 
-  if (mouseX >= 40 && mouseX <= 180 && mouseY >= 250 && mouseY <= 300)
-  {
-
-    if (alphas - pow(a, (float)alphaClots+1) >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
-    {
-      button_bg_alphaClots = 175;
-      buttonPressed_alphaClots = true;
-    }
-  }
+  
 
 
   if (mouseX >= rectdialogbuttonX && mouseX <= rectdialogbuttonX+rectdialogbuttonWidth && mouseY >= rectdialogbuttonY && mouseY <= rectdialogbuttonY+rectdialogbuttonHeight)
@@ -66,14 +58,7 @@ void mousePressed()
 
 
 void mouseReleased() {
-  if (buttonPressed_alphaClots)
-  {
-    button_bg_alphaClots = 255;
-    buttonPressed_alphaClots = false;
-
-    alphaClots += 1;
-    alphas -= pow(a, (float)alphaClots);
-  }
+  
 
 
   if (lowerButtonParticlesBg_Pressed)

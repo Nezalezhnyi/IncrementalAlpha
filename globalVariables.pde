@@ -6,18 +6,6 @@ String yourlocation = "";
 String dialogbeginning = "Oh, dear, there must be something here, just one—just one! I can't keep searching like this. When will I finally escape this cursed place... When will I, when will I...";
 String answerbutton = "Uhm, hi?";
 
-
-
-float maxalphas = 2;
-float alphaClots = 0;
-
-int button_bg_alphaClots = 255;
-boolean buttonPressed_alphaClots = false;
-
-double thresholdUpgrades;
-double pthresholdUpgrades = thresholdUpgrades;
-
-float a;
 float newPrice = 0;
 int alphaIncreaser1 = 1;
 
@@ -37,9 +25,7 @@ float rectdialogbuttonWidth;
 float textdialogbuttonHeight;
 float rectdialogbuttonHeight;
 
-float alphaParticlesPerSecond = 0;
 
-float lastAlphaCount = 0;
 
 int lowerButtonX;
 int lowerButtonY;
