@@ -305,7 +305,6 @@ class Cave
         {
           zealChargesCurrent -= 30;
           zealHasBeenBought = true;
-          //println("hello");
         }
         buttonCavePurchaseDColour = #CCE9FF;
         pressedD = false;
@@ -330,8 +329,7 @@ class Cave
       textCostD = false;
     }
 
-    println(zealChargesCurrent >= 30 && !zealHasBeenBought);
-    println(zealChargesCurrent);
+
     //////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -484,7 +482,7 @@ class Cave
       } else
         dreamColourPlus = #FFDFFC;
 
-      println(changerHope);
+    
       //println(buttonDreamPlusPressed);
       //println(availablePercents >= 5);
 

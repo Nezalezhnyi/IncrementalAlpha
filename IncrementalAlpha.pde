@@ -1,4 +1,8 @@
-Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600);
+float alphas =  12000;
+float betas = 0;
+
+Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, alphas, "α");
+Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, 5, betas, "β");
 
 Cave c1 = new Cave();
 Cave c2 = new Cave();
@@ -32,6 +36,8 @@ void setup()
   buttonfountainHeight = 40;
   buttonfountainY = fountainY + fountainHeight - buttonfountainHeight;
   buttonfountainWidth = 160;
+  
+  a = 2;
 }
 
 
@@ -50,8 +56,15 @@ void draw()
     //f2.drawIt();
     f1.act();
     //f2.act();
-    f1.tasks();
+    f1.tasksAlpha();
+    
+    if (achieved4)
+    {
+    f2.drawIt();
+    f2.act();
+    }
   }
+  
   
   ///(((
   if (InterfaceCaveShowed)
