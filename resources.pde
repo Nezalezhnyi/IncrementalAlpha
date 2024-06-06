@@ -6,6 +6,7 @@ class Resources
   String resourceName;
   boolean resourcePressed;
   float resourceClots;
+  int alphaChanger, betaChanger;
 
   public Resources(float r, String rn, int textX, int colour, boolean pressed, int clots, int bgCol, int max)
   {
@@ -24,6 +25,18 @@ class Resources
     lastResourceCount = 0;
     bgColour = 255;
     maxResource = 2;
+    alphaChanger = (int)pow(a, (int)resourceClots+1);
+    
+  }
+
+  void addResource(float r)
+  {
+    resource += r;
+  }
+
+  float getResource()
+  {
+    return resource;
   }
 
 
@@ -34,31 +47,17 @@ class Resources
     if (resource > maxResource) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
       maxResource = resource;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
 
-    thresholdUpgrades = (int)(log(maxResource)/log(a))+1; //log₂(maxalphas)  // the power (initially 2) of the cost of the next factory
-
-    if (thresholdUpgrades != pthresholdUpgrades) //if the current thresholdUpgrades doesn`t equal himself previous (it happens when we buy a new factory)
-    {
-
-
-      pthresholdUpgrades = thresholdUpgrades; //now we don`t have previous thresholdUpgrades, they`re equal. Now we just wait for the next changing to repeat the loop
-    }
+    
   }
-  
+
   void currentBetaParticles()
   {
-    resource += (resourceClots);
+    resource += (resourceClots)/60;
 
     if (resource > maxResource) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
       maxResource = resource;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
 
-    thresholdUpgrades = (int)(maxResource); //log₂(maxalphas)  // the power (initially 2) of the cost of the next factory
-
-    if (thresholdUpgrades != pthresholdUpgrades) //if the current thresholdUpgrades doesn`t equal himself previous (it happens when we buy a new factory)
-    {
-
-
-      pthresholdUpgrades = thresholdUpgrades; //now we don`t have previous thresholdUpgrades, they`re equal. Now we just wait for the next changing to repeat the loop
-    }
+    
   }
 
 

@@ -4,14 +4,17 @@ float a;
 float betas = 2;
 float b = 10;
 
-Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, alphas, "α");
-Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, 5, betas, "β");
+Resources r1 = new Resources(alphas, "α", 100, #EFFF66, false, 0, 255, 2);
+Resources r2 = new Resources(betas, "β", 1050, #A2CEFF, false, 0, 255, 10);
+
+Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, r1, "α");
+Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, 5, r2, "β");
+
 
 Cave c1 = new Cave();
 Cave c2 = new Cave();
 
-Resources r1 = new Resources(alphas, "α", 100, #EFFF66, false, 0, 255, 2);
-Resources r2 = new Resources(betas, "β", 1050, #A2CEFF, false, 0, 255, 10);
+
 
 void setup()
 {
@@ -69,8 +72,8 @@ void draw()
     if (achieved4)
     {
     f2.drawIt();
-    f2.act();
     }
+    f2.act();
   }
   
   

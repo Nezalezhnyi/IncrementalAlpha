@@ -1,7 +1,8 @@
 class Fountain
 {
   int x, y, w, h, bg, inc, strW, buttonH, colour, colourLast;
-  float filledMax, filled, resource;
+  float filledMax, filled;
+  Resources resource;
   int first, second, third, fourth, fifth;
   boolean filledBool;
   int firstBg, firstStroke, firstText, secondBg, secondStroke, secondText,
@@ -9,7 +10,7 @@ class Fountain
     fifthBg, fifthStroke, fifthText;
   String name;
 
-  public Fountain(int xx, int yy, int ww, int hh, int c, int cL, float r, String n)
+  public Fountain(int xx, int yy, int ww, int hh, int c, int cL, Resources r, String n)
   {
     x=xx;
     y=yy;
@@ -60,28 +61,25 @@ class Fountain
     text(round(filled) + " " + name, 80+100/2 - textfilledsize/2+x-w+20, (90+100 + 50) + 600 - 10);
   }
 
-  float act()
+  void act()
   {
     inc = 5;
     if (mousePressed && mouseX>x && mouseX < x+(w+strW)
       && mouseY > (y - buttonH - 20) && mouseY < (y - buttonH - 20) + buttonH)
     {
       bg = 175;
-      if (resource - resource/10 > 0 && filled < filledMax)
+      if (resource.getResource() - resource.getResource()/10 > 0 && filled < filledMax)
       {
-        filled += resource/100;
-        resource -= resource/100; //alphas -> resource (alphas does not decrease)
-        return resource;
+        filled += resource.getResource()/100;
+        resource.addResource(-resource.getResource()/100); //alphas -> resource (alphas does not decrease)
       } else
       {
         filled = (int)(filledMax);
         filledBool = true;
-        return 0;
       }
     } else
     {
       bg = 255;
-      return 0;
     }
   }
 
