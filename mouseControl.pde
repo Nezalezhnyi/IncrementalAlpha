@@ -3,8 +3,8 @@ String redbuttontext = "";
 boolean gameIsStarted = false;
 boolean InterfaceParticlesShowed = false;
 boolean InterfaceFountainsShowed = false;
-boolean InterfaceCaveShowed = true;
-boolean InterfaceAlchemyShowed = false;
+boolean InterfaceCaveShowed = false;
+boolean InterfaceAlchemyShowed = true;
 
 void mousePressed()
 {

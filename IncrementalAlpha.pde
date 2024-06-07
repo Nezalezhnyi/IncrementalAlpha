@@ -81,6 +81,57 @@ void draw()
     }
   }
 
+  ///(((
+  c1.mainButton(); //should be achieved4
+  if (InterfaceCaveShowed)
+  {
+    c1.barCircle();
+    c1.resourceButtons(); //((90+100+50)+400 - the circle's center, 200 - the circle's radius, 40 - 1/2 of the rect's height
+    c1.probabilityMenu();
+  }
+
+  if (InterfaceAlchemyShowed)
+  {
+    al1.buttonToCave();
+    
+    
+    al1.alchemyButtons(850,200); //Dream
+    al1.alchemyButtons(100,250); //Alpha
+    al1.alchemyButtons(width-100-200,250); //Beta    //-100 - x-coordinate, 200 - the width of rects
+    al1.alchemyButtons(850,800); //Gamma
+    al1.alchemyButtons(100,750); //Hope
+    al1.alchemyButtons(width-100-200,750); //Zeal
+    
+    al1.alchemyButtons((850+100)/2, 350); //auto-alpha
+    al1.alchemyButtons(100, (250 + 750)/2); //alpha-fountain
+    al1.alchemyButtons((850+100)/2, 650); //gamma-fountain
+    
+    al1.alchemyButtons((850+(width-100-200))/2, 350); //auto-beta
+    al1.alchemyButtons(width-100-200, (250 + 750)/2); //beta-fountain
+    al1.alchemyButtons((850+(width-100-200))/2, 650); //auto-gamma
+    
+    al1.alchemyButtons((850+100)/2, (350+650)/2); //singularity
+    al1.alchemyButtons((850+(width-100-200))/2, (350+650)/2); //auto-sphere-charging
+    
+    al1.alchemyButtons(850, (200 + 800)/2); //delta-particles
+    
+    
+    
+    
+    
+    
+    
+  }
+
+
+
+
+
+  r1.currentAlphaParticles();
+  r1.formatAlphaParticlesText();
+  r1.alphaParticlesProductionSpeed();
+  r1.mouseControl(40, 250, 140, 50);
+  
   if (achieved4)
   {
     r2.currentBetaParticles();
@@ -88,26 +139,6 @@ void draw()
     r2.alphaParticlesProductionSpeed();
     r2.mouseControl(40, 250+100, 140, 50);
   }
-
-  ///(((
-  if (InterfaceCaveShowed)
-  {
-    c1.barCircle();
-    c1.resourceButtons(); //((90+100+50)+400 - the circle's center, 200 - the circle's radius, 40 - 1/2 of the rect's height
-    c1.probabilityMenu();
-  }
-  
-  if(InterfaceAlchemyShowed)
-  {
-    al1.buttonToCave();
-  }
-  
-  c1.mainButton();
-  r1.currentAlphaParticles();
-  r1.formatAlphaParticlesText();
-  r1.alphaParticlesProductionSpeed();
-  r1.mouseControl(40, 250, 140, 50);
-
 
 
   currentLocation();
