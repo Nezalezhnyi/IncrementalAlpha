@@ -1,11 +1,13 @@
-float alphas =  12000;
+float alphas =  2;
 float a;
 
-float betas = 2;
+float betas = 10;
 float b = 10;
 
-Resources r1 = new Resources(alphas, "α", 100, #EFFF66, false, 0, 255, 2);
-Resources r2 = new Resources(betas, "β", 1050, #A2CEFF, false, 0, 255, 10);
+float resourceClots;
+
+Resources r1 = new Resources(alphas, "α", 100, #EFFF66, false, 0, 255, 0);
+Resources r2 = new Resources(betas, "β", 1050, #A2CEFF, false, 0, 255, 1);
 
 Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, r1, "α");
 Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, 5, r2, "β");

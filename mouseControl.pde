@@ -1,8 +1,8 @@
 int page = 1;
 String redbuttontext = "";
 boolean gameIsStarted = false;
-boolean InterfaceParticlesShowed = false;
-boolean InterfaceFountainsShowed = true;
+boolean InterfaceParticlesShowed = true;
+boolean InterfaceFountainsShowed = false;
 boolean InterfaceCaveShowed = false;
 
 void mousePressed()

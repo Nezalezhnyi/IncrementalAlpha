@@ -7,8 +7,10 @@ class Resources
   boolean resourcePressed;
   float resourceClots;
   int alphaChanger, betaChanger;
+  int mechanic;
+  float threshold;
 
-  public Resources(float r, String rn, int textX, int colour, boolean pressed, int clots, int bgCol, int max)
+  public Resources(float r, String rn, int textX, int colour, boolean pressed, int clots, int bgCol, int mech)
   {
     resource = r;
     resourceName = rn;
@@ -17,7 +19,7 @@ class Resources
     resourceColour = colour;
     resourceClots = clots;
     bgColour = bgCol;
-    maxResource = max;
+    mechanic = mech;
 
     pthresholdUpgrades = thresholdUpgrades;
     maxResource = 2;
@@ -25,7 +27,8 @@ class Resources
     lastResourceCount = 0;
     bgColour = 255;
     maxResource = 2;
-    alphaChanger = (int)pow(a, (int)resourceClots+1);
+    threshold = 0;   
+    
     
   }
 
@@ -39,6 +42,7 @@ class Resources
     return resource;
   }
 
+  
 
   void currentAlphaParticles()
   {
@@ -79,7 +83,7 @@ class Resources
       textSize(70);
       text("You have ", youHaveResourceX, 90);
       fill(resourceColour);
-      text(round(resource), youHaveResourceX + textWidth("You have "), 90);
+      text((int)resource, youHaveResourceX + textWidth("You have "), 90);
       fill(0);
       text(" " + resourceName + "-particles", youHaveResourceX + textWidth("You have ") + textWidth(str((int)resource)), 90);
     } else
@@ -113,53 +117,60 @@ class Resources
     ///////THE RED-GREEN TEXT
     textSize(20);
     float distClots = textWidth("You have ") + textWidth(nf(resourceClots, 0, 0)) + textWidth(" clots of " + resourceName + "-energy");
-    float distTime = textWidth("Make a clot of " + resourceName + "-energy with ") + textWidth(str((int)pow(a, (int)resourceClots+1))) + textWidth(" " + resourceName + "-particles");
+    float distTime = textWidth("Make a clot of " + resourceName + "-energy with ") + textWidth(str(threshold)) + textWidth(" " + resourceName + "-particles");
     int stabiliserClots = 240;
     int stabiliserTime = 20;
-    if (resource < (int)pow(a, (int)resourceClots+1))
+    if (resource < threshold)
     {
       strokeWeight(3);
       stroke(#FF5B5B);
       fill(#FF5B5B);
-      text("Make a clot of " + resourceName + "-energy with " + (int)pow(a, (int)resourceClots+1) + " " + resourceName + "-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
+      text("Make a clot of " + resourceName + "-energy with " + round(threshold) + " " + resourceName + "-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
     } else
     {
       strokeWeight(3);
       stroke(#3CFF63);
       fill(#3CFF63);
-      text("Make a clot of " + resourceName + "-energy with " + (int)pow(a, (int)resourceClots+1) + " " + resourceName + "-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
+      text("Make a clot of " + resourceName + "-energy with " + round(threshold) + " " + resourceName + "-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
     }
 
 
     ///////THE BUTTON
     fill(bgColour);
-    rect(40, rectY, 160, 50, 10); //rectY is initially += 100
+    rect(40, rectY, 170, 50, 10); //rectY is initially += 100
     fill(0);
     textSize(20);
-    text("Unite " + resourceName + "-particles", 40+textbuttonX, 250+33 + (rectY-250) );
+    text("Merge " + resourceName + "-particles", 40+textbuttonX, 250+33 + (rectY-250) );
 
     fill(0);
     textSize(20);
     //if (alphas < pow(2,(float)alphaFactories)
-    text("You have ", 52+153+10, 250+33 + (rectY-250));
+    text("You have ", 52+153+10+10, 250+33 + (rectY-250));
     fill(#66FFFF);
-    text(nf(resourceClots, 0, 0), 52+153+10+textWidth("You have "), 250+33 + (rectY-250));
+    text(nf(resourceClots, 0, 0), 52+153+20+textWidth("You have "), 250+33 + (rectY-250));
     fill(0);
-    text(" clots of " + resourceName + "-energy", (52+153+3+10)+textWidth("You have ")+textWidth(nf(resourceClots, 0, 0)), 250+33 + (rectY-250));
+    text(" clots of " + resourceName + "-energy", (52+153+3+17)+textWidth("You have ")+textWidth(nf(resourceClots, 0, 0)), 250+33 + (rectY-250));
 
     strokeWeight(1);
     stroke(0);
 
-    float timeToNextAlphaClot = ((int)pow(a, (int)resourceClots+1) - resource) / resourceParticlesPerSecond;
+    float timeToNextResourceClot = 0;
+    switch (mechanic)
+    {
+      case 0: timeToNextResourceClot = (pow(a, resourceClots+1) - resource) / resourceParticlesPerSecond; break;
+      case 1: timeToNextResourceClot = (b*resourceClots+10 - resource) / resourceParticlesPerSecond; break;
+    }
+    
+    
     fill(255);
     if (resourceParticlesPerSecond == 0)
       text("Accumulation paused or not started", 100+153+240+390, 250+33 + (rectY-250));
     else
     {
-      if (timeToNextAlphaClot > 0)
+      if (timeToNextResourceClot > 0)
       {
-        int minutes = (int)(timeToNextAlphaClot / 60); // Calculate full minutes
-        float seconds = (timeToNextAlphaClot % 60); // Calculate remaining seconds
+        int minutes = (int)(timeToNextResourceClot / 60); // Calculate full minutes
+        float seconds = (timeToNextResourceClot % 60); // Calculate remaining seconds
         text("You're gonna be able to buy next clot in " + minutes + " minutes " + nf(seconds, 0, 1) + " seconds", (distClots+stabiliserClots) + distTime+stabiliserTime, 250+33 + (rectY-250));
       } else {
         text("You're gonna be able to buy next clot RIGHT NOW!", (distClots+stabiliserClots) + distTime+stabiliserTime, 250+33 + (rectY-250));
@@ -169,6 +180,14 @@ class Resources
 
   void mouseControl(int x, int y, int w, int h)
   {
+   
+    switch (mechanic)
+    {
+      case 0: threshold = pow(a, resourceClots+1); break;
+      case 1: threshold = resourceClots*b+10; break;
+    }
+    println(threshold);
+    
     if (mousePressed && !resourcePressed && mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h)
     {
       bgColour = 175;
@@ -176,10 +195,11 @@ class Resources
     } else if (!mousePressed && resourcePressed)
     {
       bgColour = 255;
-      if (resource - pow(a, (float)resourceClots+1) >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+      if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
       {
+        
+        resource -= threshold;
         resourceClots += 1;
-        resource -= pow(a, (float)resourceClots);
       }
       resourcePressed = false;
     }
