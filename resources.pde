@@ -217,7 +217,7 @@ class Resources
       threshold = resourceClots*b+10;
       break;
     }
-    println(threshold);
+
 
     if (mousePressed && !resourcePressed && mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h)
     {
@@ -235,4 +235,7 @@ class Resources
       resourcePressed = false;
     }
   }
+  
+  
+  
 }

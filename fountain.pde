@@ -36,8 +36,6 @@ class Fountain
     fill(colour);
     rect(x+strW-1, y+h-1, w-strW, -(filled/filledMax * h)+3); //the colour rect
 
-    strokeWeight(strW);
-
 
     if (!filledBool)
     {
@@ -49,7 +47,7 @@ class Fountain
       text("Fill", x+(w-textWidth("Fill"))/2, (y - buttonH - 20) + textH);
     } else
     {
-      fill(#EFFF66);
+      fill(colour);
       rect(x, y - buttonH - 20, w, buttonH, 15); //this is the button
       fill(0);
       float textH = 30;
@@ -59,6 +57,7 @@ class Fountain
 
     float textfilledsize = textWidth(str(round(filled))) + textWidth(" " + name);
     text(round(filled) + " " + name, 80+100/2 - textfilledsize/2+x-w+20, (90+100 + 50) + 600 - 10);
+    
   }
 
   void act()

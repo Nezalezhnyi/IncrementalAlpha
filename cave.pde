@@ -53,6 +53,9 @@ class Cave
 
   boolean buttonDreamMinusPressed, buttonDreamPlusPressed, buttonHopeMinusPressed, buttonHopePlusPressed, buttonZealMinusPressed, buttonZealPlusPressed;
 
+  int buttonToAlchemyColourBg;
+  boolean buttonToAlchemyPressed;
+
   public Cave()
   {
     caveFilled = 0;
@@ -83,12 +86,18 @@ class Cave
     buttonDreamMinusPressed = buttonDreamPlusPressed = buttonHopeMinusPressed = buttonHopePlusPressed = buttonZealMinusPressed = buttonZealPlusPressed = false;
 
     zealHasBeenBought = false;
+
+    buttonToAlchemyColourBg = 255;
+    buttonToAlchemyPressed = false;
   }
 
 
 
   void barCircle()
   {
+    int buttonW = 100;
+
+
     caveBarX = 50;
     caveBarY = (90+100+50);
     caveBarW = width-2*50;
@@ -98,6 +107,28 @@ class Cave
     caveButtonX = width/2-300/2;
     caveButtonY = caveBarY+100;
     caveButtonW = 300;
+
+    /////////////////////////////////BUTTON TO THE ALCHEMY
+    fill(buttonToAlchemyColourBg);
+    if (zealHasBeenBought && InterfaceCaveShowed)
+    {
+      rect(caveBarX+caveBarW-buttonW, height-160, buttonW, 100); //the alchemy button
+
+      if (mousePressed && mouseX >= caveBarX+caveBarW-buttonW && mouseX <= caveBarX+caveBarW-buttonW + buttonW && mouseY >= height-160 && mouseY <= height-160 + 100)
+      {
+        buttonToAlchemyColourBg = 180;
+        buttonToAlchemyPressed = true;
+      } else if (!mousePressed && buttonToAlchemyPressed)
+      {
+        buttonToAlchemyColourBg = 255;
+        InterfaceAlchemyShowed = true;
+        InterfaceCaveShowed = false;
+        buttonToAlchemyPressed = false;
+      }
+    }
+
+
+    /////////////////////////////////BUTTON TO THE ALCHEMY
 
 
     fill(180);
@@ -482,7 +513,7 @@ class Cave
       } else
         dreamColourPlus = #FFDFFC;
 
-    
+
       //println(buttonDreamPlusPressed);
       //println(availablePercents >= 5);
 
