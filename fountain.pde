@@ -141,7 +141,7 @@ class Fountain
     stroke(0);
 
 
-    if (filled > 5000)
+    if (filled >= 5000)
     {
       thirdBg = colour;
       thirdStroke = colour;

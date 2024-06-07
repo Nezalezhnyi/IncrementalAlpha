@@ -7,16 +7,17 @@ class Resources
   boolean resourcePressed;
   float resourceClots;
   int alphaChanger, betaChanger;
-  int mechanic;
+  int typeResource, mechanic;
   float threshold;
 
-  public Resources(float r, String rn, int textX, int colour, boolean pressed, int clots, int bgCol, int mech)
+  public Resources(float r, int tr, String rn, int textX, int colour, boolean pressed, int clots, int bgCol, int mech)
   {
     resource = r;
+    typeResource = tr;
     resourceName = rn;
-    resourcePressed = pressed;
     youHaveResourceX = textX;
     resourceColour = colour;
+    resourcePressed = pressed;
     resourceClots = clots;
     bgColour = bgCol;
     mechanic = mech;
@@ -27,9 +28,7 @@ class Resources
     lastResourceCount = 0;
     bgColour = 255;
     maxResource = 2;
-    threshold = 0;   
-    
-    
+    threshold = 0;
   }
 
   void addResource(float r)
@@ -42,7 +41,9 @@ class Resources
     return resource;
   }
 
-  
+
+
+
 
   void currentAlphaParticles()
   {
@@ -50,8 +51,6 @@ class Resources
 
     if (resource > maxResource) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
       maxResource = resource;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
-
-    
   }
 
   void currentBetaParticles()
@@ -60,13 +59,24 @@ class Resources
 
     if (resource > maxResource) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
       maxResource = resource;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
-
-    
   }
 
 
   void formatAlphaParticlesText()
   {
+    int stabiliser = 0;
+    if (achieved4)
+    {
+      switch(typeResource)
+      {
+      case 0:
+        stabiliser = -530;
+        break;
+      case 1:
+        stabiliser = -30;
+        break;
+      }
+    }
     int exponent;
     if (resource != 0)
     {
@@ -81,21 +91,21 @@ class Resources
 
       fill(0);
       textSize(70);
-      text("You have ", youHaveResourceX, 90);
+      text("You have ", youHaveResourceX + stabiliser, 90);
       fill(resourceColour);
-      text((int)resource, youHaveResourceX + textWidth("You have "), 90);
+      text((int)resource, youHaveResourceX + stabiliser + textWidth("You have "), 90);
       fill(0);
-      text(" " + resourceName + "-particles", youHaveResourceX + textWidth("You have ") + textWidth(str((int)resource)), 90);
+      text(" " + resourceName + "-particles", youHaveResourceX + stabiliser + textWidth("You have ") + textWidth(str((int)resource)), 90);
     } else
     {
       fill(0);
       textSize(70);
       float mantissa = resource / pow(10, exponent);
-      text("You have ", youHaveResourceX, 90);
+      text("You have ", youHaveResourceX + stabiliser, 90);
       fill(resourceColour);
-      text(nf(mantissa, 0, 1) + "e" + exponent, youHaveResourceX + textWidth("You have "), 90);
+      text(nf(mantissa, 0, 1) + "e" + exponent, youHaveResourceX + stabiliser + textWidth("You have "), 90);
       fill(0);
-      text(" " + resourceName + "-particles", youHaveResourceX + textWidth("You have ") + textWidth(nf(mantissa, 0, 1) + "e" + exponent), 90);
+      text(" " + resourceName + "-particles", youHaveResourceX + stabiliser + textWidth("You have ") + textWidth(nf(mantissa, 0, 1) + "e" + exponent), 90);
     }
   }
 
@@ -103,11 +113,24 @@ class Resources
 
   void alphaParticlesProductionSpeed()
   {
+    int stabiliser = 0;
+    if (achieved4)
+    {
+      switch(typeResource)
+      {
+      case 0:
+        stabiliser = -470;
+        break;
+      case 1:
+        stabiliser = 0;
+        break;
+      }
+    }
     float deltaAlphas = resource - lastResourceCount;
     resourceParticlesPerSecond = deltaAlphas * 60;
     textSize(30);
     fill(30);
-    text("You are gaining " + nf(resourceParticlesPerSecond, 0, 1) + " " + resourceName + "-particles per second", youHaveResourceX+30+textWidth(str((int)resource)), 145);
+    text("You are gaining " + nf(resourceParticlesPerSecond, 0, 1) + " " + resourceName + "-particles per second", youHaveResourceX+30+textWidth(str((int)resource)) + stabiliser, 145);
     lastResourceCount = resource;
   }
 
@@ -117,7 +140,7 @@ class Resources
     ///////THE RED-GREEN TEXT
     textSize(20);
     float distClots = textWidth("You have ") + textWidth(nf(resourceClots, 0, 0)) + textWidth(" clots of " + resourceName + "-energy");
-    float distTime = textWidth("Make a clot of " + resourceName + "-energy with ") + textWidth(str(threshold)) + textWidth(" " + resourceName + "-particles");
+    float distTime = textWidth("Make a clot of " + resourceName + "-energy with ") + textWidth(str(round(threshold))) + textWidth(" " + resourceName + "-particles");
     int stabiliserClots = 240;
     int stabiliserTime = 20;
     if (resource < threshold)
@@ -157,11 +180,15 @@ class Resources
     float timeToNextResourceClot = 0;
     switch (mechanic)
     {
-      case 0: timeToNextResourceClot = (pow(a, resourceClots+1) - resource) / resourceParticlesPerSecond; break;
-      case 1: timeToNextResourceClot = (b*resourceClots+10 - resource) / resourceParticlesPerSecond; break;
+    case 0:
+      timeToNextResourceClot = (pow(a, resourceClots+1) - resource) / resourceParticlesPerSecond;
+      break;
+    case 1:
+      timeToNextResourceClot = (b*resourceClots+10 - resource) / resourceParticlesPerSecond;
+      break;
     }
-    
-    
+
+
     fill(255);
     if (resourceParticlesPerSecond == 0)
       text("Accumulation paused or not started", 100+153+240+390, 250+33 + (rectY-250));
@@ -180,14 +207,18 @@ class Resources
 
   void mouseControl(int x, int y, int w, int h)
   {
-   
+
     switch (mechanic)
     {
-      case 0: threshold = pow(a, resourceClots+1); break;
-      case 1: threshold = resourceClots*b+10; break;
+    case 0:
+      threshold = pow(a, resourceClots+1);
+      break;
+    case 1:
+      threshold = resourceClots*b+10;
+      break;
     }
     println(threshold);
-    
+
     if (mousePressed && !resourcePressed && mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h)
     {
       bgColour = 175;
@@ -197,7 +228,7 @@ class Resources
       bgColour = 255;
       if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
       {
-        
+
         resource -= threshold;
         resourceClots += 1;
       }

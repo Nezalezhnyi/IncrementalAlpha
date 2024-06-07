@@ -1,13 +1,13 @@
-float alphas =  2;
+float alphas =  82000;
 float a;
 
-float betas = 10;
+float betas = 12220;
 float b = 10;
 
 float resourceClots;
 
-Resources r1 = new Resources(alphas, "α", 100, #EFFF66, false, 0, 255, 0);
-Resources r2 = new Resources(betas, "β", 1050, #A2CEFF, false, 0, 255, 1);
+Resources r1 = new Resources(alphas, 0, "α", 570, #EFFF66, false, 0, 255, 0);
+Resources r2 = new Resources(betas, 1, "β", 1050, #A2CEFF, false, 0, 255, 1);
 
 Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, r1, "α");
 Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, 5, r2, "β");
@@ -47,7 +47,7 @@ void setup()
   buttonfountainHeight = 40;
   buttonfountainY = fountainY + fountainHeight - buttonfountainHeight;
   buttonfountainWidth = 160;
-  
+
   a = 2;
   b = 10;
 }
@@ -60,7 +60,8 @@ void draw()
   if (InterfaceParticlesShowed)
   {
     r1.currencyType(8, 250);
-    r2.currencyType(8, 350);
+    if (achieved4)
+      r2.currencyType(8, 350);
   }
 
   if (InterfaceFountainsShowed)
@@ -70,15 +71,22 @@ void draw()
     f1.act();
     //f2.act();
     f1.tasksAlpha();
-    
+
     if (achieved4)
     {
-    f2.drawIt();
+      f2.drawIt();
+      f2.act();
     }
-    f2.act();
   }
-  
-  
+
+  if (achieved4)
+  {
+    r2.currentBetaParticles();
+    r2.formatAlphaParticlesText();
+    r2.alphaParticlesProductionSpeed();
+    r2.mouseControl(40, 250+100, 140, 50);
+  }
+
   ///(((
   if (InterfaceCaveShowed)
   {
@@ -88,20 +96,17 @@ void draw()
   }
   c1.mainButton();
   //)))
-  
+
   r1.currentAlphaParticles();
   r1.formatAlphaParticlesText();
   r1.alphaParticlesProductionSpeed();
   r1.mouseControl(40, 250, 140, 50);
-  
-  r2.currentBetaParticles();
-  r2.formatAlphaParticlesText();
-  r2.alphaParticlesProductionSpeed();
-  r2.mouseControl(40, 250+100, 140, 50);
-  
+
+
+
   currentLocation();
   lowerButtons();
-  
+
 
 
 
