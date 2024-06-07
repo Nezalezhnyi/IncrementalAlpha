@@ -6,6 +6,10 @@ float b = 10;
 
 float resourceClots;
 
+int dreamX, dreamY, hopeX, hopeY, zealX, zealY, alphaX, alphaY, autoAlphaX, autoAlphaY, alphaFX, alphaFY,
+  betaX, betaY, autoBetaX, autoBetaY, betaFX, betaFY, gammaX, gammaY, autoGammaX, autoGammaY, gammaFX,
+  gammaFY, singX, singY, sphereX, sphereY, deltaX, deltaY;
+
 Resources r1 = new Resources(alphas, 0, "α", 570, #EFFF66, false, 0, 255, 0);
 Resources r2 = new Resources(betas, 1, "β", 1050, #A2CEFF, false, 0, 255, 1);
 
@@ -52,6 +56,37 @@ void setup()
 
   a = 2;
   b = 10;
+
+  dreamX = 850;
+  dreamY = 200;
+  hopeX = 100;
+  hopeY = 750;
+  zealX = width-100-200;
+  zealY = 750;
+  alphaX = 100;
+  alphaY = 250;
+  autoAlphaX = (850+100)/2;
+  autoAlphaY = 350;
+  alphaFX = 100;
+  alphaFY = (250+750)/2;
+  betaX = width-100-200;
+  betaY = 250;
+  autoBetaX = (850+(width-100-200))/2;
+  autoBetaY = 350;
+  betaFX = width-100-200;
+  betaFY = (250+750)/2;
+  gammaX = 850;
+  gammaY = 800;
+  autoGammaX = (850+(width-100-200))/2;
+  autoGammaY = 650;
+  gammaFX = (850+100)/2;
+  gammaFY = 650;
+  singX = (850+100)/2;
+  singY = (350+650)/2;
+  sphereX = (850+(width-100-200))/2;
+  sphereY = (350+650)/2;
+  deltaX = 850;
+  deltaY = (200+800)/2;
 }
 
 
@@ -93,31 +128,51 @@ void draw()
   if (InterfaceAlchemyShowed)
   {
     al1.buttonToCave();
+
+
+    al1.alchemyButtons(dreamX, dreamY, "Dream", 30, dreamX+52, dreamY+35); //Dream
+    al1.alchemyButtons(alphaX, alphaY, "α", 40, alphaX+85, alphaY+40); //Alpha
+    al1.alchemyButtons(betaX, betaY, "β", 40, betaX+85, betaY+40); //Beta    //-100 - x-coordinate, 200 - the width of rects
+    al1.alchemyButtons(gammaX, gammaY, "γ", 40, gammaX+85, gammaY+40); //Gamma
+    al1.alchemyButtons(hopeX, hopeY, "Hope", 30, hopeX+63, hopeY+35); //Hope
+    al1.alchemyButtons(zealX, zealY, "Zeal", 30, zealX+70, zealY+35); //Zeal
+
+    al1.alchemyButtons(autoAlphaX, autoAlphaY, "Unlock auto α-clots", 20, autoAlphaX+10, autoAlphaY+27); //auto-alpha
+    al1.additionalText("merging", autoAlphaX+10, (autoAlphaY+27)+20);
+    al1.alchemyButtons(alphaFX, alphaFY, "Unlock and restart", 20, alphaFX+10, alphaFY+27); //alpha-fountain
+    al1.additionalText("the α-fountain", alphaFX+11, (alphaFY+27)+20);
+    al1.alchemyButtons(gammaFX, gammaFY, "Unlock and restart", 20, gammaFX+10, gammaFY+27); //gamma-fountain
+    al1.additionalText("the γ-fountain", gammaFX+11, (gammaFY+27)+20);
+
+    al1.alchemyButtons(autoBetaX, autoBetaY, "Unlock auto β-clots", 20, autoBetaX+10, autoBetaY+27); //auto-beta
+    al1.additionalText("merging", autoBetaX+10, (autoBetaY+27)+20);
+    al1.alchemyButtons(betaFX, betaFY, "Unlock and restart", 20, betaFX+11, betaFY+27); //beta-fountain
+    al1.additionalText("the β-fountain", betaFX+10, (betaFY+27)+20);
+    al1.alchemyButtons(autoGammaX, autoGammaY, "Unlock auto γ-clots", 20, autoGammaX+10, autoGammaY+27); //auto-gamma
+    al1.additionalText("merging", autoGammaX+10, (autoGammaY+27)+20);
+
+    al1.alchemyButtons(singX, singY, "Unlock singularity", 20, singX+10, singY+27); //singularity
+    al1.alchemyButtons(sphereX, sphereY, "Unlock auto", 20, sphereX+10, sphereY+27); //auto-sphere-charging
+    al1.additionalText("sphere-charging", sphereX+10, (sphereY+27)+20);
+
+    al1.alchemyButtons(deltaX, deltaY, "Unlock", 25, deltaX+60, deltaY+30); //delta-particles
+    al1.additionalText("δ-particles", deltaX+40, (deltaY+27)+28);
+
+    //w = 200, h = 80
+    al1.buttonConnections(alphaX+200, alphaY + 80/2, autoAlphaX, autoAlphaY + 80/2); //alpha -> autoAlpha
+    al1.buttonConnections(dreamX, dreamY + 80/2, autoAlphaX+200, autoAlphaY + 80/2); //dream -> autoAlpha
+    al1.buttonConnections(dreamX+200, dreamY + 80/2, autoBetaX, autoBetaY + 80/2); //dream -> autoBeta
+    al1.buttonConnections(betaX, betaY+80/2, autoBetaX+200, autoBetaY + 80/2); //dream -> autoBeta
+
+    al1.buttonConnections(gammaX, gammaY + 80/2, gammaFX+200, gammaFY + 80/2); //gamma -> gammaFountain
+    al1.buttonConnections(gammaX+200, gammaY + 80/2, autoGammaX, autoGammaY + 80/2); //gamma -> autoGamma
+    al1.buttonConnections(hopeX+200, hopeY + 80/2, gammaFX, gammaFY + 80/2); //hope -> gammaFountain
+    al1.buttonConnections(zealX, zealY + 80/2, autoGammaX+200, autoGammaY + 80/2); //zeal -> autoGamma
     
-    
-    al1.alchemyButtons(850,200); //Dream
-    al1.alchemyButtons(100,250); //Alpha
-    al1.alchemyButtons(width-100-200,250); //Beta    //-100 - x-coordinate, 200 - the width of rects
-    al1.alchemyButtons(850,800); //Gamma
-    al1.alchemyButtons(100,750); //Hope
-    al1.alchemyButtons(width-100-200,750); //Zeal
-    
-    al1.alchemyButtons((850+100)/2, 350); //auto-alpha
-    al1.alchemyButtons(100, (250 + 750)/2); //alpha-fountain
-    al1.alchemyButtons((850+100)/2, 650); //gamma-fountain
-    
-    al1.alchemyButtons((850+(width-100-200))/2, 350); //auto-beta
-    al1.alchemyButtons(width-100-200, (250 + 750)/2); //beta-fountain
-    al1.alchemyButtons((850+(width-100-200))/2, 650); //auto-gamma
-    
-    al1.alchemyButtons((850+100)/2, (350+650)/2); //singularity
-    al1.alchemyButtons((850+(width-100-200))/2, (350+650)/2); //auto-sphere-charging
-    
-    al1.alchemyButtons(850, (200 + 800)/2); //delta-particles
-    
-    
-    
-    
+    al1.buttonConnections(alphaX+200/2, alphaY+80, alphaFX+200/2, alphaFY); //alpha -> alphaFountain
+    al1.buttonConnections(hopeX+200/2, hopeY, alphaFX+200/2, alphaFY+80); //hope -> alphaFountain
+    al1.buttonConnections(betaX+200/2, betaY+80, betaFX+200/2, betaFY); //beta -> betaFountain
+    al1.buttonConnections(zealX+200/2, zealY, betaFX+200/2, alphaFY+80); //zeal -> betaFountain
     
     
     
@@ -131,7 +186,7 @@ void draw()
   r1.formatAlphaParticlesText();
   r1.alphaParticlesProductionSpeed();
   r1.mouseControl(40, 250, 140, 50);
-  
+
   if (achieved4)
   {
     r2.currentBetaParticles();

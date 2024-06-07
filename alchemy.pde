@@ -14,18 +14,27 @@ class Alchemy
     buttonToCavePressed = false;
   }
   
-  void alchemyButtons(float bx, float by)
+  void alchemyButtons(float bx, float by, String text, int tSize, int tx, int ty)
   {
-    rect(bx, by, 200, 70);
-       
+    rect(bx, by, 200, 80);
+    textSize(tSize);
+    fill(0);
+    text(text, tx, ty);
+    fill(255);
+  }
+  
+  
+  void additionalText(String text, float x, float y)
+  {
+    fill(0);
+    text(text, x, y);
+    fill(255);
   }
   
   void buttonConnections(float x1, float y1, float x2, float y2)
   {
     line(x1, y1, x2, y2);
   }
-  
-  
   
   
   
