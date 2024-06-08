@@ -54,6 +54,8 @@ int buttonfountainY;
 int buttonfountainWidth;
 
 boolean achieved2, achieved3, achieved4;
+boolean achievedBeta1, achievedBeta2, achievedBeta3, achievedBeta4;
+
 
 boolean wasCaveMousePressed = false;
 boolean caveStartFilling = false;

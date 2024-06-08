@@ -26,13 +26,50 @@ class Alchemy
 
   public void addConnections()
   {
+    //0 - dream, 1 - alpha, 2- beta, 3 - gamma, 4 - hope, 5 - zeal, 6 - autoA, 7 - AF,
+    //8 - GF, 9 - autoB, 10 - BF, 11 - autoG, 12 - sing, 13 - sphere, 14 - delta
     AlchemyButton b;
-    b = AlchemyButtonArray.get(0);
+    
+    b = AlchemyButtonArray.get(6);
+    b.addConnections(AlchemyButtonArray.get(0));
     b.addConnections(AlchemyButtonArray.get(1));
+    
+    b = AlchemyButtonArray.get(7); //-> alpha-fountain
+    b.addConnections(AlchemyButtonArray.get(1)); //alpha ->
+    b.addConnections(AlchemyButtonArray.get(4)); //hope ->
+    
+    b = AlchemyButtonArray.get(8);
     b.addConnections(AlchemyButtonArray.get(3));
-    b = AlchemyButtonArray.get(1);
-    b.addConnections(AlchemyButtonArray.get(2));
     b.addConnections(AlchemyButtonArray.get(4));
+    
+    b = AlchemyButtonArray.get(9);
+    b.addConnections(AlchemyButtonArray.get(0));
+    b.addConnections(AlchemyButtonArray.get(2));
+    
+    b = AlchemyButtonArray.get(10);
+    b.addConnections(AlchemyButtonArray.get(2));
+    b.addConnections(AlchemyButtonArray.get(5));
+    
+    b = AlchemyButtonArray.get(11);
+    b.addConnections(AlchemyButtonArray.get(3));
+    b.addConnections(AlchemyButtonArray.get(5));
+    
+    b = AlchemyButtonArray.get(12);
+    b.addConnections(AlchemyButtonArray.get(6));
+    b.addConnections(AlchemyButtonArray.get(7));
+    b.addConnections(AlchemyButtonArray.get(8));
+    
+    b = AlchemyButtonArray.get(13);
+    b.addConnections(AlchemyButtonArray.get(9));
+    b.addConnections(AlchemyButtonArray.get(10));
+    b.addConnections(AlchemyButtonArray.get(11));
+    
+    b = AlchemyButtonArray.get(14);
+    b.addConnections(AlchemyButtonArray.get(12));
+    b.addConnections(AlchemyButtonArray.get(13));
+    
+    
+    
   }
 
   public void show()

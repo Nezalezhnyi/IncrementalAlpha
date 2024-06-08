@@ -1,7 +1,7 @@
 float alphas =  82000;
 float a;
 
-float betas = 12220;
+float betas = 33302;
 float b = 10;
 
 float resourceClots;
@@ -15,6 +15,8 @@ Resources r2 = new Resources(betas, 1, "β", 1050, #A2CEFF, false, 0, 255, 1);
 
 Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, r1, "α");
 Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, #72FF77, r2, "β");
+
+float betaClots = r2.getResourceClots();
 
 
 Cave c1 = new Cave();
@@ -95,28 +97,19 @@ void setup()
   al1.add(new AlchemyButton(hopeX, hopeY, "Hope", 30, hopeX+63, hopeY+35)); //Hope
   al1.add(new AlchemyButton(zealX, zealY, "Zeal", 30, zealX+70, zealY+35)); //Zeal
   
+  al1.add(new AlchemyButton(autoAlphaX, autoAlphaY, "Unlock auto α-clots\nmerging", 20, autoAlphaX+10, autoAlphaY+27)); //auto-alpha
+  al1.add(new AlchemyButton(alphaFX, alphaFY, "Unlock and restart\nthe α-fountain", 20, alphaFX+10, alphaFY+27)); //alpha-fountain
+  al1.add(new AlchemyButton(gammaFX, gammaFY, "Unlock and restart\nthe γ-fountain", 20, gammaFX+10, gammaFY+27)); //gamma-fountain
+
+  al1.add(new AlchemyButton(autoBetaX, autoBetaY, "Unlock auto β-clots\nmerging", 20, autoBetaX+10, autoBetaY+27)); //auto-beta
+  al1.add(new AlchemyButton(betaFX, betaFY, "Unlock and restart\nthe β-fountain", 20, betaFX+11, betaFY+27)); //beta-fountain
+  al1.add(new AlchemyButton(autoGammaX, autoGammaY, "Unlock auto γ-clots\nmerging", 20, autoGammaX+10, autoGammaY+27)); //auto-gamma
+
+  al1.add(new AlchemyButton(singX, singY, "Unlock singularity", 20, singX+10, singY+27)); //singularity
+  al1.add(new AlchemyButton(sphereX, sphereY, "Unlock auto\nsphere-charging", 20, sphereX+10, sphereY+27)); //auto-sphere-charging
   
-
-  /*al1.alchemyButtons(autoAlphaX, autoAlphaY, "Unlock auto α-clots", 20, autoAlphaX+10, autoAlphaY+27); //auto-alpha
-  al1.additionalText("merging", autoAlphaX+10, (autoAlphaY+27)+20);
-  al1.alchemyButtons(alphaFX, alphaFY, "Unlock and restart", 20, alphaFX+10, alphaFY+27); //alpha-fountain
-  al1.additionalText("the α-fountain", alphaFX+11, (alphaFY+27)+20);
-  al1.alchemyButtons(gammaFX, gammaFY, "Unlock and restart", 20, gammaFX+10, gammaFY+27); //gamma-fountain
-  al1.additionalText("the γ-fountain", gammaFX+11, (gammaFY+27)+20);
-
-  al1.alchemyButtons(autoBetaX, autoBetaY, "Unlock auto β-clots", 20, autoBetaX+10, autoBetaY+27); //auto-beta
-  al1.additionalText("merging", autoBetaX+10, (autoBetaY+27)+20);
-  al1.alchemyButtons(betaFX, betaFY, "Unlock and restart", 20, betaFX+11, betaFY+27); //beta-fountain
-  al1.additionalText("the β-fountain", betaFX+10, (betaFY+27)+20);
-  al1.alchemyButtons(autoGammaX, autoGammaY, "Unlock auto γ-clots", 20, autoGammaX+10, autoGammaY+27); //auto-gamma
-  al1.additionalText("merging", autoGammaX+10, (autoGammaY+27)+20);
-
-  al1.alchemyButtons(singX, singY, "Unlock singularity", 20, singX+10, singY+27); //singularity
-  al1.alchemyButtons(sphereX, sphereY, "Unlock auto", 20, sphereX+10, sphereY+27); //auto-sphere-charging
-  al1.additionalText("sphere-charging", sphereX+10, (sphereY+27)+20);
-
-  al1.alchemyButtons(deltaX, deltaY, "Unlock", 25, deltaX+60, deltaY+30); //delta-particles
-  al1.additionalText("δ-particles", deltaX+40, (deltaY+27)+28);*/
+  al1.add(new AlchemyButton(deltaX, deltaY, "Unlock\nδ-particles", 25, deltaX+60, deltaY+30)); //delta-particles
+  
   
   al1.addConnections();
 }
@@ -124,7 +117,8 @@ void setup()
 
 void draw()
 {
-
+  float betaClots = r2.getResourceClots();
+  
   background(120);
   {
     if (InterfaceParticlesShowed)
@@ -199,7 +193,7 @@ void draw()
 
 
 
-  r1.currentAlphaParticles();
+  r1.currentAlphaParticles(betaClots);
   r1.formatAlphaParticlesText();
   r1.alphaParticlesProductionSpeed();
   r1.mouseControl(40, 250, 140, 50);

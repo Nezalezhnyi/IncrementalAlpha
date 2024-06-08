@@ -55,6 +55,8 @@ class Cave
 
   int buttonToAlchemyColourBg;
   boolean buttonToAlchemyPressed;
+  
+  boolean isSecondsDecrementedByFountain = false;
 
   public Cave()
   {
@@ -69,6 +71,7 @@ class Cave
     zealChargesCurrent = 30; //30
 
     dreamDecreaseSeconds = 0;
+    
     seconds = 20;
     textCostL = textCostR = textCostD = true;
     firstHopePurchase = false;
@@ -212,6 +215,12 @@ class Cave
   }
 
   void resourceButtons() {
+    if (!isSecondsDecrementedByFountain && achievedBeta3)
+        {
+          seconds -= 1;
+          isSecondsDecrementedByFountain = true;
+        }
+        
     int w = 220;
     int LX = (width/2 - 200) - 600;
     int RX = (width/2 + 200) + 600 - w;
@@ -292,7 +301,7 @@ class Cave
       pressedL = true;
     } else if (!mousePressed && pressedL)
     {
-      if (dreamChargesCurrent >= dreamChargesCost && seconds >= 4)
+      if (dreamChargesCurrent >= dreamChargesCost && seconds >= 3)
       {
         dreamChargesCurrent -= dreamChargesCost;
         seconds -= 2;

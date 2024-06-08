@@ -9,6 +9,7 @@ class Resources
   int alphaChanger, betaChanger;
   int typeResource, mechanic;
   float threshold;
+  float betaClots;
 
   public Resources(float r, int tr, String rn, int textX, int colour, boolean pressed, int clots, int bgCol, int mech)
   {
@@ -45,9 +46,14 @@ class Resources
 
 
 
-  void currentAlphaParticles()
+
+  void currentAlphaParticles(float betaClots)
   {
-    resource += alphaIncreaser1*(resourceClots/100);
+    println(betaClots);
+    if (achievedBeta1)
+      resource += (betaClots/10+1) * alphaIncreaser1*(resourceClots/100);
+    else
+      resource += alphaIncreaser1*(resourceClots/100);
 
     if (resource > maxResource) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
       maxResource = resource;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
@@ -235,7 +241,10 @@ class Resources
       resourcePressed = false;
     }
   }
-  
-  
+
+  float getResourceClots()
+  {
+    return resourceClots;
+  }
   
 }

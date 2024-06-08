@@ -3,7 +3,7 @@ class AlchemyButton
   int buttonToCaveColourBg;
   boolean buttonToCavePressed;
   float rectButtonX, rectButtonY;
-  boolean isButtonPressed;
+  boolean isButtonPressed, buttonState;
   int buttonsBgColour = 255;
   int buttonX, buttonY, textSize, textX, textY;
   String buttonText;
@@ -29,10 +29,11 @@ class AlchemyButton
   {
     for (AlchemyButton b : connections)
     {
-      if (isButtonPressed)
+      if (buttonState)
         stroke(255,0,0);
       else
         stroke(0);
+        
       strokeWeight(2);
       line(buttonX+100, buttonY+40, b.buttonX+100, b.buttonY+40);
       strokeWeight(1);
@@ -44,16 +45,15 @@ class AlchemyButton
   {
     if (mouseX >= buttonX && mouseX <= buttonX + 200 && mouseY >= buttonY && mouseY <= buttonY+80)
     {
-      if (mousePressed)
-      {
-        buttonsBgColour = 180;
+      if (mousePressed && !isButtonPressed) {
         isButtonPressed = true;
-      } else if (!mousePressed && isButtonPressed)
-      {
-        buttonsBgColour = 255;
+        buttonState = !buttonState;
+        //buttonsBgColour = buttonState ? color(180) : color(255);
+      } else if (!mousePressed) {
         isButtonPressed = false;
       }
     }
+    
 
     strokeWeight(2);
     fill(buttonsBgColour);
