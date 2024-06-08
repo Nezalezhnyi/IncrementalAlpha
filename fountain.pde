@@ -70,7 +70,7 @@ class Fountain
       if (resource.getResource() - resource.getResource()/10 > 0 && filled < filledMax)
       {
         filled += resource.getResource()/100;
-        resource.addResource(-resource.getResource()/100); //alphas -> resource (alphas does not decrease)
+        resource.addResource(-resource.getResource()/100);
       } else
       {
         filled = (int)(filledMax);

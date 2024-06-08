@@ -46,7 +46,14 @@ class Resources
   }
 
 
+  public float getResourceClots() {
+    return resourceClots;
+  }
 
+  
+  public void setResourceClots(float newClots) {
+    resourceClots = newClots;
+  }
 
 
 
@@ -68,7 +75,7 @@ class Resources
     if (resource > maxResource) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
       maxResource = resource;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
   }
-  
+
 
   void currentGammaParticles()
   {
@@ -248,10 +255,9 @@ class Resources
     case 1:
       timeToNextResourceClot = (b*resourceClots+10 - resource) / resourceParticlesPerSecond;
       break;
-    case 2: 
-    timeToNextResourceClot = (pow(g, resourceClots+1) - resource) / resourceParticlesPerSecond;
-    break;
-    
+    case 2:
+      timeToNextResourceClot = (pow(g, resourceClots+1) - resource) / resourceParticlesPerSecond;
+      break;
     }
 
 
@@ -305,8 +311,5 @@ class Resources
     }
   }
 
-  float getResourceClots()
-  {
-    return resourceClots;
-  }
+
 }

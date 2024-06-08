@@ -94,6 +94,28 @@ class Cave
     buttonToAlchemyPressed = false;
   }
 
+  public int getDreams() {
+    return dreamChargesCurrent;
+  }
+  public void setDreams(int newMorals) {
+    dreamChargesCurrent = newMorals;
+  }
+  
+  public int getHopes() {
+    return hopeChargesCurrent;
+  }  
+  public void setHopes(int newMorals) {
+    hopeChargesCurrent = newMorals;
+  }
+  
+  public int getZeals() {
+    return zealChargesCurrent;
+  }
+  public void setZeals(int newMorals) {
+    zealChargesCurrent = newMorals;
+  }
+
+
 
 
   void barCircle()

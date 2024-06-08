@@ -74,7 +74,6 @@ class Alchemy
 
   public void show()
   {
-    
     for (AlchemyButton b : AlchemyButtonArray)
       b.drawConnections();
     for (AlchemyButton b : AlchemyButtonArray)
@@ -90,12 +89,6 @@ class Alchemy
     fill(255);
   }
 
-  void buttonConnections(float x1, float y1, float x2, float y2)
-  {
-    strokeWeight(2);
-    line(x1, y1, x2, y2);
-    strokeWeight(1);
-  }
 
 
 
