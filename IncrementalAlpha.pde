@@ -1,8 +1,16 @@
-float alphas =  82000;
+float alphas =  820020;
 float a;
 
-float betas = 33302;
+float betas = 333202;
 float b = 10;
+
+float gammas = 20;
+float g = 10;
+
+
+
+
+
 
 float resourceClots;
 
@@ -12,6 +20,7 @@ int dreamX, dreamY, hopeX, hopeY, zealX, zealY, alphaX, alphaY, autoAlphaX, auto
 
 Resources r1 = new Resources(alphas, 0, "α", 570, #EFFF66, false, 0, 255, 0);
 Resources r2 = new Resources(betas, 1, "β", 1050, #A2CEFF, false, 0, 255, 1);
+Resources r3 = new Resources(gammas, 2, "γ", 1050, #72FF77, false, 0, 255, 2);
 
 Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, r1, "α");
 Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, #72FF77, r2, "β");
@@ -126,6 +135,8 @@ void draw()
       r1.currencyType(8, 250);
       if (achieved4)
         r2.currencyType(8, 350);
+      if (achievedBeta4)
+        r3.currencyType(8, 450);
     }
 
     if (InterfaceFountainsShowed)
@@ -161,32 +172,7 @@ void draw()
 
 
     al1.show();
-    //w = 200, h = 80
-    /*al1.buttonConnections(alphaX+200, alphaY + 80/2, autoAlphaX, autoAlphaY + 80/2); //alpha -> autoAlpha
-    al1.buttonConnections(dreamX, dreamY + 80/2, autoAlphaX+200, autoAlphaY + 80/2); //dream -> autoAlpha
-    al1.buttonConnections(dreamX+200, dreamY + 80/2, autoBetaX, autoBetaY + 80/2); //dream -> autoBeta
-    al1.buttonConnections(betaX, betaY+80/2, autoBetaX+200, autoBetaY + 80/2); //dream -> autoBeta
-
-    al1.buttonConnections(gammaX, gammaY + 80/2, gammaFX+200, gammaFY + 80/2); //gamma -> gammaFountain
-    al1.buttonConnections(gammaX+200, gammaY + 80/2, autoGammaX, autoGammaY + 80/2); //gamma -> autoGamma
-    al1.buttonConnections(hopeX+200, hopeY + 80/2, gammaFX, gammaFY + 80/2); //hope -> gammaFountain
-    al1.buttonConnections(zealX, zealY + 80/2, autoGammaX+200, autoGammaY + 80/2); //zeal -> autoGamma
-
-    al1.buttonConnections(alphaX+200/2, alphaY+80, alphaFX+200/2, alphaFY); //alpha -> alphaFountain
-    al1.buttonConnections(hopeX+200/2, hopeY, alphaFX+200/2, alphaFY+80); //hope -> alphaFountain
-    al1.buttonConnections(betaX+200/2, betaY+80, betaFX+200/2, betaFY); //beta -> betaFountain
-    al1.buttonConnections(zealX+200/2, zealY, betaFX+200/2, alphaFY+80); //zeal -> betaFountain
-
-    al1.buttonConnections(alphaFX+200, alphaFY+80/2, singX, singY+80/2); //alpha-fountain -> singularity
-    al1.buttonConnections(autoAlphaX+200/2, autoAlphaY+80, singX+200/2, singY); //auto-alpha -> singularity
-    al1.buttonConnections(gammaFX+200/2, gammaFY, singX+200/2, singY+80); //gamma-fountain -> singularity
-
-    al1.buttonConnections(betaFX, betaFY + 80/2, sphereX+200, sphereY+80/2); //beta-fountain -> sphere
-    al1.buttonConnections(autoBetaX+200/2, autoAlphaY+80, sphereX+200/2, singY); //auto-beta -> sphere
-    al1.buttonConnections(autoGammaX+200/2, autoGammaY, sphereX+200/2, sphereY+80); //auto-gamma -> sphere
-
-    al1.buttonConnections(singX+200, singY+80/2, deltaX, deltaY+80/2); //singularity -> delta
-    al1.buttonConnections(sphereX, sphereY+80/2, deltaX+200, deltaY+80/2); //sphere -> delta*/
+ 
   }
 
 
@@ -204,6 +190,14 @@ void draw()
     r2.formatAlphaParticlesText();
     r2.alphaParticlesProductionSpeed();
     r2.mouseControl(40, 250+100, 140, 50);
+  }
+  
+  if (achievedBeta4)
+  {
+    r3.currentGammaParticles();
+    r3.formatAlphaParticlesText();
+    r3.alphaParticlesProductionSpeed();
+    r3.mouseControl(40, 250+200, 140, 50);
   }
 
 

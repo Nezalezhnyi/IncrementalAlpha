@@ -10,6 +10,7 @@ class Resources
   int typeResource, mechanic;
   float threshold;
   float betaClots;
+  int particlesTextSize, gainingTextSize;
 
   public Resources(float r, int tr, String rn, int textX, int colour, boolean pressed, int clots, int bgCol, int mech)
   {
@@ -30,6 +31,8 @@ class Resources
     bgColour = 255;
     maxResource = 2;
     threshold = 0;
+    particlesTextSize = 70;
+    gainingTextSize = 30;
   }
 
   void addResource(float r)
@@ -49,7 +52,6 @@ class Resources
 
   void currentAlphaParticles(float betaClots)
   {
-    println(betaClots);
     if (achievedBeta1)
       resource += (betaClots/10+1) * alphaIncreaser1*(resourceClots/100);
     else
@@ -66,12 +68,20 @@ class Resources
     if (resource > maxResource) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
       maxResource = resource;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
   }
+  
 
+  void currentGammaParticles()
+  {
+    resource += (resourceClots)*10;
+
+    if (resource > maxResource) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
+      maxResource = resource;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
+  }
 
   void formatAlphaParticlesText()
   {
     int stabiliser = 0;
-    if (achieved4)
+    if (achieved4 && !achievedBeta4)
     {
       switch(typeResource)
       {
@@ -82,7 +92,23 @@ class Resources
         stabiliser = -30;
         break;
       }
+    } else if (achievedBeta4)
+    {
+      particlesTextSize = 45;
+      switch(typeResource)
+      {
+      case 0:
+        stabiliser = -530;
+        break;
+      case 1:
+        stabiliser = -380;
+        break;
+      case 2:
+        stabiliser = 240;
+        break;
+      }
     }
+
     int exponent;
     if (resource != 0)
     {
@@ -96,7 +122,7 @@ class Resources
     {
 
       fill(0);
-      textSize(70);
+      textSize(particlesTextSize);
       text("You have ", youHaveResourceX + stabiliser, 90);
       fill(resourceColour);
       text((int)resource, youHaveResourceX + stabiliser + textWidth("You have "), 90);
@@ -105,7 +131,7 @@ class Resources
     } else
     {
       fill(0);
-      textSize(70);
+      textSize(particlesTextSize);
       float mantissa = resource / pow(10, exponent);
       text("You have ", youHaveResourceX + stabiliser, 90);
       fill(resourceColour);
@@ -120,29 +146,59 @@ class Resources
   void alphaParticlesProductionSpeed()
   {
     int stabiliser = 0;
-    if (achieved4)
+    int stabiliserY = 0;
+    if (achieved4 && !achievedBeta4)
     {
       switch(typeResource)
       {
       case 0:
-        stabiliser = -470;
+        stabiliser = -530;
         break;
       case 1:
-        stabiliser = 0;
+        stabiliser = -30;
+        break;
+      }
+    } else if (achievedBeta4)
+    {
+      gainingTextSize = 20;
+      stabiliserY = -20;
+      switch(typeResource)
+      {
+      case 0:
+        stabiliser = -550;
+        break;
+      case 1:
+        stabiliser = -400;
+        break;
+      case 2:
+        stabiliser = 240;
         break;
       }
     }
+
     float deltaAlphas = resource - lastResourceCount;
     resourceParticlesPerSecond = deltaAlphas * 60;
-    textSize(30);
+    textSize(gainingTextSize);
     fill(30);
-    text("You are gaining " + nf(resourceParticlesPerSecond, 0, 1) + " " + resourceName + "-particles per second", youHaveResourceX+30+textWidth(str((int)resource)) + stabiliser, 145);
+    text("You are gaining " + nf(resourceParticlesPerSecond, 0, 1) + " " + resourceName + "-particles per second", youHaveResourceX+30+textWidth(str((int)resource)) + stabiliser, 145+stabiliserY);
     lastResourceCount = resource;
   }
 
 
   void currencyType (int textbuttonX, int rectY)
   {
+    String text = str(round(threshold));
+    int exponent;
+    if (resource != 0)
+    {
+      exponent = (int)Math.log10(threshold);
+    } else
+    {
+      exponent = 0;
+    }
+    float mantissa = threshold / pow(10, exponent);
+    if (threshold >= 100000)
+      text = nf(mantissa, 0, 1) + "e" + exponent;
     ///////THE RED-GREEN TEXT
     textSize(20);
     float distClots = textWidth("You have ") + textWidth(nf(resourceClots, 0, 0)) + textWidth(" clots of " + resourceName + "-energy");
@@ -154,13 +210,13 @@ class Resources
       strokeWeight(3);
       stroke(#FF5B5B);
       fill(#FF5B5B);
-      text("Make a clot of " + resourceName + "-energy with " + round(threshold) + " " + resourceName + "-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
+      text("Make a clot of " + resourceName + "-energy with " + text + " " + resourceName + "-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
     } else
     {
       strokeWeight(3);
       stroke(#3CFF63);
       fill(#3CFF63);
-      text("Make a clot of " + resourceName + "-energy with " + round(threshold) + " " + resourceName + "-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
+      text("Make a clot of " + resourceName + "-energy with " + text + " " + resourceName + "-particles", distClots+stabiliserClots, 250+33 + (rectY-250) );
     }
 
 
@@ -192,6 +248,10 @@ class Resources
     case 1:
       timeToNextResourceClot = (b*resourceClots+10 - resource) / resourceParticlesPerSecond;
       break;
+    case 2: 
+    timeToNextResourceClot = (pow(g, resourceClots+1) - resource) / resourceParticlesPerSecond;
+    break;
+    
     }
 
 
@@ -222,6 +282,9 @@ class Resources
     case 1:
       threshold = resourceClots*b+10;
       break;
+    case 2:
+      threshold = pow(g, resourceClots+1);
+      break;
     }
 
 
@@ -246,5 +309,4 @@ class Resources
   {
     return resourceClots;
   }
-  
 }
