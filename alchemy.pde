@@ -74,6 +74,7 @@ class Alchemy
 
   public void show()
   {
+    
     for (AlchemyButton b : AlchemyButtonArray)
       b.drawConnections();
     for (AlchemyButton b : AlchemyButtonArray)
