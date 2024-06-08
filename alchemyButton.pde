@@ -12,6 +12,10 @@ class AlchemyButton
   float filled;
   int strButtons;
   int strokeColour;
+  long[] lastUpdateTimes;
+  int updateInterval = 5000;
+
+
 
   ArrayList <AlchemyButton> connections = new ArrayList <AlchemyButton> (5);
 
@@ -30,6 +34,8 @@ class AlchemyButton
     filled = 0;
     strButtons = 2;
     strokeColour = 0;
+    this.lastUpdateTimes = new long[15];
+    Arrays.fill(this.lastUpdateTimes, System.currentTimeMillis());
   }
 
   void addConnections(AlchemyButton b)
@@ -90,60 +96,84 @@ class AlchemyButton
       case 0:
         {
           strokeColour = #FF3030;
-          if (dreams > 0)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[0] >= updateInterval)
           {
-            c1.setDreams((int)dreams - 1);
-            filled += 1;
+            if (dreams > 0)
+            {
+              c1.setDreams((int)(dreams - 1));
+              filled += 1;
+            }
+            this.lastUpdateTimes[0] = System.currentTimeMillis();
           }
         }
         break;
       case 1:
         {
-          strokeColour = #FF3030;
-          if (alphaClots >1)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[1] >= updateInterval)
           {
-            r1.setResourceClots(alphaClots - 1);
-            filled += 1;
+            if (alphaClots >1)
+            {
+              r1.setResourceClots(alphaClots - 1);
+              filled += 1;
+            }
+            this.lastUpdateTimes[1] = System.currentTimeMillis();
           }
+          strokeColour = #FF3030;
         }
         break;
       case 2:
         {
           strokeColour = #FF3030;
-          if (betaClots > 1)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[2] >= updateInterval)
           {
-            r2.setResourceClots(betaClots - 1);
-            filled += 1;
+            if (betaClots > 1)
+            {
+              r2.setResourceClots(betaClots - 1);
+              filled += 1;
+            }
+            this.lastUpdateTimes[2] = System.currentTimeMillis();
           }
         }
         break;
       case 3:
         {
           strokeColour = #FF3030;
-          if (gammaClots > 1)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[3] >= updateInterval)
           {
-            r3.setResourceClots(gammaClots - 1);
-            filled += 1;
+            if (gammaClots > 1)
+            {
+              r3.setResourceClots(gammaClots - 1);
+              filled += 1;
+            }
+            this.lastUpdateTimes[3] = System.currentTimeMillis();
           }
         }
         break;
       case 4:
         {
           strokeColour = #FF3030;
-          if (hopes > 1)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[4] >= updateInterval)
           {
-            c1.setHopes((int)hopes - 1);
-            filled += 1;
+            if (hopes > 1)
+            {
+              c1.setHopes((int)hopes - 1);
+              filled += 1;
+            }
+            this.lastUpdateTimes[4] = System.currentTimeMillis();
           }
         }
         break;
-        case 5:
+      case 5:
         {
           strokeColour = #FF3030;
-          if (zeals > 1)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[5] >= updateInterval)
           {
-            c1.setZeals((int)zeals - 1);
-            filled += 1;
+            if (zeals > 1)
+            {
+              c1.setZeals((int)zeals - 1);
+              filled += 1;
+            }
+            this.lastUpdateTimes[5] = System.currentTimeMillis();
           }
         }
         break;
@@ -164,6 +194,9 @@ class AlchemyButton
       fill(colourFilled);
       strokeWeight(0);
       rect(buttonX+strButtons, buttonY+strButtons, filled, 80-strButtons-1);
+      textSize(17);
+      fill(0);
+      text((int)filled + "/200", buttonX + 75, buttonY + 73);
       textSize(textSize);
       fill(0);
       text(buttonText, textX, textY);
