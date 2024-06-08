@@ -66,9 +66,9 @@ class Cave
     moveLX = moveLY = moveRX = moveRY = moveDX = moveDY = 0;
     pressedL = pressedR = pressedD = false;
 
-    dreamChargesCurrent = 45;  //45
-    hopeChargesCurrent = 66; //66
-    zealChargesCurrent = 30; //30
+    dreamChargesCurrent = 145;  //45
+    hopeChargesCurrent = 166; //66
+    zealChargesCurrent = 160; //30
 
     dreamDecreaseSeconds = 0;
     
@@ -448,9 +448,7 @@ class Cave
     else
       fill(#FF5B5B);
     if (textCostD)
-    {
       text("Cost: " + zealChargesCost + " Zeal Charges", (int)(DX + moveDX) + xStabiliser, (int)(DY + moveDY) + ystabiliser + 2*yNextStabiliser);
-    }
 
     int stabiliserDreamX = -35;
     int stabiliserHopeX = -33;
