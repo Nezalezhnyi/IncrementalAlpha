@@ -14,7 +14,7 @@ Resources r1 = new Resources(alphas, 0, "α", 570, #EFFF66, false, 0, 255, 0);
 Resources r2 = new Resources(betas, 1, "β", 1050, #A2CEFF, false, 0, 255, 1);
 
 Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, r1, "α");
-Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, 5, r2, "β");
+Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, #72FF77, r2, "β");
 
 
 Cave c1 = new Cave();
@@ -87,6 +87,38 @@ void setup()
   sphereY = (350+650)/2;
   deltaX = 850;
   deltaY = (200+800)/2;
+
+  al1.add(new AlchemyButton(dreamX, dreamY, "Dream", 30, dreamX+52, dreamY+35)); //Dream
+  al1.add(new AlchemyButton(alphaX, alphaY, "α", 40, alphaX+85, alphaY+40)); //Alpha
+  al1.add(new AlchemyButton(betaX, betaY, "β", 40, betaX+85, betaY+40)); //Beta    //-100 - x-coordinate, 200 - the width of rects
+  al1.add(new AlchemyButton(gammaX, gammaY, "γ", 40, gammaX+85, gammaY+40)); //Gamma
+  al1.add(new AlchemyButton(hopeX, hopeY, "Hope", 30, hopeX+63, hopeY+35)); //Hope
+  al1.add(new AlchemyButton(zealX, zealY, "Zeal", 30, zealX+70, zealY+35)); //Zeal
+  
+  
+
+  /*al1.alchemyButtons(autoAlphaX, autoAlphaY, "Unlock auto α-clots", 20, autoAlphaX+10, autoAlphaY+27); //auto-alpha
+  al1.additionalText("merging", autoAlphaX+10, (autoAlphaY+27)+20);
+  al1.alchemyButtons(alphaFX, alphaFY, "Unlock and restart", 20, alphaFX+10, alphaFY+27); //alpha-fountain
+  al1.additionalText("the α-fountain", alphaFX+11, (alphaFY+27)+20);
+  al1.alchemyButtons(gammaFX, gammaFY, "Unlock and restart", 20, gammaFX+10, gammaFY+27); //gamma-fountain
+  al1.additionalText("the γ-fountain", gammaFX+11, (gammaFY+27)+20);
+
+  al1.alchemyButtons(autoBetaX, autoBetaY, "Unlock auto β-clots", 20, autoBetaX+10, autoBetaY+27); //auto-beta
+  al1.additionalText("merging", autoBetaX+10, (autoBetaY+27)+20);
+  al1.alchemyButtons(betaFX, betaFY, "Unlock and restart", 20, betaFX+11, betaFY+27); //beta-fountain
+  al1.additionalText("the β-fountain", betaFX+10, (betaFY+27)+20);
+  al1.alchemyButtons(autoGammaX, autoGammaY, "Unlock auto γ-clots", 20, autoGammaX+10, autoGammaY+27); //auto-gamma
+  al1.additionalText("merging", autoGammaX+10, (autoGammaY+27)+20);
+
+  al1.alchemyButtons(singX, singY, "Unlock singularity", 20, singX+10, singY+27); //singularity
+  al1.alchemyButtons(sphereX, sphereY, "Unlock auto", 20, sphereX+10, sphereY+27); //auto-sphere-charging
+  al1.additionalText("sphere-charging", sphereX+10, (sphereY+27)+20);
+
+  al1.alchemyButtons(deltaX, deltaY, "Unlock", 25, deltaX+60, deltaY+30); //delta-particles
+  al1.additionalText("δ-particles", deltaX+40, (deltaY+27)+28);*/
+  
+  al1.addConnections();
 }
 
 
@@ -94,35 +126,38 @@ void draw()
 {
 
   background(120);
-  if (InterfaceParticlesShowed)
   {
-    r1.currencyType(8, 250);
-    if (achieved4)
-      r2.currencyType(8, 350);
-  }
-
-  if (InterfaceFountainsShowed)
-  {
-    f1.drawIt();
-    //f2.drawIt();
-    f1.act();
-    //f2.act();
-    f1.tasksAlpha();
-
-    if (achieved4)
+    if (InterfaceParticlesShowed)
     {
-      f2.drawIt();
-      f2.act();
+      r1.currencyType(8, 250);
+      if (achieved4)
+        r2.currencyType(8, 350);
     }
-  }
 
-  ///(((
-  c1.mainButton(); //should be achieved4
-  if (InterfaceCaveShowed)
-  {
-    c1.barCircle();
-    c1.resourceButtons(); //((90+100+50)+400 - the circle's center, 200 - the circle's radius, 40 - 1/2 of the rect's height
-    c1.probabilityMenu();
+    if (InterfaceFountainsShowed)
+    {
+      f1.drawIt();
+      //f2.drawIt();
+      f1.act();
+      //f2.act();
+      f1.tasksAlpha();
+
+      if (achieved4)
+      {
+        f2.drawIt();
+        f2.act();
+        f2.tasksBeta();
+      }
+    }
+
+    ///(((
+    c1.mainButton(); //should be achieved4
+    if (InterfaceCaveShowed)
+    {
+      c1.barCircle();
+      c1.resourceButtons(); //((90+100+50)+400 - the circle's center, 200 - the circle's radius, 40 - 1/2 of the rect's height
+      c1.probabilityMenu();
+    }
   }
 
   if (InterfaceAlchemyShowed)
@@ -130,36 +165,10 @@ void draw()
     al1.buttonToCave();
 
 
-    al1.alchemyButtons(dreamX, dreamY, "Dream", 30, dreamX+52, dreamY+35); //Dream
-    al1.alchemyButtons(alphaX, alphaY, "α", 40, alphaX+85, alphaY+40); //Alpha
-    al1.alchemyButtons(betaX, betaY, "β", 40, betaX+85, betaY+40); //Beta    //-100 - x-coordinate, 200 - the width of rects
-    al1.alchemyButtons(gammaX, gammaY, "γ", 40, gammaX+85, gammaY+40); //Gamma
-    al1.alchemyButtons(hopeX, hopeY, "Hope", 30, hopeX+63, hopeY+35); //Hope
-    al1.alchemyButtons(zealX, zealY, "Zeal", 30, zealX+70, zealY+35); //Zeal
 
-    al1.alchemyButtons(autoAlphaX, autoAlphaY, "Unlock auto α-clots", 20, autoAlphaX+10, autoAlphaY+27); //auto-alpha
-    al1.additionalText("merging", autoAlphaX+10, (autoAlphaY+27)+20);
-    al1.alchemyButtons(alphaFX, alphaFY, "Unlock and restart", 20, alphaFX+10, alphaFY+27); //alpha-fountain
-    al1.additionalText("the α-fountain", alphaFX+11, (alphaFY+27)+20);
-    al1.alchemyButtons(gammaFX, gammaFY, "Unlock and restart", 20, gammaFX+10, gammaFY+27); //gamma-fountain
-    al1.additionalText("the γ-fountain", gammaFX+11, (gammaFY+27)+20);
-
-    al1.alchemyButtons(autoBetaX, autoBetaY, "Unlock auto β-clots", 20, autoBetaX+10, autoBetaY+27); //auto-beta
-    al1.additionalText("merging", autoBetaX+10, (autoBetaY+27)+20);
-    al1.alchemyButtons(betaFX, betaFY, "Unlock and restart", 20, betaFX+11, betaFY+27); //beta-fountain
-    al1.additionalText("the β-fountain", betaFX+10, (betaFY+27)+20);
-    al1.alchemyButtons(autoGammaX, autoGammaY, "Unlock auto γ-clots", 20, autoGammaX+10, autoGammaY+27); //auto-gamma
-    al1.additionalText("merging", autoGammaX+10, (autoGammaY+27)+20);
-
-    al1.alchemyButtons(singX, singY, "Unlock singularity", 20, singX+10, singY+27); //singularity
-    al1.alchemyButtons(sphereX, sphereY, "Unlock auto", 20, sphereX+10, sphereY+27); //auto-sphere-charging
-    al1.additionalText("sphere-charging", sphereX+10, (sphereY+27)+20);
-
-    al1.alchemyButtons(deltaX, deltaY, "Unlock", 25, deltaX+60, deltaY+30); //delta-particles
-    al1.additionalText("δ-particles", deltaX+40, (deltaY+27)+28);
-
+    al1.show();
     //w = 200, h = 80
-    al1.buttonConnections(alphaX+200, alphaY + 80/2, autoAlphaX, autoAlphaY + 80/2); //alpha -> autoAlpha
+    /*al1.buttonConnections(alphaX+200, alphaY + 80/2, autoAlphaX, autoAlphaY + 80/2); //alpha -> autoAlpha
     al1.buttonConnections(dreamX, dreamY + 80/2, autoAlphaX+200, autoAlphaY + 80/2); //dream -> autoAlpha
     al1.buttonConnections(dreamX+200, dreamY + 80/2, autoBetaX, autoBetaY + 80/2); //dream -> autoBeta
     al1.buttonConnections(betaX, betaY+80/2, autoBetaX+200, autoBetaY + 80/2); //dream -> autoBeta
@@ -168,14 +177,22 @@ void draw()
     al1.buttonConnections(gammaX+200, gammaY + 80/2, autoGammaX, autoGammaY + 80/2); //gamma -> autoGamma
     al1.buttonConnections(hopeX+200, hopeY + 80/2, gammaFX, gammaFY + 80/2); //hope -> gammaFountain
     al1.buttonConnections(zealX, zealY + 80/2, autoGammaX+200, autoGammaY + 80/2); //zeal -> autoGamma
-    
+
     al1.buttonConnections(alphaX+200/2, alphaY+80, alphaFX+200/2, alphaFY); //alpha -> alphaFountain
     al1.buttonConnections(hopeX+200/2, hopeY, alphaFX+200/2, alphaFY+80); //hope -> alphaFountain
     al1.buttonConnections(betaX+200/2, betaY+80, betaFX+200/2, betaFY); //beta -> betaFountain
     al1.buttonConnections(zealX+200/2, zealY, betaFX+200/2, alphaFY+80); //zeal -> betaFountain
-    
-    
-    
+
+    al1.buttonConnections(alphaFX+200, alphaFY+80/2, singX, singY+80/2); //alpha-fountain -> singularity
+    al1.buttonConnections(autoAlphaX+200/2, autoAlphaY+80, singX+200/2, singY); //auto-alpha -> singularity
+    al1.buttonConnections(gammaFX+200/2, gammaFY, singX+200/2, singY+80); //gamma-fountain -> singularity
+
+    al1.buttonConnections(betaFX, betaFY + 80/2, sphereX+200, sphereY+80/2); //beta-fountain -> sphere
+    al1.buttonConnections(autoBetaX+200/2, autoAlphaY+80, sphereX+200/2, singY); //auto-beta -> sphere
+    al1.buttonConnections(autoGammaX+200/2, autoGammaY, sphereX+200/2, sphereY+80); //auto-gamma -> sphere
+
+    al1.buttonConnections(singX+200, singY+80/2, deltaX, deltaY+80/2); //singularity -> delta
+    al1.buttonConnections(sphereX, sphereY+80/2, deltaX+200, deltaY+80/2); //sphere -> delta*/
   }
 
 
@@ -288,32 +305,35 @@ void dialogs()
 
 void lowerButtons()
 {
-  strokeWeight(1);
-
-  fill(lowerButtonParticlesBg);
-  rect(lowerButtonX, lowerButtonY, lowerButtonWidth, lowerButtonHeight);
-  fill(0);
-  textSize(70);
-  textAlign(CENTER, CENTER);
-  text("≡", (lowerButtonX)+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
-
-  if (true)//page >= 21)
+  if (!InterfaceAlchemyShowed)
   {
-    fill(lowerButtonFountainsBg);
-    rect(lowerButtonX+(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
+    strokeWeight(1);
+
+    fill(lowerButtonParticlesBg);
+    rect(lowerButtonX, lowerButtonY, lowerButtonWidth, lowerButtonHeight);
     fill(0);
     textSize(70);
     textAlign(CENTER, CENTER);
-    text("╬", (lowerButtonX+(lowerButtonWidth+30) )+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
-  }
+    text("≡", (lowerButtonX)+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
 
-  if (true)//achieved2)
-  {
-    fill(lowerButtonCaveBg);
-    rect(lowerButtonX+2*(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
-    fill(0);
-    textSize(70);
-    textAlign(CENTER, CENTER);
-    text("¤", (lowerButtonX+2*((lowerButtonWidth+30) )+(lowerButtonWidth/2)), lowerButtonY+(lowerButtonHeight/2));
+    if (true)//page >= 21)
+    {
+      fill(lowerButtonFountainsBg);
+      rect(lowerButtonX+(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
+      fill(0);
+      textSize(70);
+      textAlign(CENTER, CENTER);
+      text("╬", (lowerButtonX+(lowerButtonWidth+30) )+(lowerButtonWidth/2), lowerButtonY+(lowerButtonHeight/2)-7);
+    }
+
+    if (true)//achieved2)
+    {
+      fill(lowerButtonCaveBg);
+      rect(lowerButtonX+2*(lowerButtonWidth+30), lowerButtonY, lowerButtonWidth, lowerButtonHeight);
+      fill(0);
+      textSize(70);
+      textAlign(CENTER, CENTER);
+      text("¤", (lowerButtonX+2*((lowerButtonWidth+30) )+(lowerButtonWidth/2)), lowerButtonY+(lowerButtonHeight/2));
+    }
   }
 }

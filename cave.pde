@@ -113,6 +113,10 @@ class Cave
     if (zealHasBeenBought && InterfaceCaveShowed)
     {
       rect(caveBarX+caveBarW-buttonW, height-160, buttonW, 100); //the alchemy button
+      textSize(70);
+      fill(0);
+      text("→", caveBarX+caveBarW-buttonW+20, height-160+70);
+      fill(255);
 
       if (mousePressed && mouseX >= caveBarX+caveBarW-buttonW && mouseX <= caveBarX+caveBarW-buttonW + buttonW && mouseY >= height-160 && mouseY <= height-160 + 100)
       {

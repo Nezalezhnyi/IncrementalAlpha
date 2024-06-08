@@ -15,7 +15,7 @@ void mousePressed()
   rectdialogbuttonHeight = textdialogbuttonHeight + 20;
 
 
-  
+
 
 
   if (mouseX >= rectdialogbuttonX && mouseX <= rectdialogbuttonX+rectdialogbuttonWidth && mouseY >= rectdialogbuttonY && mouseY <= rectdialogbuttonY+rectdialogbuttonHeight)
@@ -36,7 +36,7 @@ void mousePressed()
     lowerButtonFountainsBg = 175;
     lowerButtonFountainsBg_Pressed = true;
   }
-  
+
   if (mouseX >= (lowerButtonX+2*(lowerButtonWidth+30)) && mouseX <= ((lowerButtonX+2*(lowerButtonWidth+30))+lowerButtonWidth) && mouseY >= lowerButtonY && mouseY <= lowerButtonY + lowerButtonHeight)
   {
     lowerButtonCaveBg = 175;
@@ -47,7 +47,6 @@ void mousePressed()
   {
     buttonfountainBg_Pressed = true;
     buttonfountainBg = 175;
-
   }
 
 
@@ -59,43 +58,43 @@ void mousePressed()
 
 
 void mouseReleased() {
-  
 
 
-  if (lowerButtonParticlesBg_Pressed)
+  if (!InterfaceAlchemyShowed)
   {
-    lowerButtonParticlesBg = 255;
-    lowerButtonParticlesBg_Pressed = false;
-    InterfaceParticlesShowed = true;
-    InterfaceFountainsShowed = false;
-    InterfaceCaveShowed = false;
-  }
+    if (lowerButtonParticlesBg_Pressed)
+    {
+      lowerButtonParticlesBg = 255;
+      lowerButtonParticlesBg_Pressed = false;
+      InterfaceParticlesShowed = true;
+      InterfaceFountainsShowed = false;
+      InterfaceCaveShowed = false;
+    }
 
-  if (lowerButtonFountainsBg_Pressed)
-  {
-    lowerButtonFountainsBg = 255;
-    lowerButtonFountainsBg_Pressed = false;
-    InterfaceParticlesShowed = false;
-    InterfaceFountainsShowed = true;
-    InterfaceCaveShowed = false;
-  }
-  
-  if (lowerButtonCaveBg_Pressed)
-  {
-    lowerButtonCaveBg = 255;
-    lowerButtonCaveBg_Pressed = false;
-    InterfaceParticlesShowed = false;
-    InterfaceFountainsShowed = false;
-    InterfaceCaveShowed = true;
-  }
+    if (lowerButtonFountainsBg_Pressed)
+    {
+      lowerButtonFountainsBg = 255;
+      lowerButtonFountainsBg_Pressed = false;
+      InterfaceParticlesShowed = false;
+      InterfaceFountainsShowed = true;
+      InterfaceCaveShowed = false;
+    }
 
-  if (buttonfountainBg_Pressed)
-  {
-    buttonfountainBg = 255;
-    buttonfountainBg_Pressed = false;
+    if (lowerButtonCaveBg_Pressed)
+    {
+      lowerButtonCaveBg = 255;
+      lowerButtonCaveBg_Pressed = false;
+      InterfaceParticlesShowed = false;
+      InterfaceFountainsShowed = false;
+      InterfaceCaveShowed = true;
+    }
+
+    if (buttonfountainBg_Pressed)
+    {
+      buttonfountainBg = 255;
+      buttonfountainBg_Pressed = false;
+    }
   }
-
-
 
 
 
