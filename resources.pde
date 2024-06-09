@@ -42,6 +42,7 @@ class Resources
     wasAutoResourcePressed = false;
     colourAuto = 255;
     strokeColourAuto = #FF5B5B;
+    gammaImprover = 1;
   }
 
   void addResource(float r)
@@ -88,7 +89,7 @@ class Resources
 
   void currentGammaParticles()
   {
-    resource += (resourceClots)*10;
+    resource += pow((resourceClots)*10,gammaImprover);
 
     if (resource > maxResource) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
       maxResource = resource;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with
@@ -365,7 +366,7 @@ class Resources
         {
 
           resource -= threshold;
-          resourceClots += 50;
+          resourceClots += 1;
         }
         resourcePressed = false;
       }

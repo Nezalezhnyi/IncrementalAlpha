@@ -7,7 +7,7 @@ float a;
 float betas = 102122;
 float b = 10;
 
-float gammas = 102122;
+float gammas = 2232202;
 float g = 10;
 
 
@@ -22,12 +22,12 @@ int dreamX, dreamY, hopeX, hopeY, zealX, zealY, alphaX, alphaY, autoAlphaX, auto
   gammaFY, singX, singY, sphereX, sphereY, deltaX, deltaY;
 
 Resources r1 = new Resources(alphas, 0, "α", 570, #EFFF66, false, 0, 255, 0);
-Resources r2 = new Resources(betas, 1, "β", 1050, #A2CEFF, false, 0, 255, 1);
-Resources r3 = new Resources(gammas, 2, "γ", 1050, #72FF77, false, 0, 255, 2);
+Resources r2 = new Resources(betas, 1, "β", 1050, #A2CEFF, false, 1, 255, 1);
+Resources r3 = new Resources(gammas, 2, "γ", 1050, #72FF77, false, 1, 255, 2);
 
-Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, r1, "α");
-Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, #72FF77, r2, "β");
-Fountain f3 = new Fountain (80+500+500, 90+100 + 50, 100, 600, #72FF77, #72FF77, r3, "γ");
+Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, r1, "α", 10000, 0);
+Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, #72FF77, r2, "β", 10000, 1);
+Fountain f3 = new Fountain (80+500+500, 90+100 + 50, 100, 600, #72FF77, #72FF77, r3, "γ", 1000000, 2);
 
 float betaClots = r2.getResourceClots();
 
@@ -160,7 +160,7 @@ void draw()
       {
         f3.drawIt();
         f3.act();
-        f3.tasksBeta();
+        f3.tasksGamma();
       }
     }
 

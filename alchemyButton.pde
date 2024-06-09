@@ -14,7 +14,6 @@ class AlchemyButton
   int strButtons;
   int strokeColour;
   long[] lastUpdateTimes;
-  int updateInterval = 20;
 
 
 
@@ -37,6 +36,7 @@ class AlchemyButton
     strokeColour = 0;
     this.lastUpdateTimes = new long[15];
     Arrays.fill(this.lastUpdateTimes, System.currentTimeMillis());
+    reactionsTime = 5000;
   }
 
   void addConnections(AlchemyButton b)
@@ -65,7 +65,6 @@ class AlchemyButton
 
   void alchemyButtons()
   {
-    println(autoAlpha);
 
     float alphaClots = r1.getResourceClots();
     float betaClots = r2.getResourceClots();
@@ -98,7 +97,7 @@ class AlchemyButton
       case 0:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[0] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[0] >= reactionsTime)
           {
             if (dreams > 0 && filled < 50)
             {
@@ -111,7 +110,7 @@ class AlchemyButton
         break;
       case 1:
         {
-          if (System.currentTimeMillis() - this.lastUpdateTimes[1] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[1] >= reactionsTime)
           {
             if (alphaClots > 1 && filled < 50)
             {
@@ -126,7 +125,7 @@ class AlchemyButton
       case 2:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[2] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[2] >= reactionsTime)
           {
             if (betaClots > 1 && filled < 50)
             {
@@ -140,7 +139,7 @@ class AlchemyButton
       case 3:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[3] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[3] >= reactionsTime)
           {
             if (gammaClots > 1 && filled < 50)
             {
@@ -154,7 +153,7 @@ class AlchemyButton
       case 4:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[4] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[4] >= reactionsTime)
           {
             if (hopes > 0 && filled < 50)
             {
@@ -168,7 +167,7 @@ class AlchemyButton
       case 5:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[5] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[5] >= reactionsTime)
           {
             if (zeals > 0 && filled < 50)
             {
@@ -185,7 +184,7 @@ class AlchemyButton
           AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(1);
           AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(6);
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[6] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[6] >= reactionsTime)
           {
 
             if (pbutton1.filled > 0 && pbutton2.filled > 0 && button.filled < 50) {
@@ -204,7 +203,7 @@ class AlchemyButton
       case 7:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[7] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[7] >= reactionsTime)
           {
             AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(1);
             AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(4);
@@ -221,7 +220,7 @@ class AlchemyButton
       case 8:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[8] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[8] >= reactionsTime)
           {
             AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(3);
             AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(4);
@@ -241,7 +240,7 @@ class AlchemyButton
           AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(2);
           AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(9);
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[9] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[9] >= reactionsTime)
           {
 
             if (pbutton1.filled > 0 && pbutton2.filled > 0 && button.filled < 50) {
@@ -260,7 +259,7 @@ class AlchemyButton
       case 10:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[10] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[10] >= reactionsTime)
           {
             AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(2);
             AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(5);
@@ -280,7 +279,7 @@ class AlchemyButton
           AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(3);
           AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(5);
           AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(11);
-          if (System.currentTimeMillis() - this.lastUpdateTimes[11] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[11] >= reactionsTime)
           {
             if (pbutton1.filled > 0 && pbutton2.filled > 0 && button.filled < 50) {
               pbutton1.filled -= 1;
@@ -298,7 +297,7 @@ class AlchemyButton
       case 12:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[12] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[12] >= reactionsTime)
           {
             AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(6);
             AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(7);
@@ -317,7 +316,7 @@ class AlchemyButton
       case 13:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[13] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[13] >= reactionsTime)
           {
             AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(9);
             AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(10);
@@ -336,7 +335,7 @@ class AlchemyButton
       case 14:
         {
           strokeColour = #FF3030;
-          if (System.currentTimeMillis() - this.lastUpdateTimes[14] >= updateInterval)
+          if (System.currentTimeMillis() - this.lastUpdateTimes[14] >= reactionsTime)
           {
             AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(12);
             AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(13);

@@ -62,3 +62,5 @@ boolean caveStartFilling = false;
 
 boolean autoAlpha, autoBeta, autoGamma, alphaFimpr, betaFimpr, gammaFimpr, singularity, autoSphere, openDelta;
 boolean isAlphaAutoOn, isBetaAutoOn, isGammaAutoOn;
+int reactionsTime;
+float gammaImprover;

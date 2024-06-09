@@ -10,23 +10,41 @@ class Fountain
     fifthBg, fifthStroke, fifthText;
   String name;
   boolean isSecondsDecremented = false;
+  int mechanic;
+  int stabiliser;
 
-  public Fountain(int xx, int yy, int ww, int hh, int c, int cL, Resources r, String n)
+  public Fountain(int xx, int yy, int ww, int hh, int c, int cL, Resources r, String n, int max, int mech)
   {
     x=xx;
     y=yy;
     h=hh;
     w=ww;
-    filled=57;
-    filledMax = 10000;
     colour = c;
     colourLast = cL;
     resource = r;
     name = n;
+    filledMax = max;
+    mechanic = mech;
+
+    filled=57;
   }
 
   void drawIt()
   {
+
+    /*switch(mechanic)
+     {
+     case 0:
+     stabiliser = 3;
+     break;
+     case 1:
+     stabiliser = 3;
+     break;
+     case 2:
+     stabiliser = 0;
+     break;
+     }*/
+
     strW = 3;
     buttonH = 40;
     fill(180);
@@ -56,8 +74,25 @@ class Fountain
       text("Filled", x+(w-textWidth("Filled"))/2, (y - buttonH - 20) + textH);
     }
 
-    float textfilledsize = textWidth(str(round(filled))) + textWidth(" " + name);
-    text(round(filled) + " " + name, 80+100/2 - textfilledsize/2+x-w+20, (90+100 + 50) + 600 - 10);
+    int exponent;
+    if (filled != 0)
+    {
+      exponent = (int)Math.log10(filled);
+    } else
+    {
+      exponent = 0;
+    }
+    float mantissa = filled / pow(10, exponent);
+
+    float textfilledsizeLess = textWidth(str(round(filled))) + textWidth(" " + name);
+    float textfilledsizeGreater = textWidth(nf(mantissa, 0, 1) + "e" + exponent) + textWidth(" " + name);
+
+
+
+    if (filled < 100000)
+      text(round(filled) + " " + name, 80+100/2 - textfilledsizeLess/2+x-w+20, (90+100 + 50) + 600 - 10);
+    else
+      text(nf(mantissa, 0, 1) + "e" + exponent + " " + name, 80+100/2 - textfilledsizeGreater/2+x-w+20, (90+100 + 50) + 600 - 10);
   }
 
   void act()
@@ -276,6 +311,124 @@ class Fountain
     textSize(22);
     fill(fourthText);
     text("10000 β: open γ-particles\nand a new fountain", x+w+strW+10+15, triangle4-50/2+21);
+    stroke(0);
+  }
+
+  void tasksGamma()
+  {
+
+
+    first = 100000; //1e5
+    float triangle1 = (y+h-1)-(first/filledMax * h)+3;
+    second = 300000;
+    float triangle2 = (y+h-1)-(second/filledMax * h)+3;
+    third = 500000;
+    float triangle3 = (y+h-1)-(third/filledMax * h)+3;
+    fourth = 750000;
+    float triangle4 = (y+h-1)-(fourth/filledMax * h)+3;
+    fifth = 1000000;
+    float triangle5 = (y+h-1)-(fifth/filledMax * h)+3;
+
+    firstBg = secondBg = thirdBg = fourthBg = fifthBg = 0;
+    firstStroke = firstText = secondStroke = secondText = thirdStroke = thirdText = fourthStroke = fourthText = colour;
+    fifthStroke = fifthText = colourLast;
+
+
+
+    if (filled >= 100000)
+    {
+      firstBg = colour;
+      firstStroke = colour;
+      firstText = 0;
+      g = 5;
+    }
+
+    stroke(colour);
+    strokeWeight(2);
+    fill(firstBg);
+    triangle(x+w+strW, triangle1, x+w+strW+10, triangle1-5, x+w+strW+10, triangle1+5);
+    rect(x+w+strW+10, triangle1-70/2, 300, 70, 15);
+    textSize(22);
+    fill(firstText);
+    text("1e5 γ: Reduces the growth\nrate of merging cost", x+w+strW+10+15, triangle1-50/2+21);
+    stroke(0);
+
+
+    if (filled >= 300000)
+    {
+      secondBg = colour;
+      secondStroke = colour;
+      secondText = 0;
+      gammaImprover = 1.2;
+    }
+
+    stroke(secondStroke);
+    strokeWeight(2);
+    fill(secondBg);
+    triangle(x+w+strW, triangle2, x+w+strW+10, triangle2-5, x+w+strW+10, triangle2+5);
+    rect(x+w+strW+10, triangle2-70/2, 300, 70, 15);
+    textSize(22);
+    fill(secondText);
+    text("3e5 γ: Makes γ-clots more\npowerful", x+w+strW+10+15, triangle2-50/2+21);
+    stroke(0);
+
+
+    if (filled >= 500000)
+    {
+      thirdBg = colour;
+      thirdStroke = colour;
+      thirdText = 0;
+      reactionsTime = 3000;
+    }
+
+
+    stroke(thirdStroke);
+    strokeWeight(2);
+    fill(thirdBg);
+    triangle(x+w+strW, triangle3, x+w+strW+10, triangle3-5, x+w+strW+10, triangle3+5);
+    rect(x+w+strW+10, triangle3-70/2, 300, 70, 15);
+    textSize(21);
+    fill(thirdText);
+    text("5e5 γ: Reduces the duration\nof alchemical reactions by 2s", x+w+strW+10+15, triangle3-50/2+21);
+    stroke(0);
+
+    if (filled >= 750000)
+    {
+      fourthBg = colour;
+      fourthStroke = colour;
+      fourthText = 0;
+      g = 3;
+    }
+
+ 
+    stroke(fourthStroke);
+    strokeWeight(2);
+    fill(fourthBg);
+    triangle(x+w+strW, triangle4, x+w+strW+10, triangle4-5, x+w+strW+10, triangle4+5);
+    rect(x+w+strW+10, triangle4-70/2, 300, 95, 15);
+    textSize(22);
+    fill(fourthText);
+    text("7,5e5 γ: Much more reduces\nthe growth rate of merging\ncost", x+w+strW+10+15, triangle4-50/2+21);
+    stroke(0);
+
+
+    if (filled == 1000000)
+    {
+      fifthBg = colourLast;
+      fifthStroke = colourLast;
+      fifthText = 0;
+      gammaImprover = 1.5;
+    }
+
+
+    stroke(fifthStroke);
+    strokeWeight(2);
+    fill(fifthBg);
+    triangle(x+w+strW, triangle5, x+w+strW+10, triangle5-5, x+w+strW+10, triangle5+5);
+    rect(x+w+strW+10, triangle5-70/2, 300, 70, 15);
+    textSize(22);
+    fill(fifthText);
+    text("1e6 γ: Makes γ-clots\nsignificantly more powerful", x+w+strW+10+15, triangle5-50/2+21);
     stroke(0);
   }
 }
