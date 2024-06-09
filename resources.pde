@@ -11,6 +11,10 @@ class Resources
   float threshold;
   float betaClots;
   int particlesTextSize, gainingTextSize;
+  long[] lastUpdateTimes;
+  int updateInterval = 5000;
+  boolean autoResource, wasAutoResourcePressed, isAutoResourceGreen;
+  int colourAuto, strokeColourAuto;
 
   public Resources(float r, int tr, String rn, int textX, int colour, boolean pressed, int clots, int bgCol, int mech)
   {
@@ -33,6 +37,11 @@ class Resources
     threshold = 0;
     particlesTextSize = 70;
     gainingTextSize = 30;
+    this.lastUpdateTimes = new long[15];
+    Arrays.fill(this.lastUpdateTimes, System.currentTimeMillis());
+    wasAutoResourcePressed = false;
+    colourAuto = 255;
+    strokeColourAuto = #FF5B5B;
   }
 
   void addResource(float r)
@@ -50,7 +59,7 @@ class Resources
     return resourceClots;
   }
 
-  
+
   public void setResourceClots(float newClots) {
     resourceClots = newClots;
   }
@@ -292,24 +301,286 @@ class Resources
       threshold = pow(g, resourceClots+1);
       break;
     }
-
-
-    if (mousePressed && !resourcePressed && mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h)
+    /////////////////////////////////////BAAAAAAAAAAAAAAAD COOOOOOOOOOOOOOOOOOOOOOOODE////////////////////////////////////////////
+    switch(mechanic)
     {
-      bgColour = 175;
-      resourcePressed = true;
-    } else if (!mousePressed && resourcePressed)
+    case 0:
+      autoResource = autoAlpha;
+      break;
+    case 1:
+      autoResource = autoBeta;
+      break;
+    case 2:
+      autoResource = autoGamma;
+      break;  
+    }
+    if (autoResource && InterfaceParticlesShowed)
     {
-      bgColour = 255;
-      if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+      fill(colourAuto);
+      stroke(strokeColourAuto);
+      rect(width-x-w-80, y, 200, 50);
+      stroke(0);
+      fill(0);
+      textSize(25);
+      if (!isAutoResourceGreen)
+        text(resourceName + "-automatic: Off", (width-x-w-80) + 10, y+33);
+      else
+        text(resourceName + "-automatic: On", (width-x-w-80) + 10, y+33);
+
+      if (mouseX >= (width-x-w-50) + 10 && mouseX <= ((width-x-w-50) + 10)+200 && mouseY >= y && mouseY <= y+50)
       {
+        if (mousePressed)
+        {
+          colourAuto = 180;
+          wasAutoResourcePressed = true;
+        }
 
-        resource -= threshold;
-        resourceClots += 1;
+        if (!mousePressed && wasAutoResourcePressed && !isAutoResourceGreen)
+        {
+          strokeColourAuto = #3CFF63;
+          colourAuto = 255;
+          wasAutoResourcePressed = false;
+          isAutoResourceGreen = true;
+        } else if (!mousePressed && wasAutoResourcePressed && isAutoResourceGreen)
+        {
+          strokeColourAuto = #FF5B5B;
+          colourAuto = 255;
+          wasAutoResourcePressed = false;
+          isAutoResourceGreen = false;
+        }
       }
-      resourcePressed = false;
+    }
+
+
+    if (!autoResource || !isAutoResourceGreen)
+    {
+      if (mousePressed && !resourcePressed && mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h)
+      {
+        bgColour = 175;
+        resourcePressed = true;
+      } else if (!mousePressed && resourcePressed)
+      {
+        bgColour = 255;
+        if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+        {
+
+          resource -= threshold;
+          resourceClots += 50;
+        }
+        resourcePressed = false;
+      }
+    } else if (isAutoResourceGreen)
+    {
+      if (System.currentTimeMillis() - this.lastUpdateTimes[0] >= updateInterval)
+      {
+        if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+        {
+
+          resource -= threshold;
+          resourceClots += 1;
+        }
+        this.lastUpdateTimes[0] = System.currentTimeMillis();
+      }
     }
   }
 
+  /*if (autoBeta && InterfaceParticlesShowed)
+   {
+   fill(colourAuto);
+   stroke(strokeColourAuto);
+   rect(width-x-w-50, y, 200, 50);
+   stroke(0);
+   fill(0);
+   textSize(25);
+   if (!isAutoBetaGreen)
+   text("β-automatic: Off", (width-x-w-50) + 10, y+33);
+   else
+   text("β-automatic: On", (width-x-w-50) + 10, y+33);
+   
+   if (mouseX >= (width-x-w-50) + 10 && mouseX <= ((width-x-w-50) + 10)+200 && mouseY >= y && mouseY <= y+50)
+   {
+   if (mousePressed)
+   {
+   colourAuto = 180;
+   wasAutoBetaPressed = true;
+   }
+   
+   if (!mousePressed && wasAutoBetaPressed && !isAutoBetaGreen)
+   {
+   strokeColourAuto = #3CFF63;
+   colourAuto = 255;
+   wasAutoBetaPressed = false;
+   isAutoBetaGreen = true;
+   }
+   else if (!mousePressed && wasAutoBetaPressed && isAutoBetaGreen)
+   {
+   strokeColourAuto = #FF5B5B;
+   colourAuto = 255;
+   wasAutoBetaPressed = false;
+   isAutoBetaGreen = false;
+   }
+   
+   }
+   }
+   
+   if (autoGamma && InterfaceParticlesShowed)
+   {
+   fill(colourAuto);
+   stroke(strokeColourAuto);
+   rect(width-x-w-50, y, 200, 50);
+   stroke(0);
+   fill(0);
+   textSize(25);
+   if (!isAutoGammaGreen)
+   text("γ-automatic: Off", (width-x-w-50) + 10, y+33);
+   else
+   text("γ-automatic: On", (width-x-w-50) + 10, y+33);
+   
+   if (mouseX >= (width-x-w-50) + 10 && mouseX <= ((width-x-w-50) + 10)+200 && mouseY >= y && mouseY <= y+50)
+   {
+   if (mousePressed)
+   {
+   colourAuto = 180;
+   wasAutoGammaPressed = true;
+   }
+   
+   if (!mousePressed && wasAutoGammaPressed && !isAutoGammaGreen)
+   {
+   strokeColourAuto = #3CFF63;
+   colourAuto = 255;
+   wasAutoGammaPressed = false;
+   isAutoGammaGreen = true;
+   }
+   else if (!mousePressed && wasAutoGammaPressed && isAutoGammaGreen)
+   {
+   strokeColourAuto = #FF5B5B;
+   colourAuto = 255;
+   wasAutoGammaPressed = false;
+   isAutoGammaGreen = false;
+   }
+   
+   }
+   }*/
 
+  /////////////////////////////////////BAAAAAAAAAAAAAAAD COOOOOOOOOOOOOOOOOOOOOOOODE////////////////////////////////////////////
+
+  /*switch(mechanic)
+   {
+   case 0:
+   {
+   if (!autoResource || !isAutoResourceGreen)
+   {
+   if (mousePressed && !resourcePressed && mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h)
+   {
+   bgColour = 175;
+   resourcePressed = true;
+   } else if (!mousePressed && resourcePressed)
+   {
+   bgColour = 255;
+   if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+   {
+   
+   resource -= threshold;
+   resourceClots += 1;
+   }
+   resourcePressed = false;
+   }
+   } else if (isAutoResourceGreen)
+   {
+   if (System.currentTimeMillis() - this.lastUpdateTimes[0] >= updateInterval)
+   {
+   if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+   {
+   
+   resource -= threshold;
+   resourceClots += 1;
+   }
+   this.lastUpdateTimes[0] = System.currentTimeMillis();
+   }
+   }
+   }
+   case 1:
+   {
+   if (!autoBeta)
+   {
+   if (mousePressed && !resourcePressed && mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h)
+   {
+   bgColour = 175;
+   resourcePressed = true;
+   } else if (!mousePressed && resourcePressed)
+   {
+   bgColour = 255;
+   if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+   {
+   
+   resource -= threshold;
+   resourceClots += 1;
+   }
+   resourcePressed = false;
+   }
+   } else
+   {
+   if (System.currentTimeMillis() - this.lastUpdateTimes[1] >= updateInterval)
+   {
+   if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+   {
+   
+   resource -= threshold;
+   resourceClots += 1;
+   }
+   this.lastUpdateTimes[1] = System.currentTimeMillis();
+   }
+   }
+   }
+   case 2:
+   {
+   if (!autoGamma)
+   {
+   if (mousePressed && !resourcePressed && mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h)
+   {
+   bgColour = 175;
+   resourcePressed = true;
+   } else if (!mousePressed && resourcePressed)
+   {
+   bgColour = 255;
+   if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+   {
+   
+   resource -= threshold;
+   resourceClots += 1;
+   }
+   resourcePressed = false;
+   }
+   } else
+   {
+   if (System.currentTimeMillis() - this.lastUpdateTimes[2] >= updateInterval)
+   {
+   if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+   {
+   
+   resource -= threshold;
+   resourceClots += 1;
+   }
+   this.lastUpdateTimes[2] = System.currentTimeMillis();
+   }
+   }
+   }
+   }*/
+
+
+  /*if (mousePressed && !resourcePressed && mouseX >= x && mouseX <= x+w && mouseY >= y && mouseY <= y+h)
+   {
+   bgColour = 175;
+   resourcePressed = true;
+   } else if (!mousePressed && resourcePressed)
+   {
+   bgColour = 255;
+   if (resource - threshold >= 0) //if we have enough possible purchases and purchasing of a factory (pow(a,(float)alphaClots+1)) - the cost of the next factory) won`t give us a negative number (we have enough money), then give a new factory, decrease the amount of alpha-particles (-money) and decrease available purchases
+   {
+   
+   resource -= threshold;
+   resourceClots += 1;
+   }
+   resourcePressed = false;
+   }*/
 }

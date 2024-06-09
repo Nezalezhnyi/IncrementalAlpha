@@ -14,7 +14,7 @@ class AlchemyButton
   int strButtons;
   int strokeColour;
   long[] lastUpdateTimes;
-  int updateInterval = 1000;
+  int updateInterval = 20;
 
 
 
@@ -65,6 +65,7 @@ class AlchemyButton
 
   void alchemyButtons()
   {
+    println(autoAlpha);
 
     float alphaClots = r1.getResourceClots();
     float betaClots = r2.getResourceClots();
@@ -180,12 +181,13 @@ class AlchemyButton
         break;
       case 6:
         {
+          AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(0);
+          AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(1);
+          AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(6);
           strokeColour = #FF3030;
           if (System.currentTimeMillis() - this.lastUpdateTimes[6] >= updateInterval)
           {
-            AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(0);
-            AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(1);
-            AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(6);
+
             if (pbutton1.filled > 0 && pbutton2.filled > 0 && button.filled < 50) {
               pbutton1.filled -= 1;
               pbutton2.filled -= 1;
@@ -193,6 +195,10 @@ class AlchemyButton
             }
             this.lastUpdateTimes[6] = System.currentTimeMillis();
           }
+          if (button.filled == 50)
+            autoAlpha = true;
+          else
+            autoAlpha = false;
         }
         break;
       case 7:
@@ -231,12 +237,13 @@ class AlchemyButton
         break;
       case 9:
         {
+          AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(0);
+          AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(2);
+          AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(9);
           strokeColour = #FF3030;
           if (System.currentTimeMillis() - this.lastUpdateTimes[9] >= updateInterval)
           {
-            AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(0);
-            AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(2);
-            AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(9);
+
             if (pbutton1.filled > 0 && pbutton2.filled > 0 && button.filled < 50) {
               pbutton1.filled -= 1;
               pbutton2.filled -= 1;
@@ -244,9 +251,13 @@ class AlchemyButton
             }
             this.lastUpdateTimes[9] = System.currentTimeMillis();
           }
+          if (button.filled == 50)
+            autoBeta = true;
+          else
+            autoBeta = false;
         }
         break;
-        case 10:
+      case 10:
         {
           strokeColour = #FF3030;
           if (System.currentTimeMillis() - this.lastUpdateTimes[10] >= updateInterval)
@@ -263,14 +274,14 @@ class AlchemyButton
           }
         }
         break;
-        case 11:
+      case 11:
         {
           strokeColour = #FF3030;
+          AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(3);
+          AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(5);
+          AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(11);
           if (System.currentTimeMillis() - this.lastUpdateTimes[11] >= updateInterval)
           {
-            AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(3);
-            AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(5);
-            AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(11);
             if (pbutton1.filled > 0 && pbutton2.filled > 0 && button.filled < 50) {
               pbutton1.filled -= 1;
               pbutton2.filled -= 1;
@@ -278,9 +289,13 @@ class AlchemyButton
             }
             this.lastUpdateTimes[11] = System.currentTimeMillis();
           }
+          if (button.filled == 50)
+            autoGamma = true;
+          else
+            autoGamma = false;
         }
         break;
-        case 12:
+      case 12:
         {
           strokeColour = #FF3030;
           if (System.currentTimeMillis() - this.lastUpdateTimes[12] >= updateInterval)
@@ -299,7 +314,7 @@ class AlchemyButton
           }
         }
         break;
-        case 13:
+      case 13:
         {
           strokeColour = #FF3030;
           if (System.currentTimeMillis() - this.lastUpdateTimes[13] >= updateInterval)
@@ -318,7 +333,7 @@ class AlchemyButton
           }
         }
         break;
-        case 14:
+      case 14:
         {
           strokeColour = #FF3030;
           if (System.currentTimeMillis() - this.lastUpdateTimes[14] >= updateInterval)
@@ -336,7 +351,7 @@ class AlchemyButton
           stroke(0);
         }
         break;
-        
+
 
 
         //0 - dream, 1 - alpha, 2- beta, 3 - gamma, 4 - hope, 5 - zeal, 6 - autoA, 7 - AF,
@@ -360,7 +375,7 @@ class AlchemyButton
       rect(buttonX+strButtons, buttonY+strButtons, filled/51 * 200, 80-strButtons-1);
       textSize(17);
       fill(0);
-      text((int)filled + "/50", buttonX + 78, buttonY + 73);
+      text((int)filled + "/50", buttonX + 81, buttonY + 73);
       textSize(textSize);
       fill(0);
       text(buttonText, textX, textY);

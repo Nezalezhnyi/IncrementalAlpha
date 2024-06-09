@@ -59,3 +59,6 @@ boolean achievedBeta1, achievedBeta2, achievedBeta3, achievedBeta4;
 
 boolean wasCaveMousePressed = false;
 boolean caveStartFilling = false;
+
+boolean autoAlpha, autoBeta, autoGamma, alphaFimpr, betaFimpr, gammaFimpr, singularity, autoSphere, openDelta;
+boolean isAlphaAutoOn, isBetaAutoOn, isGammaAutoOn;
