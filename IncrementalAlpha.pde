@@ -1,10 +1,10 @@
 import java.util.Arrays;
 
 
-float alphas =  111120;
+float alphas =  1000000;
 float a;
 
-float betas = 102122;
+float betas = 3500400;
 float b = 10;
 
 float gammas = 2232202;
@@ -28,7 +28,12 @@ Resources r3 = new Resources(gammas, 2, "γ", 1050, #72FF77, false, 1, 255, 2);
 Fountain f1 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #A2CEFF, r1, "α", 10000, 0);
 Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, #72FF77, r2, "β", 10000, 1);
 Fountain f3 = new Fountain (80+500+500, 90+100 + 50, 100, 600, #72FF77, #72FF77, r3, "γ", 1000000, 2);
+Fountain f4 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #EFFF66, r1, "α", 1000000, 0);
+Fountain f5 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, #A2CEFF, r2, "β", 500000, 1);
+Fountain f6 = new Fountain (80+500+500, 90+100 + 50, 100, 600, #72FF77, #72FF77, r3, "γ", 10000000, 2);
 
+
+float alphaClots = r1.getResourceClots();
 float betaClots = r2.getResourceClots();
 
 
@@ -129,6 +134,7 @@ void setup()
 
 void draw()
 {
+  float alphaClots = r1.getResourceClots();
   float betaClots = r2.getResourceClots();
 
   background(120);
@@ -138,30 +144,46 @@ void draw()
       r1.currencyType(8, 250);
       if (achieved4)
         r2.currencyType(8, 350);
-      if (achievedBeta4)
+      if (achievedBeta5)
         r3.currencyType(8, 450);
     }
 
     if (InterfaceFountainsShowed)
     {
-      f1.drawIt();
-      //f2.drawIt();
-      f1.act();
-      //f2.act();
-      f1.tasksAlpha();
+      if (!alphaFimpr)
+      {
+        f1.drawIt();
+        //f2.drawIt();
+        f1.act();
+        //f2.act();
+        f1.tasksAlpha();
+      } else
+      {
+        f4.drawIt();
+        //f2.drawIt();
+        f4.act();
+        //f2.act();
+        f4.tasksAlphaImproved();
+      }
 
-      if (achieved4)
+      if (achieved4 && !betaFimpr)
       {
         f2.drawIt();
         f2.act();
         f2.tasksBeta();
+      } else if (betaFimpr && achievedBeta5)
+      {
+        f5.drawIt();
+        f5.act();
+        f5.tasksBetaImproved();
       }
-      if (achievedBeta4)
+      if (!achievedBeta5)
       {
         f3.drawIt();
         f3.act();
         f3.tasksGamma();
       }
+      
     }
 
     ///(((
@@ -198,22 +220,22 @@ void draw()
     r2.mouseControl(40, 250+100, 140, 50);
   }
 
-  if (achievedBeta4)
+  if (achievedBeta5)
   {
-    r3.currentGammaParticles();
+    r3.currentGammaParticles(alphaClots);
     r3.formatAlphaParticlesText();
     r3.alphaParticlesProductionSpeed();
     r3.mouseControl(40, 250+200, 140, 50);
   }
 
 
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
 
   currentLocation();
   if (!InterfaceAlchemyShowed)

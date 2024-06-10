@@ -54,7 +54,7 @@ int buttonfountainY;
 int buttonfountainWidth;
 
 boolean achieved2, achieved3, achieved4;
-boolean achievedBeta1, achievedBeta2, achievedBeta3, achievedBeta4;
+boolean achievedBeta1, achievedBeta2, achievedBeta3, achievedBeta4, achievedBeta5;
 
 
 boolean wasCaveMousePressed = false;
@@ -64,3 +64,7 @@ boolean autoAlpha, autoBeta, autoGamma, alphaFimpr, betaFimpr, gammaFimpr, singu
 boolean isAlphaAutoOn, isBetaAutoOn, isGammaAutoOn;
 int reactionsTime;
 float gammaImprover;
+int updateIntervalAlpha, updateIntervalBeta, updateIntervalGamma;
+boolean achievedImprovedAlpha4, achievedImprovedBeta4;
+int betaImprover;
+int betaSecondImprover, betaRiseInPriceFnd;

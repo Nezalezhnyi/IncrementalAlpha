@@ -36,7 +36,7 @@ class AlchemyButton
     strokeColour = 0;
     this.lastUpdateTimes = new long[15];
     Arrays.fill(this.lastUpdateTimes, System.currentTimeMillis());
-    reactionsTime = 5000;
+    reactionsTime = 50;
   }
 
   void addConnections(AlchemyButton b)
@@ -203,11 +203,11 @@ class AlchemyButton
       case 7:
         {
           strokeColour = #FF3030;
+          AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(1);
+          AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(4);
+          AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(7);
           if (System.currentTimeMillis() - this.lastUpdateTimes[7] >= reactionsTime)
           {
-            AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(1);
-            AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(4);
-            AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(7);
             if (pbutton1.filled > 0 && pbutton2.filled > 0 && button.filled < 50) {
               pbutton1.filled -= 1;
               pbutton2.filled -= 1;
@@ -215,6 +215,8 @@ class AlchemyButton
             }
             this.lastUpdateTimes[7] = System.currentTimeMillis();
           }
+          if (button.filled == 50)
+            alphaFimpr = true;
         }
         break;
       case 8:
@@ -259,11 +261,11 @@ class AlchemyButton
       case 10:
         {
           strokeColour = #FF3030;
+          AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(2);
+          AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(5);
+          AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(10);
           if (System.currentTimeMillis() - this.lastUpdateTimes[10] >= reactionsTime)
           {
-            AlchemyButton pbutton1 = parentAlchemy.AlchemyButtonArray.get(2);
-            AlchemyButton pbutton2 = parentAlchemy.AlchemyButtonArray.get(5);
-            AlchemyButton button = parentAlchemy.AlchemyButtonArray.get(10);
             if (pbutton1.filled > 0 && pbutton2.filled > 0 && button.filled < 50) {
               pbutton1.filled -= 1;
               pbutton2.filled -= 1;
@@ -271,6 +273,8 @@ class AlchemyButton
             }
             this.lastUpdateTimes[10] = System.currentTimeMillis();
           }
+          if (button.filled == 50)
+            betaFimpr = true;
         }
         break;
       case 11:
