@@ -45,7 +45,7 @@ class Resources
     gammaImprover = 1;
     updateIntervalAlpha = updateIntervalBeta = updateIntervalGamma = 3000;
     betaImprover = 1;
-    betaSecondImprover = betaRiseInPriceFnd = 1;
+    betaSecondImprover = betaRiseInPriceFnd = gammaSecondImprover = 1;
   }
 
   void addResource(float r)
@@ -96,9 +96,9 @@ class Resources
   void currentGammaParticles(float alphaClots)
   {
     if (achievedImprovedAlpha4)
-      resource += (alphaClots+1) * pow((resourceClots)*10, gammaImprover);
+      resource += gammaSecondImprover*(alphaClots+1) * pow((resourceClots)*10, gammaImprover);
     else
-      resource += pow((resourceClots)*10, gammaImprover);
+      resource += gammaSecondImprover*pow((resourceClots)*10, gammaImprover);
 
     if (resource > maxResource) //variable maxalphas will contain the greatest value of alphas which has been reached during a simulation
       maxResource = resource;   //in order to save the value of the next threshold of alpha particles we will be able to buy next factory with

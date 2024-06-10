@@ -7,7 +7,7 @@ float a;
 float betas = 3500400;
 float b = 10;
 
-float gammas = 2232202;
+float gammas = 5e7;
 float g = 10;
 
 
@@ -30,7 +30,7 @@ Fountain f2 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, #72FF77, r2,
 Fountain f3 = new Fountain (80+500+500, 90+100 + 50, 100, 600, #72FF77, #72FF77, r3, "γ", 1000000, 2);
 Fountain f4 = new Fountain (80, 90+100 + 50, 100, 600, #EFFF66, #EFFF66, r1, "α", 1000000, 0);
 Fountain f5 = new Fountain (80+500, 90+100 + 50, 100, 600, #A2CEFF, #A2CEFF, r2, "β", 500000, 1);
-Fountain f6 = new Fountain (80+500+500, 90+100 + 50, 100, 600, #72FF77, #72FF77, r3, "γ", 10000000, 2);
+Fountain f6 = new Fountain (80+500+500, 90+100 + 50, 100, 600, #72FF77, #72FF77, r3, "γ", (int)1e8, 2);
 
 
 float alphaClots = r1.getResourceClots();
@@ -166,7 +166,7 @@ void draw()
         f4.tasksAlphaImproved();
       }
 
-      if (achieved4 && !betaFimpr)
+      if (achieved4 && !betaFimpr) //achieved4 without !
       {
         f2.drawIt();
         f2.act();
@@ -177,13 +177,18 @@ void draw()
         f5.act();
         f5.tasksBetaImproved();
       }
-      if (!achievedBeta5)
+      if (achievedBeta5 && !betaFimpr)
       {
         f3.drawIt();
         f3.act();
         f3.tasksGamma();
       }
-      
+      else
+      {
+        f6.drawIt();
+        f6.act();
+        f6.tasksGammaImproved();
+      }
     }
 
     ///(((

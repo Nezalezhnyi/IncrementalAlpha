@@ -273,7 +273,7 @@ class Fountain
     rect(x+w+strW+10, triangle2-70/2, 300, 70, 15);
     textSize(22);
     fill(secondText);
-    text("2500 β: Reduces the growth\nrate of merging costs ", x+w+strW+10+15, triangle2-50/2+21);
+    text("2500 β: Reduces the growth\nrate of β-merging costs ", x+w+strW+10+15, triangle2-50/2+21);
     stroke(0);
 
 
@@ -372,7 +372,7 @@ class Fountain
     rect(x+w+strW+10, triangle1-70/2, 300, 70, 15);
     textSize(22);
     fill(firstText);
-    text("1e5 γ: Reduces the growth\nrate of merging cost", x+w+strW+10+15, triangle1-50/2+21);
+    text("1e5 γ: Reduces the growth\nrate of γ-merging cost", x+w+strW+10+15, triangle1-50/2+21);
     stroke(0);
 
 
@@ -433,7 +433,7 @@ class Fountain
     rect(x+w+strW+10, triangle4-70/2, 300, 95, 15);
     textSize(22);
     fill(fourthText);
-    text("7,5e5 γ: Much more reduces\nthe growth rate of merging\ncost", x+w+strW+10+15, triangle4-50/2+21);
+    text("7,5e5 γ: Much more reduces\nthe growth rate of γ-merging\ncost", x+w+strW+10+15, triangle4-50/2+21);
     stroke(0);
 
 
@@ -443,6 +443,7 @@ class Fountain
       fifthStroke = colourLast;
       fifthText = 0;
       gammaImprover = 1.5;
+      checkerF = true;
     }
 
 
@@ -658,15 +659,15 @@ class Fountain
   {
 
 
-    first = 100000; //1e5
+    first = (int)2e6; //significantly improves γ-formula
     float triangle1 = (y+h-1)-(first/filledMax * h)+3;
-    second = 300000;
+    second = (int)2.5e7;
     float triangle2 = (y+h-1)-(second/filledMax * h)+3;
-    third = 500000;
+    third = (int)5e7;
     float triangle3 = (y+h-1)-(third/filledMax * h)+3;
-    fourth = 750000;
+    fourth = (int)7e7;
     float triangle4 = (y+h-1)-(fourth/filledMax * h)+3;
-    fifth = 1000000;
+    fifth = (int)1e8;
     float triangle5 = (y+h-1)-(fifth/filledMax * h)+3;
 
     firstBg = secondBg = thirdBg = fourthBg = fifthBg = 0;
@@ -675,12 +676,12 @@ class Fountain
 
 
 
-    if (filled >= 100000)
+    if (filled >= first)
     {
       firstBg = colour;
       firstStroke = colour;
       firstText = 0;
-      g = 5;
+      gammaSecondImprover = 10;
     }
 
     stroke(colour);
@@ -688,18 +689,18 @@ class Fountain
     fill(firstBg);
     triangle(x+w+strW, triangle1, x+w+strW+10, triangle1-5, x+w+strW+10, triangle1+5);
     rect(x+w+strW+10, triangle1-70/2, 300, 70, 15);
-    textSize(22);
+    textSize(21.7);
     fill(firstText);
-    text("1e5 γ: Reduces the growth\nrate of merging cost", x+w+strW+10+15, triangle1-50/2+21);
+    text("2e6 γ: Significantly improves\nγ-clots", x+w+strW+10+15, triangle1-50/2+21);
     stroke(0);
 
 
-    if (filled >= 300000)
+    if (filled >= second)
     {
       secondBg = colour;
       secondStroke = colour;
       secondText = 0;
-      gammaImprover = 1.2;
+      updateIntervalGamma = 1000;
     }
 
     stroke(secondStroke);
@@ -709,16 +710,16 @@ class Fountain
     rect(x+w+strW+10, triangle2-70/2, 300, 70, 15);
     textSize(22);
     fill(secondText);
-    text("3e5 γ: Makes γ-clots more\npowerful", x+w+strW+10+15, triangle2-50/2+21);
+    text("2,5e7 γ: Accelerates γ-clots\nauto-purchase", x+w+strW+10+15, triangle2-50/2+21);
     stroke(0);
 
 
-    if (filled >= 500000)
+    if (filled >= third)
     {
       thirdBg = colour;
       thirdStroke = colour;
       thirdText = 0;
-      reactionsTime = 3000; //!!!!!!!
+      g = 2;
    
       }
         
@@ -732,15 +733,15 @@ class Fountain
     rect(x+w+strW+10, triangle3-70/2, 300, 70, 15);
     textSize(21);
     fill(thirdText);
-    text("5e5 γ: Reduces the duration\nof alchemical reactions by 2s", x+w+strW+10+15, triangle3-50/2+21);
+    text("5e7 γ: Reduces the growth\nrate of γ-merging cost", x+w+strW+10+15, triangle3-50/2+21);
     stroke(0);
 
-    if (filled >= 750000)
+    if (filled >= fourth)
     {
       fourthBg = colour;
       fourthStroke = colour;
       fourthText = 0;
-      g = 3;
+      updateIntervalGamma = 200;
     }
 
  
@@ -748,19 +749,19 @@ class Fountain
     strokeWeight(2);
     fill(fourthBg);
     triangle(x+w+strW, triangle4, x+w+strW+10, triangle4-5, x+w+strW+10, triangle4+5);
-    rect(x+w+strW+10, triangle4-70/2, 300, 95, 15);
+    rect(x+w+strW+10, triangle4-70/2, 300, 70, 15);
     textSize(22);
     fill(fourthText);
-    text("7,5e5 γ: Much more reduces\nthe growth rate of merging\ncost", x+w+strW+10+15, triangle4-50/2+21);
+    text("7e7 γ: Greatly accelerates\nα-clots auto-purchase", x+w+strW+10+15, triangle4-50/2+21);
     stroke(0);
 
 
-    if (filled == 1000000)
+    if (filled == fifth)
     {
       fifthBg = colourLast;
       fifthStroke = colourLast;
       fifthText = 0;
-      gammaImprover = 1.5;
+      reactionsTime = 1000;
     }
 
 
@@ -769,9 +770,9 @@ class Fountain
     fill(fifthBg);
     triangle(x+w+strW, triangle5, x+w+strW+10, triangle5-5, x+w+strW+10, triangle5+5);
     rect(x+w+strW+10, triangle5-70/2, 300, 70, 15);
-    textSize(22);
+    textSize(21.7);
     fill(fifthText);
-    text("1e6 γ: Makes γ-clots\nsignificantly more powerful", x+w+strW+10+15, triangle5-50/2+21);
+    text("1e8 γ: Reduces the duration\nof alchemical reactions to 1s", x+w+strW+10+15, triangle5-50/2+21);
     stroke(0);
   }
   

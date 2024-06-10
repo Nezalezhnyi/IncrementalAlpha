@@ -36,7 +36,7 @@ class AlchemyButton
     strokeColour = 0;
     this.lastUpdateTimes = new long[15];
     Arrays.fill(this.lastUpdateTimes, System.currentTimeMillis());
-    reactionsTime = 50;
+    reactionsTime = 50; //originally 5000
   }
 
   void addConnections(AlchemyButton b)

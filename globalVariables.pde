@@ -65,6 +65,8 @@ boolean isAlphaAutoOn, isBetaAutoOn, isGammaAutoOn;
 int reactionsTime;
 float gammaImprover;
 int updateIntervalAlpha, updateIntervalBeta, updateIntervalGamma;
-boolean achievedImprovedAlpha4, achievedImprovedBeta4;
+boolean achievedImprovedAlpha4, achievedImprovedBeta4, achievedImprovedGamma4;
 int betaImprover;
-int betaSecondImprover, betaRiseInPriceFnd;
+int betaSecondImprover, betaRiseInPriceFnd, gammaSecondImprover;
+
+boolean checkerF; //  checkerF = true;
